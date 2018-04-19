@@ -7,16 +7,3 @@ install:
 
 services:
   - mongodb
-
-script:
-- npm test
-
-env:
-- NODE_ENV=development
-
-cache:
-  directories:
-  - "node_modules"
-
-before_script:
-  - npm install -g grunt-cli
