@@ -27,6 +27,7 @@
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.11.0",
+    "dotenv": "^5.0.1",
     "express": "~3.4.0",
     "forever": "latest",
     "grunt": "~0.4.1",
