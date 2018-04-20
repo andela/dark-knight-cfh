@@ -9,16 +9,23 @@
     "url": "https://github.com/cardsforhumanity/cardsforhumanity.git"
   },
   "scripts": {
-    "start": "node node_modules/grunt-cli/bin/grunt",
-    "test": "node node_modules/grunt-cli/bin/grunt test",
-    "postinstall": "node node_modules/grunt-cli/bin/grunt install"
+    "start:grunt": "node node_modules/grunt-cli/bin/grunt",
+    "start": "babel-node node_modules/gulp/bin/gulp",
+    "test:grunt": "node node_modules/grunt-cli/bin/grunt test",
+    "test": "babel-watch node_modules/gulp/bin/gulp test",
+    "postinstall:grunt": "node node_modules/grunt-cli/bin/grunt install",
+    "postinstall": "babel-node node_modules/gulp/bin/gulp install"
   },
   "dependencies": {
     "async": "~0.2.9",
+    "babel-watch": "^2.0.7",
     "bcryptjs": "~1.0.4",
     "bower": "~1.3.8",
     "connect-flash": "~0.1.1",
+    "bower": "~1.3.8",
+    "connect-flash": "~0.1.1",
     "connect-mongo": "^2.0.1",
+
     "console-stamp": "~0.1.1",
     "dotenv": "^5.0.1",
     "express": "~3.4.0",
@@ -26,6 +33,10 @@
     "grunt": "~0.4.1",
     "grunt-bower-task": "~0.4.0",
     "grunt-cli": "~0.1.9",
+    "gulp-eslint": "^4.0.2",
+    "gulp-nodemon": "^2.2.1",
+    "gulp-sass": "^4.0.1",
+
     "jade": "~0.35.0",
     "mean-logger": "~0.0.1",
     "mongoose": "~3.6.20",
@@ -42,14 +53,22 @@
     "view-helpers": "~0.1.3"
   },
   "devDependencies": {
-    "supertest": "~0.8.0",
-    "should": "~1.3.0",
-    "grunt-contrib-watch": "~0.5.3",
-    "grunt-contrib-jshint": "~0.6.4",
-    "grunt-nodemon": "~0.1.1",
-    "grunt-concurrent": "~0.4.0",
-    "grunt-mocha-test": "~0.7.0",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "browser-sync": "^2.23.7",
     "grunt": "~0.4.1",
-    "grunt-contrib-sass": "~0.5.0"
+    "grunt-concurrent": "~0.4.0",
+    "grunt-contrib-jshint": "~0.6.4",
+    "grunt-contrib-sass": "~0.5.0",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-mocha-test": "~0.7.0",
+    "grunt-nodemon": "~0.1.1",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.1",
+    "gulp-bower": "0.0.14",
+    "gulp-mocha": "^5.0.0",
+    "should": "~1.3.0",
+    "supertest": "~0.8.0"
   }
 }
