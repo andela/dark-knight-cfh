@@ -21,18 +21,40 @@ gulp.task('sass', function () {
     gulp.watch(['public/css/common.scss, public/css/views/articles.scss'], ['sass:dist']);
 })
 
-// set up task for babel for transpiling
-gulp.task('es6', ()=>{
-    gulp.src(['./**/*.js','!build/**','!node_modules/**/*','!bower_components/**','!gulpfile.js'])
-    .pipe(babel())
-    .pipe(gulp.dest('./build'))
-});
 
-// move the all necessary files for deployment to build
-gulp.task('move-to-build', ()=>{
+// duplicate the all necessary files for deployment to build
+gulp.task('dup-public-build', ()=>{
     gulp.src(['./public/**/**', '!./public/js/*'])
     .pipe(gulp.dest('./build/public'))
 });
+
+// duplication app folder 
+gulp.task('dup-app-build', ()=>{
+    gulp.src(['./app/**/**'])
+    .pipe(gulp.dest('./build/app'))
+});
+
+// duplication server.js file 
+gulp.task('dup-server-build', ()=>{
+    gulp.src(['./server.js'])
+    .pipe(gulp.dest('./build'))
+});
+
+// duplicate config file into build
+gulp.task('dup-config-file', ()=>{
+    gulp.src(['./config/**/**'])
+    .pipe(gulp.dest('./build/config'))
+});
+
+// task to duplicate all files
+gulp.task('dup-all-files',[
+    'dup-public-build',
+    'dup-app-build',
+    'dup-server-build',
+    'dup-config-file',
+    'es6'
+    
+])
 
 // set up for eslint
 gulp.task('eslint', function () {
@@ -44,7 +66,7 @@ gulp.task('eslint', function () {
 gulp.task('nodemon', function () {
     nodemon({
         script: 'server.js',
-        ext: 'js',
+        ext: 'js, jade',
         env: { PORT: 3000 },
         ignore: ['README.md', 'node_modules/**', '.DS_Store'],
         watch: ['app', 'config']
@@ -63,7 +85,7 @@ gulp.task('mochaTest', function () {
 gulp.task('sass:dist', function () {
     return gulp.src('public/css/common.scss')
         .pipe(sass().on('error', logError))
-        .pipe(gulp.dest('./public/css/common.css'))
+        .pipe(gulp.dest('../build/public/css/common.css'))
 })
 
 gulp.task('bower', function () {

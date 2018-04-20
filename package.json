@@ -16,12 +16,13 @@
     "start:grunt": "node node_modules/grunt-cli/bin/grunt",
     "start": "babel-node node_modules/gulp/bin/gulp",
     "test:grunt": "node node_modules/grunt-cli/bin/grunt test",
-    "test": "babel-node node_modules/gulp/bin/gulp test",
+    "test": "babel-watch node_modules/gulp/bin/gulp test",
     "postinstall:grunt": "node node_modules/grunt-cli/bin/grunt install",
     "postinstall": "babel-node node_modules/gulp/bin/gulp install"
   },
   "dependencies": {
     "async": "~0.2.9",
+    "babel-watch": "^2.0.7",
     "bcryptjs": "~1.0.4",
     "bower": "~1.3.8",
     "connect-flash": "~0.1.1",
