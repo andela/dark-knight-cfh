@@ -11,8 +11,7 @@
   "scripts": {
     "start": "node node_modules/grunt-cli/bin/grunt",
     "test": "node node_modules/grunt-cli/bin/grunt test",
-    "postinstall": "node node_modules/grunt-cli/bin/grunt install",
-    "coverage": "nyc npm run test && nyc report --reporter=text-lcov | coveralls"
+    "postinstall": "node node_modules/grunt-cli/bin/grunt install"
   },
   "dependencies": {
     "async": "~0.2.9",
@@ -21,6 +20,9 @@
     "connect-flash": "~0.1.1",
     "connect-mongo": "^2.0.1",
     "console-stamp": "~0.1.1",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.11.0",
     "dotenv": "^5.0.1",
     "express": "~3.4.0",
     "forever": "latest",

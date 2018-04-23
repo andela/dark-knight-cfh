@@ -1,4 +1,4 @@
-[![Coverage Status](https://coveralls.io/repos/github/andela/dark-knight-cfh/badge.svg?branch=develop)](https://coveralls.io/github/andela/dark-knight-cfh?branch=develop)
+[![Build Status](https://travis-ci.org/andela/dark-knight-cfh.svg?branch=develop)](https://travis-ci.org/andela/dark-knight-cfh)
 
 Cards for Humanity - [http://cfh.io](http://cfh.io)
 ===========
