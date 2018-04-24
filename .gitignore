@@ -6,3 +6,5 @@ c4h_keys.txt
 bower_components
 build
 .env
+.nyc_output
+build
