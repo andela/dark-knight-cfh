@@ -9,11 +9,8 @@
     "url": "https://github.com/cardsforhumanity/cardsforhumanity.git"
   },
   "scripts": {
-    "start:grunt": "node node_modules/grunt-cli/bin/grunt",
     "start": "babel-node node_modules/gulp/bin/gulp",
-    "test:grunt": "node node_modules/grunt-cli/bin/grunt test",
-    "test": "babel-watch node_modules/gulp/bin/gulp test --timeout 15000 --exit",
-    "postinstall:grunt": "node node_modules/grunt-cli/bin/grunt install",
+    "test": "babel-node node_modules/gulp/bin/gulp test",
     "postinstall": "babel-node node_modules/gulp/bin/gulp install"
   },
   "dependencies": {
