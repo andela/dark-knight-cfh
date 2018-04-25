@@ -60,7 +60,7 @@ module.exports = function(app, passport, mongoose) {
 
         //use passport session
         app.use(passport.initialize());
-        app.use(passport.session());
+        // app.use(passport.session());
 
         //routes should be at the last
         app.use(app.router);
