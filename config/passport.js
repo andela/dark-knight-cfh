@@ -73,6 +73,7 @@ module.exports = (passport) => {
       callbackURL: config.twitter.callbackURL
     },
     (token, tokenSecret, profile, done) => {
+      console.log('>>>>>>>>>> twitter profile', profile);
       User.findOne(
         {
           'twitter.id_str': profile.id

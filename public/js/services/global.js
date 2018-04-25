@@ -1,11 +1,12 @@
 angular.module('mean.system')
   .factory('Global', [() => {
-    this.data = {
-      user: window.user,
+    const _this = this;/*eslint-disable-line */
+    _this._data = {/*eslint-disable-line */
+      user: localStorage.getItem('token'),
       authenticated: !!localStorage.getItem('token')
     };
 
-    return this.data;
+    return _this._data;/*eslint-disable-line */
   }])
   .factory('AvatarService', ['$http', '$q', ($http, $q) => ({
     getAvatars() {
