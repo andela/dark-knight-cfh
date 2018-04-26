@@ -3,6 +3,7 @@ public/lib
 .sass-cache/
 .DS_store
 c4h_keys.txt
+public/css/common.css
 bower_components
 build
 .env

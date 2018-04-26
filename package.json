@@ -9,11 +9,10 @@
     "url": "https://github.com/cardsforhumanity/cardsforhumanity.git"
   },
   "scripts": {
-
     "start": "babel-node node_modules/gulp/bin/gulp",
     "test": "babel-node node_modules/gulp/bin/gulp test",
     "postinstall": "babel-node node_modules/gulp/bin/gulp install",
-    "test:client": "karma start karma.conf.js",
+    "test:client": "karma start karma.conf.js"
   },
   "dependencies": {
     "async": "~0.2.9",
@@ -37,7 +36,7 @@
     "gulp-sass": "^4.0.1",
     "jade": "~0.35.0",
     "mean-logger": "~0.0.1",
-    "mongoose": "~3.6.20",
+    "mongoose": "^5.0.15",
     "passport": "~0.1.17",
     "passport-facebook": "~2.0.0",
     "passport-github": "~0.1.5",
