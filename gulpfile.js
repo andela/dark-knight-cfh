@@ -94,3 +94,4 @@ gulp.task('test', ['mochaTest']);
 
 // Bower Task
 gulp.task('install', ['bower']);
+
