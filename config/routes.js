@@ -1,4 +1,5 @@
 var async = require('async');
+const {signToken} = require('./middlewares/authorization');
 
 module.exports = function(app, passport, auth) {
     //User Routes
@@ -15,11 +16,20 @@ module.exports = function(app, passport, auth) {
     // Donation Routes
     app.post('/donations', users.addDonation);
 
-    app.post('/users/session', passport.authenticate('local', {
-        failureRedirect: '/signin',
-        failureFlash: 'Invalid email or password.'
-    }), users.session);
+    app.post('/api/auth/login', function(req, res, next) {
+      passport.authenticate('local', function(err, user, info) {
+        if (err) { return next(err); }
+        if (!user) { return res.send({message:'Invalid user name or password'})}
+        req.logIn(user, function(err) {
+          
+          if (err) { return next(err); }
 
+          token = signToken(req.user);
+          res.send({token: token, user: req.user});  
+        });
+      })(req, res, next);
+    });
+    
     app.get('/users/me', users.me);
     app.get('/users/:userId', users.show);
 
