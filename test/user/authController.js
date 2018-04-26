@@ -3,6 +3,7 @@ const { expect } = require('chai');
 const app = require('../../server');
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
+const dotenv = require('dotenv').config();
 const request = supertest(app);
 
 // test for register(sign up) controller
@@ -15,7 +16,7 @@ describe('POST /api/auth/signup', () => {
 
   // establish a datbase connection before each test
   beforeEach(done => {
-    mongoose.connect('mongodb://localhost/cfh_test', function() {
+    mongoose.connect(process.env.TEST_DB_URL, function() {
       done();
     });
   });
