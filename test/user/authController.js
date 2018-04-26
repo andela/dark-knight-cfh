@@ -28,7 +28,7 @@ describe('POST /api/auth/signup', () => {
     });
   });
 
-  it('should create a new user and return 201', done => {
+  it('should create a new user and return a token', done => {
     request
       .post('/api/auth/signup')
       .send({
@@ -40,6 +40,7 @@ describe('POST /api/auth/signup', () => {
         expect(res.statusCode).to.equal(201);
         expect(res.body.success).to.equal(true);
         expect(res.body.message).to.equal('Registration successful!');
+        expect(res.body.token).to.not.equal(null);
         done();
       });
   });
