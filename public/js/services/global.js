@@ -21,9 +21,7 @@ angular.module('mean.system')
         $http.post('/donations', donationObject)
       ])
         .then(results =>
-          results
-          // console.log('userDonated success', results);
-        );
+          results);
     }
   })])
   .factory('MakeAWishFactsService', [() => ({
@@ -94,7 +92,7 @@ angular.module('mean.system')
       let randNum;
 
       while (shuffleIndex) {
-        randNum = Math.floor(Math.random() * shuffleIndex - 1);
+        randNum = Math.floor((Math.random() * shuffleIndex) - 1);
         temp = facts[randNum];
         facts[randNum] = facts[shuffleIndex];
         facts[shuffleIndex] = temp;
