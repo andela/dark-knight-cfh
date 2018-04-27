@@ -36,11 +36,7 @@
     "gulp-sass": "^4.0.1",
     "jade": "~0.35.0",
     "mean-logger": "~0.0.1",
-<<<<<<< HEAD
-    "mongoose": "~3.6.20",
-=======
     "mongoose": "^5.0.15",
->>>>>>> 2914fab47c4f55d18892248c2445af5653ccaebb
     "passport": "~0.1.17",
     "passport-facebook": "~2.0.0",
     "passport-github": "~0.1.5",
