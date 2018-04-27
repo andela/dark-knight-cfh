@@ -8,4 +8,4 @@ bower_components
 build
 .env
 .nyc_output
-build
+.vscode
