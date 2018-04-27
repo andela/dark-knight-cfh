@@ -65,7 +65,7 @@ gulp.task('nodemon', () => {
   nodemon({
     script: 'server.js',
     ext: 'js, jade',
-    exec: 'babel-node',
+    exec: 'nodemon --exec babel-node',
     env: { PORT: process.env.PORT || 3000 },
     ignore: ['README.md', 'node_modules/**', '.DS_Store'],
     watch: ['app', 'config']
