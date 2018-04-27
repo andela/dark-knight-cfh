@@ -9,7 +9,7 @@
     "url": "https://github.com/cardsforhumanity/cardsforhumanity.git"
   },
   "scripts": {
-    "start": "nodemon --exec babel-node node_modules/gulp/bin/gulp",
+    "start": "babel-node node_modules/gulp/bin/gulp",
     "test": "babel-node node_modules/gulp/bin/gulp test",
     "postinstall": "babel-node node_modules/gulp/bin/gulp install",
     "test:client": "karma start karma.conf.js"
