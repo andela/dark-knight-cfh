@@ -10,8 +10,8 @@ angular.module('mean.system')/* eslint-disable-line */
       $scope.level = '';
       $scope.owner = false;
       $scope.pickedCards = [];
-      let makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
-      $scope.makeAWishFact = makeAWishFacts.pop();
+      // let makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
+      // $scope.makeAWishFact = makeAWishFacts.pop();
 
       $scope.pickCard = function (card) {
         if (!$scope.hasPickedCards) {

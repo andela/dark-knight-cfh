@@ -185,7 +185,7 @@ angular.module('mean.system')
         timing = 30;
       } else if (level === 'intermidiate') {
         timing = 20;
-      } else if (level === 'legendary') {
+      } else if (level === 'legend') {
         timing = 15;
       }
       console.log('this is the timing', timing);

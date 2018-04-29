@@ -1,12 +1,11 @@
 angular.module('mean.system')
-  .factory('Global', [function () {
-    const _this = this;
-    _this._data = {
+  .factory('Global', [() => {
+    this.data = {
       user: window.user,
-      authenticated: !!window.user
+      authenticated: !!localStorage.getItem('token')
     };
 
-    return _this._data;
+    return this.data;
   }])
   .factory('AvatarService', ['$http', '$q', function ($http, $q) {
     return {
@@ -68,7 +67,12 @@ angular.module('mean.system')
           facts[shuffleIndex] = temp;
         }
 
-        return facts;
-      }
+        while (shuffleIndex) {
+          randNum = Math.floor((Math.random() * shuffleIndex) - 1);
+          temp = facts[randNum];
+          facts[randNum] = facts[shuffleIndex];
+          facts[shuffleIndex] = temp;
+        }
+      },
     };
   }]);
