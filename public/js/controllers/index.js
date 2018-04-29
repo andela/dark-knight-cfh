@@ -1,9 +1,9 @@
 angular.module('mean.system')
   .controller(
     'IndexController',
-    ['$scope', 'Global', '$http', '$location', 'socket',
+    ['$scope', 'Global', '$http', '$window', '$location', 'socket',
       'game', 'AvatarService',
-      ($scope, Global, $http, $location, socket, game, AvatarService) => {
+      ($scope, Global, $http, $window, $location, socket, game, AvatarService) => {
         $scope.global = Global;
 
         $scope.playAsGuest = () => {
@@ -49,6 +49,7 @@ angular.module('mean.system')
           window.user = null;
           $scope.global.authenticated = false;
           localStorage.removeItem('token');
+          $window.location.assign('/');
         };
       }]
   );
