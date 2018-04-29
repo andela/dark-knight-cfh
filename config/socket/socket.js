@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 const Game = require('./game');
 const Player = require('./player');
 require('console-stamp')(console, 'm/dd HH:MM:ss');
@@ -91,8 +93,7 @@ module.exports = function (io) {
     });
   });
 
-
-  var joinGame = function (socket, data) {
+  const joinGame = function (socket, data) {
     const player = new Player(socket);
     data = data || {};
     player.userID = data.userID || 'unauthenticated';
@@ -165,7 +166,7 @@ module.exports = function (io) {
     }
   };
 
-  var fireGame = function (player, socket) {
+  const fireGame = function (player, socket) {
     let game;
     if (gamesNeedingPlayers.length <= 0) {
       gameID += 1;
@@ -199,8 +200,7 @@ module.exports = function (io) {
     }
   };
 
-  var createGameWithFriends = function (player, socket) {
-    socket.emit('owner', { id: socket.id });
+  const createGameWithFriends = function (player, socket, timing) {
     let isUniqueRoom = false;
     let uniqueRoom = '';
     // Generate a random 6-character game ID
@@ -225,7 +225,7 @@ module.exports = function (io) {
     game.sendUpdate();
   };
 
-  var exitGame = function (socket) {
+  const exitGame = function (socket) {
     console.log(socket.id, 'has disconnected');
     if (allGames[socket.gameID]) { // Make sure game exists
       const game = allGames[socket.gameID];

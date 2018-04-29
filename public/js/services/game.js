@@ -33,14 +33,6 @@ angular.module('mean.system')
       const self = this;
       let joinOverrideTimeout = 0;
 
-      const addToNotificationQueue = function (msg) {
-        console.log(game);
-        notificationQueue.push(msg);
-        if (!timeout) { // Start a cycle if there isn't one
-          setNotification();
-        }
-      };
-
       const gameStarted = function () {
         console.log('game started!!!');
         game.gameStarted = 'Only a max of 12 persons allowed per game';
@@ -51,7 +43,7 @@ angular.module('mean.system')
         game.allUsers = data.user;
       };
 
-      var setNotification = function () {
+      const setNotification = function () {
         if (notificationQueue.length === 0) { // If notificationQueue is empty, stop
           clearInterval(timeout);
           timeout = false;
@@ -62,8 +54,16 @@ angular.module('mean.system')
         }
       };
 
+      const addToNotificationQueue = function (msg) {
+        console.log(game);
+        notificationQueue.push(msg);
+        if (!timeout) { // Start a cycle if there isn't one
+          setNotification();
+        }
+      };
+
       let timeSetViaUpdate = false;
-      var decrementTime = function () {
+      const decrementTime = function () {
         if (game.time > 0 && !timeSetViaUpdate) {
           game.time--;
         } else {
@@ -128,8 +128,8 @@ angular.module('mean.system')
         if (data.table.length === 0) {
           game.table = [];
         } else {
-          const added = _.difference(_.pluck(data.table, 'player'), _.pluck(game.table, 'player'));
-          const removed = _.difference(_.pluck(game.table, 'player'), _.pluck(data.table, 'player'));
+          const added = _.difference(_.pluck(data.table, 'player'), _.pluck(game.table, 'player')); /* eslint-disable-line */
+          const removed = _.difference(_.pluck(game.table, 'player'), _.pluck(data.table, 'player')); /* eslint-disable-line */
           for (i = 0; i < added.length; i++) {
             for (let j = 0; j < data.table.length; j++) {
               if (added[i] === data.table[j].player) {

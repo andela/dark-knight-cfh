@@ -1,9 +1,17 @@
-{"root": true,
+{
+  "root": true,
   "extends": "airbnb-base",
   "env": {
     "node": true,
     "es6": true,
     "mocha": true
+  },
+  "globals": {
+    "angular": true,
+    "localStorage": true,
+    "window": true,
+    "user": true,
+    "io": true
   },
   "rules": {
     "one-var": 0,
@@ -13,6 +21,11 @@
     "no-param-reassign": 0,
     "comma-dangle": 0,
     "max-len": [1, {"code": 80}],
+    "func-names": ["off"],
+    "no-plusplus": ["off"],
+    "no-unused-vars":["off"],
+    "import/no-dynamic-require": ["off"],
+    "no-underscore-dangle": ["off"],
     "curly": ["error", "multi-line"],
     "import/no-unresolved": [2, { "commonjs": true }],
     "no-shadow": ["error", { "allow": ["req", "res", "err"] }],
