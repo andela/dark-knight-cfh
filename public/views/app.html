@@ -1,3 +1,7 @@
+<script type="text/javascript">
+  $(window).on('load',function(){
+      $('#myModal').modal('show');
+  });
 </script>
 <div id="app-container" ng-controller="GameController">
   <div id="menu-container">
@@ -16,6 +20,37 @@
   </div>
   <div id="gameplay-container">
     <div id="upper-gameplay-container">
+        <div ng-if="owner" id="myModal" class="modal" role="dialog">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title " style="text-align: center"><b>Cards for humanity</b></h4>
+                  </div>
+                <div class="modal-body">
+                    <h4 style="color: red;">Please select a difficulty level</h4>
+                    <form>
+                      <label class="radio-inline">
+                        <input class="active" value="beginner" ng-model="game.level" type="radio" name="optradio" checked> Beginner
+                      </label>
+                      <label class="radio-inline">
+                        <input value="intermidiate" ng-model="game.level" type="radio" name="optradio"> Intermidiate
+                      </label>
+                      <label class="radio-inline active" >
+                        <input value="legend" ng-model="game.level"  type="radio" name="optradio" checked=""> Legend
+                      </label>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" ng-click="startSession()" class="btn btn-success" 
+                    data-dismiss="modal">Start Game</button>
+                    <button ng-click="abandonGame()" type="button" class="btn btn-danger" 
+                    data-dismiss="modal">Go back</button>
+                </div>
+              </div>
+          
+            </div>
+          </div>
       <div id="menu-timeremaining-container">
         <div id="menu-container">
           <span id="menu-button">Menu</span>
@@ -31,3 +66,5 @@
     <answers></answers>
   </div>
 </div>
+
+
