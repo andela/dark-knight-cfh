@@ -2,33 +2,35 @@ const supertest = require('supertest');
 const { expect } = require('chai');
 const app = require('../../server');
 const mongoose = require('mongoose');
+
 const User = mongoose.model('User');
-const dotenv = require('dotenv').config();
 const request = supertest(app);
 
 // test for register(sign up) controller
 describe('POST /api/auth/signup', () => {
-  let mockData = {
+  const mockData = {
     name: 'testname',
     email: 'testname@test.com',
     password: 'password'
   };
 
   // establish a datbase connection before each test
-  beforeEach(done => {
-    mongoose.connect(process.env.TEST_DB_URL, function() {
+  beforeEach((done) => {
+    mongoose.connect(process.env.TEST_DB_URL, () => {
+      const user = new User(mockData);
+      user.save();
       done();
     });
   });
 
-  // drop the database after each test 
-  afterEach(done => {
-    mongoose.connection.db.dropDatabase(function() {
+  // drop the database after each test
+  afterEach((done) => {
+    mongoose.connection.db.dropDatabase(() => {
       done();
     });
   });
 
-  it('should create a new user and return a token', done => {
+  it('should create a new user and return a token', (done) => {
     request
       .post('/api/auth/signup')
       .send({
@@ -45,7 +47,7 @@ describe('POST /api/auth/signup', () => {
       });
   });
 
-  it('should return an error if password is not provided', done => {
+  it('should return an error if password is not provided', (done) => {
     request
       .post('/api/auth/signup')
       .send({
@@ -60,7 +62,7 @@ describe('POST /api/auth/signup', () => {
       });
   });
 
-  it('should return an error if email is not provided', done => {
+  it('should return an error if email is not provided', (done) => {
     request
       .post('/api/auth/signup')
       .send({
@@ -75,7 +77,7 @@ describe('POST /api/auth/signup', () => {
       });
   });
 
-  it('should return an error if name ise not provided', done => {
+  it('should return an error if name ise not provided', (done) => {
     request
       .post('/api/auth/signup')
       .send({
@@ -90,7 +92,7 @@ describe('POST /api/auth/signup', () => {
       });
   });
 
-  it('should return an error if the user already registered', () => {
+  it('should return an error if the user already registered', (done) => {
     request
       .post('/api/auth/signup')
       .send(Object.assign({}, mockData))
