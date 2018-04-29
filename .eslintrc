@@ -27,7 +27,7 @@
     "import/no-dynamic-require": ["off"],
     "no-underscore-dangle": ["off"],
     "curly": ["error", "multi-line"],
-    "import/no-unresolved": [2, { "commonjs": true }],
+    "import/no-unresolved": [2, { "commonjs": false }],
     "no-shadow": ["error", { "allow": ["req", "res", "err"] }],
     "valid-jsdoc": ["error", {
       "requireReturn": true,

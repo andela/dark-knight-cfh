@@ -1,8 +1,12 @@
-const async = require('async');
+const { signToken } = require('./middlewares/authorization');
+const questions = require('../app/controllers/questions');
+const answers = require('../app/controllers/answers');
+const avatars = require('../app/controllers/avatars');
+const index = require('../app/controllers/index');
+const users = require('../app/controllers/users');
 
-module.exports = function (app, passport, auth) {
+module.exports = (app, passport) => {
   // User Routes
-  const users = require('../app/controllers/users');
   app.get('/signin', users.signin);
   app.get('/signup', users.signup);
   app.get('/chooseavatars', users.checkAvatar);
@@ -17,10 +21,20 @@ module.exports = function (app, passport, auth) {
   // Donation Routes
   app.post('/donations', users.addDonation);
 
-  app.post('/users/session', passport.authenticate('local', {
-    failureRedirect: '/signin',
-    failureFlash: 'Invalid email or password.'
-  }), users.session);
+  app.post('/api/auth/login', (req, res, next) => {
+    passport.authenticate('local', (err, user) => {
+      if (err) { return next(err); }
+      if (!user) {
+        return res.send({ message: 'Invalid user name or password' });
+      }
+      req.logIn(user, (err) => {
+        if (err) { return next(err); }
+
+        const token = signToken(req.user);
+        res.send({ token, user: req.user });
+      });
+    })(req, res, next);
+  });
 
   app.get('/users/me', users.me);
   app.get('/users/:userId', users.show);
@@ -70,7 +84,6 @@ module.exports = function (app, passport, auth) {
   app.param('userId', users.user);
 
   // Answer Routes
-  const answers = require('../app/controllers/answers');
   app.get('/answers', answers.all);
   app.get('/answers/:answerId', answers.show);
   // Finish with setting up the answerId param
@@ -84,11 +97,9 @@ module.exports = function (app, passport, auth) {
   app.param('questionId', questions.question);
 
   // Avatar Routes
-  const avatars = require('../app/controllers/avatars');
   app.get('/avatars', avatars.allJSON);
 
   // Home route
-  const index = require('../app/controllers/index');
   app.get('/play', index.play);
   app.get('/', index.render);
 };

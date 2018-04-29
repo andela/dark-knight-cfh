@@ -26,7 +26,7 @@ background-image: -webkit-gradient(linear, left top, right bottom, color-stop(0,
 background-image: -webkit-linear-gradient(top left, #0B394E 0%, #ABCE8D 100%);
 
 /* W3C Markup, IE10 Release Preview */
-background-image: linear-gradient(to bottom right, #0B394E 0%, #ABCE8D 100%);
+background-image: linear-gradient(to bottom right, #0B394E  0%, #ABCE8D 100%);
 }
 
 // Both portrait and landscape
@@ -110,7 +110,7 @@ background-image: linear-gradient(to bottom right, #0B394E 0%, #ABCE8D 100%);
 
 // Up to and including the tablet landscape
 @mixin tablet-landscape-and-below {
-    @media only screen and (max-width : $mq-tablet-landscape) {
+    @media only screen and (max-width : $mq-tablet-landscape) { 
         @content;
     }
 }
@@ -312,7 +312,7 @@ background-image: linear-gradient(to bottom right, #0B394E 0%, #ABCE8D 100%);
 
     vertical-align: top;
 
-    @include mobile-only{
+    @include mobile-only{ 
         font-size: 14px;
         height: 115px;
         word-wrap: break-word;

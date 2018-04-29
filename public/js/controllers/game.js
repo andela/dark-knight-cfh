@@ -8,8 +8,8 @@ angular.module('mean.system')
       $scope.search_input = '';
       $scope.game = game;
       $scope.pickedCards = [];
-      let makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
-      $scope.makeAWishFact = makeAWishFacts.pop();
+      // let makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
+      // $scope.makeAWishFact = makeAWishFacts.pop();
 
 
       $scope.searchUser = function (playerInfo) {
