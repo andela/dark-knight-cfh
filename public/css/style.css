@@ -390,9 +390,10 @@ p a:hover {
 
 #sign-up-btn-other {
   display: inline-block;
-  border-radius: 8px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
+  width: 100%;
+  border-radius: 0 !important;
+  -moz-border-radius: 0 !important;
+  -webkit-border-radius: 0 !important;
   font-size: 20px;
   font-size: 1.35em;
   font-weight: 400;
@@ -432,6 +433,7 @@ p a:hover {
 
 #login-buttons {
   text-align: center;
+  padding: 20px;
 }
 
 #login-buttons .btn {
@@ -1215,6 +1217,8 @@ li {
   } 
   #auth-box {
     width: 100%;
+    height: 100%;
+    overflow: scroll !important;
   }
 }
 
@@ -1283,6 +1287,7 @@ input[type="file"] {
 }
 .auth-body form {
   padding: 0 20px;
+  margin-bottom: 20px;
 }
 .reg-redirect {
   text-align: center;
