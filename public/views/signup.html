@@ -1,10 +1,14 @@
-<div id="auth-center" class="page-bg" ng-controller="signupController">
+<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="../css/style.css">
+
+<div id="auth-center" class="page-bg" ng-controller="IndexController">
   <div id="auth-box">
     <div id="auth-data">
       <h2 id="slogan">Register</h2>
 
       <div class="auth-body">
-        <form ng-submit='signup()'>
+        <form ng-submit='register()'>
           <div class="row">
             <div class="col-md-4 image-div">
               <img src="/img/profile-image.png" class="profile-image img-circle invert-color" alt="avatar" />
