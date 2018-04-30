@@ -1313,5 +1313,13 @@ input[type="file"] {
   background-attachment: fixed;
   background-size: cover;
   background-repeat: no-repeat;
-  background-image: url(https://cbschicago.files.wordpress.com/2016/09/screen-shot-2016-09-16-at-1-32-38-pm.png);
+  background-image: url('../img/bg.jpg');
+}
+.btn-upload{
+  color: #fff;
+  background-color: #333333;
+}
+.btn-upload:hover{
+  color: #fff;
+  background-color: #000;
 }
