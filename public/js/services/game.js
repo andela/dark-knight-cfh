@@ -228,8 +228,8 @@ angular.module('mean.system')
         mode = mode || 'joinGame';
         room = room || '';
         createPrivate = createPrivate || false;
-        const userID = window.user ? user._id : 'unauthenticated';
-
+        const user = localStorage.getItem('user');
+        const userID = user || 'unauthenticated';
         socket.emit(mode, { userID, room, createPrivate });
       };
 
