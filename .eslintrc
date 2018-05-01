@@ -19,7 +19,7 @@
     "consistent-return": 0,
     "no-param-reassign": 0,
     "comma-dangle": 0,
-    "max-len": [1, {"code": 80}],
+    "max-len": [1, {"code": 280}],
     "func-names": ["off"],
     "no-plusplus": ["off"],
     "no-unused-vars":["off"],
@@ -35,7 +35,6 @@
       "requireParamDescription": false,
       "requireReturnDescription": true
     }],
-    "no-underscore-dangle": ["off"],
     "require-jsdoc": ["error", {
         "require": {
             "FunctionDeclaration": true,
