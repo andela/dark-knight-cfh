@@ -1323,3 +1323,14 @@ input[type="file"] {
   color: #fff;
   background-color: #000;
 }
+.logo-text{
+  color: #fff;
+  padding: 10px;
+  font-weight: bold;
+  font-size: 1.5em;
+  text-transform: uppercase;
+  line-height: 60px;
+  border: 1px solid #fff;
+  text-align: left;
+}
+.logo-text:hover{color: #fff;background: #000;}

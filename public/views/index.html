@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="../css/common2.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
-<div>
+<div  ng-controller="IndexController">
     <!-- Navbar -->
     <div class="navbar-fixed">
         <nav>
@@ -11,8 +11,9 @@
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         <li><a href="#charity" class="grey-text text-lighten-2 animate swell-1 turn-purple">CHARITY</a></li>
                         <li><a href="#" class="grey-text text-lighten-2 animate swell-1 turn-purple">ABOUT US</a></li>
-                        <li><a href="#!/signup" class="grey-text text-lighten-2 animate swell-1 turn-purple">SIGN UP</a></li>
-                        <li><a href="#!/signin" class="grey-text text-lighten-2 animate swell-1 turn-purple">LOGIN</a></li>
+                        <li><a href="#!/signup" class="grey-text text-lighten-2 animate swell-1 turn-purple" data-ng-hide="global.authenticated">SIGN UP</a></li>
+                        <li><a href="#!/signin" class="grey-text text-lighten-2 animate swell-1 turn-purple" data-ng-hide="global.authenticated">LOGIN</a></li>
+                        <li><a href="" ng-click="logout()" class="grey-text text-lighten-2 animate swell-1 turn-purple" data-ng-show="global.authenticated">SIGN OUT</a></li>
                     </ul>
                 </div>
             </div>
@@ -22,8 +23,9 @@
     <ul class="sidenav" id="mobile">
         <li><a href="#charity">CHARITY</a></li>
         <li><a href="#">ABOUT US</a></li>
-        <li><a href="#!/signup">SIGN UP</a></li>
-        <li><a href="#!/signin">LOGIN</a></li>
+        <li><a href="#!/signup" data-ng-hide="global.authenticated">SIGN UP</a></li>
+        <li><a href="#!/signin" data-ng-hide="global.authenticated">LOGIN</a></li>
+        <li><a href="" ng-click="logout()" data-ng-show="global.authenticated">SIGN OUT</a></li>
     </ul>
     <!-- Introduction Section -->
     <div class="row landing-page-row parallax intro-container">
