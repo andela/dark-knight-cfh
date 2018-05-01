@@ -1,17 +1,19 @@
+require('dotenv').config();
+
 module.exports = {
   app: {
     name: 'Cards for Humanity - Development'
   },
   facebook: {
-    callbackURL: 'http://localhost:3000/auth/facebook/callback'
+    callbackURL: process.env.FACEBOOK_CALLBACK
   },
   twitter: {
-    callbackURL: 'http://localhost:3000/auth/twitter/callback'
+    callbackURL: process.env.TWITTER_CALLBACK
   },
   github: {
-    callbackURL: 'http://localhost:3000/auth/github/callback'
+    callbackURL: process.env.GITHUB_CALLBACK
   },
   google: {
-    callbackURL: 'http://localhost:3000/auth/google/callback'
+    callbackURL: process.env.GOOGLE_CALLBACK
   }
 };

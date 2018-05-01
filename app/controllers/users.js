@@ -1,21 +1,26 @@
 /**
  * Module dependencies.
  */
-let mongoose = require('mongoose'),
-  User = mongoose.model('User');
+const mongoose = require('mongoose');
+
+const User = mongoose.model('User');
 const avatars = require('./avatars').all();
+// const jwt = require('jsonwebtoken');
+const { generateToken } = require('../../config/authMiddleware');
 
 /**
  * Auth callback
  */
-exports.authCallback = function (req, res, next) {
+
+exports.authCallback = (req, res, next) => { /* eslint-disable-line */
   res.redirect('/chooseavatars');
 };
 
 /**
  * Show login form
  */
-exports.signin = function (req, res) {
+
+exports.signin = (req, res) => {
   if (!req.user) {
     res.redirect('/#!/signin?error=invalid');
   } else {
@@ -26,7 +31,8 @@ exports.signin = function (req, res) {
 /**
  * Show sign up form
  */
-exports.signup = function (req, res) {
+
+exports.signup = (req, res) => {
   if (!req.user) {
     res.redirect('/#!/signup');
   } else {
@@ -37,7 +43,8 @@ exports.signup = function (req, res) {
 /**
  * Logout
  */
-exports.signout = function (req, res) {
+
+exports.signout = (req, res) => {
   req.logout();
   res.redirect('/');
 };
@@ -45,7 +52,8 @@ exports.signout = function (req, res) {
 /**
  * Session
  */
-exports.session = function (req, res) {
+
+exports.session = (req, res) => {
   res.redirect('/');
 };
 
@@ -54,18 +62,18 @@ exports.session = function (req, res) {
  * already has an avatar. If they don't have one, redirect them
  * to our Choose an Avatar page.
  */
-exports.checkAvatar = function (req, res) {
+
+exports.checkAvatar = (req, res) => {
   if (req.user && req.user._id) {
     User.findOne({
       _id: req.user._id
-    })
-      .exec((err, user) => {
-        if (user.avatar !== undefined) {
-          res.redirect('/#!/');
-        } else {
-          res.redirect('/#!/choose-avatar');
-        }
-      });
+    }).exec((err, user) => {
+      if (user.avatar !== undefined) {
+        res.redirect('/#!/');
+      } else {
+        res.redirect('/#!/choose-avatar');
+      }
+    });
   } else {
     // If user doesn't even exist, redirect to /
     res.redirect('/');
@@ -73,9 +81,62 @@ exports.checkAvatar = function (req, res) {
 };
 
 /**
+ * Create User- Jwt strategy - New
+ */
+
+exports.register = (req, res) => {
+  const { name, email, password } = req.body;
+
+  if (!name || !email || !password) {
+    return res.status(400).json({
+      success: false,
+      message: 'Enter all the fields to signup'
+    });
+  }
+  // return res.send('User saved');
+  User.findOne({
+    email: req.body.email
+  })
+    .exec()
+    .then((existingUser) => {
+      // if user does not exist, save to the db
+      if (!existingUser) {
+        const user = new User(req.body);
+        user
+          .save()
+          .then((newUser) => {
+            const payload = {
+              id: newUser._id, /* eslint-disable-line */
+              email: newUser.email,
+              name: newUser.name,
+              picture: newUser.picture,
+              publicId: newUser.publicId
+            };
+            const token = generateToken(payload);
+            return res.status(201).send({
+              success: true,
+              message: 'Registration successful!',
+              token
+            });
+          })
+          .catch(error =>
+            res.status(500).json(error.message || 'Unable to create user'));
+      } else {
+        return res.status(400).json({
+          success: false,
+          message: 'This user already exists!'
+        });
+      }
+    })
+    .catch(error =>
+      res.status(500).json(error.message || 'Unable to query the database'));
+};
+
+/**
  * Create user
  */
-exports.create = function (req, res) {
+
+exports.create = (req, res) => {
   if (req.body.name && req.body.password && req.body.email) {
     User.findOne({
       email: req.body.email
@@ -93,7 +154,7 @@ exports.create = function (req, res) {
             });
           }
           req.logIn(user, (err) => {
-            if (err) return next(err);
+            if (err) return next(err); /* eslint-disable-line */
             return res.redirect('/#!/');
           });
         });
@@ -109,43 +170,54 @@ exports.create = function (req, res) {
 /**
  * Assign avatar to user
  */
-exports.avatars = function (req, res) {
+
+exports.avatars = (req, res) => {
   // Update the current user's profile to include the avatar choice they've made
-  if (req.user && req.user._id && req.body.avatar !== undefined &&
-    /\d/.test(req.body.avatar) && avatars[req.body.avatar]) {
+  if (
+    req.user &&
+    req.user._id &&
+    req.body.avatar !== undefined &&
+    /\d/.test(req.body.avatar) &&
+    avatars[req.body.avatar]
+  ) {
     User.findOne({
       _id: req.user._id
-    })
-      .exec((err, user) => {
-        user.avatar = avatars[req.body.avatar];
-        user.save();
-      });
+    }).exec((err, user) => {
+      user.avatar = avatars[req.body.avatar];
+      user.save();
+    });
   }
   return res.redirect('/#!/app');
 };
 
-exports.addDonation = function (req, res) {
+exports.addDonation = (req, res) => {
   if (req.body && req.user && req.user._id) {
     // Verify that the object contains crowdrise data
-    if (req.body.amount && req.body.crowdrise_donation_id && req.body.donor_name) {
+    if (
+      req.body.amount &&
+      req.body.crowdrise_donation_id &&
+      req.body.donor_name
+    ) {
       User.findOne({
         _id: req.user._id
-      })
-        .exec((err, user) => {
+      }).exec((err, user) => {
         // Confirm that this object hasn't already been entered
-          let duplicate = false;
-          for (let i = 0; i < user.donations.length; i++) {
-            if (user.donations[i].crowdrise_donation_id === req.body.crowdrise_donation_id) {
-              duplicate = true;
-            }
+        let duplicate = false;
+        for (let i = 0; i < user.donations.length; i++) { /* eslint-disable-line */
+          if (
+            user.donations[i].crowdrise_donation_id ===
+            req.body.crowdrise_donation_id
+          ) {
+            duplicate = true;
           }
-          if (!duplicate) {
-            console.log('Validated donation');
-            user.donations.push(req.body);
-            user.premium = 1;
-            user.save();
-          }
-        });
+        }
+        if (!duplicate) {
+          // console.log('Validated donation');
+          user.donations.push(req.body);
+          user.premium = 1;
+          user.save();
+        }
+      });
     }
   }
   res.send();
@@ -154,7 +226,8 @@ exports.addDonation = function (req, res) {
 /**
  *  Show profile
  */
-exports.show = function (req, res) {
+
+exports.show = (req, res) => {
   const user = req.profile;
 
   res.render('users/show', {
@@ -166,22 +239,22 @@ exports.show = function (req, res) {
 /**
  * Send User
  */
-exports.me = function (req, res) {
+
+exports.me = (req, res) => {
   res.jsonp(req.user || null);
 };
 
 /**
  * Find user by id
  */
-exports.user = function (req, res, next, id) {
-  User
-    .findOne({
-      _id: id
-    })
-    .exec((err, user) => {
-      if (err) return next(err);
-      if (!user) return next(new Error(`Failed to load User ${id}`));
-      req.profile = user;
-      next();
-    });
+
+exports.user = (req, res, next, id) => {
+  User.findOne({
+    _id: id
+  }).exec((err, user) => {
+    if (err) return next(err);
+    if (!user) return next(new Error('Failed to load User ' + id)); /* eslint-disable-line */
+    req.profile = user;
+    next();
+  });
 };

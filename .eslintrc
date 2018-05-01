@@ -35,6 +35,7 @@
       "requireParamDescription": false,
       "requireReturnDescription": true
     }],
+    "no-underscore-dangle": ["off"],
     "require-jsdoc": ["error", {
         "require": {
             "FunctionDeclaration": true,
