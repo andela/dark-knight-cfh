@@ -1,10 +1,11 @@
 /**
- * Redirect users to /#!/app (forcing Angular to reload the page)
- * @param {object} req
- * @param {object} res
- * @returns {redirects} redirects
+ * Module dependencies.
  */
-exports.play = (req, res) => {
+const mongoose = require('mongoose'),
+  async = require('async'),
+  _ = require('underscore');
+
+exports.play = function (req, res) {
   if (Object.keys(req.query)[0] === 'custom') {
     res.redirect('/#!/app?custom');
   } else {
