@@ -40,6 +40,7 @@ angular.module('mean.system').controller('IndexController', [
             if (token) {
               window.user = response.data.user;
               $scope.global.authenticated = true;
+              $scope.global.user = window.user;
               localStorage.setItem('token', token);
               $location.path('/');
             } else {

@@ -103,4 +103,6 @@ module.exports = (app, passport) => {
   // Home route
   app.get('/play', index.play);
   app.get('/', index.render);
+
+  app.post('/api/games/:id/start', index.start);
 };

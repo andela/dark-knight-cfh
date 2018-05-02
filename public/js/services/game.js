@@ -19,6 +19,7 @@ angular.module('mean.system')
         round: 0,
         time: 0,
         curQuestion: null,
+        level: '',
         notification: null,
         timeLimits: {},
         joinOverride: false,
@@ -32,6 +33,7 @@ angular.module('mean.system')
       let timeout = false;
       const self = this;
       let joinOverrideTimeout = 0;
+      let timing;
 
       const gameStarted = function () {
         console.log('game started!!!');
@@ -197,6 +199,38 @@ angular.module('mean.system')
         gameStarted();
       });
 
+      game.joinGame = function (mode, room, createPrivate) {
+        const level = localStorage.getItem('level');
+        if (level === 'beginner') {
+          timing = 30;
+        } else if (level === 'intermidiate') {
+          timing = 20;
+        } else if (level === 'legend') {
+          timing = 15;
+        }
+        console.log('this is the timing', timing);
+        mode = mode || 'joinGame';
+        room = room || '';
+        createPrivate = createPrivate || false;
+        const userID = window.user ? user._id : 'unauthenticated';
+        socket.emit(mode, {
+          userID, room, createPrivate, timing
+        });
+      };
+
+      game.saveGame = function (winner, players, gameId) {
+        const level = localStorage.getItem('level');
+        $http({
+          method: 'POST',
+          url: `/api/games/${gameId}/start`,
+          data: { winner, players, level },
+        }).then((response) => {
+          console.log('operation was successful', response);
+        }, (error) => {
+          console.log('An error occured', error);
+        });
+      };
+
       socket.on('owner', (data) => {
         game.owner = data.id;
       });
@@ -224,17 +258,8 @@ angular.module('mean.system')
         }, 2000);
       });
 
-      game.joinGame = function (mode, room, createPrivate) {
-        mode = mode || 'joinGame';
-        room = room || '';
-        createPrivate = createPrivate || false;
-        const user = localStorage.getItem('user');
-        const userID = user || 'unauthenticated';
-        socket.emit(mode, { userID, room, createPrivate });
-      };
 
       game.startGame = function (players, id) {
-        console.log(id, 'heyyo gameId');
         if (players < 3) {
           socket.emit('startError', { id });
         } else {

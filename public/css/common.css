@@ -74,8 +74,7 @@ html {
 
 body {
   font-family: "helvetica neue", helvetica, sans-serif;
-  background: transparent;
-  /*margin: 10px;*/ }
+  background: transparent; }
   @media only screen and (min-width: 521px) and (max-width: 768px) {
     body {
       margin: 5px; } }
@@ -130,7 +129,6 @@ body {
           color: #FC575E; }
       #main-container #app-container #menu-container #abandon-game-button {
         display: inline-block;
-        /*float: right*/
         border-radius: 8px;
         -moz-border-radius: 8px;
         -webkit-border-radius: 8px;

@@ -1,4 +1,4 @@
-
+/* eslint-disable */
 
 const async = require('async');
 const _ = require('underscore');
@@ -45,7 +45,7 @@ function Game(gameID, io) {
   this.answers = null;
   this.curQuestion = null;
   this.timeLimits = {
-    stateChoosing: 21,
+    stateChoosing: 30,
     stateJudging: 16,
     stateResults: 6
   };
