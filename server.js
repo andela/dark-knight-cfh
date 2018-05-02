@@ -1,3 +1,5 @@
+import path from 'path';
+
 /**
  * Module dependencies.
  */
@@ -14,7 +16,8 @@ let express = require('express'),
 
 // Load configurations
 // if test env, load example file
-let env = process.env.NODE_ENV = process.env.NODE_ENV || 'development',
+/* eslint-disable */
+let env = (process.env.NODE_ENV = process.env.NODE_ENV || 'development'), 
   config = require('./config/config'),
   auth = require('./config/middlewares/authorization'),
   mongoose = require('mongoose');
@@ -23,11 +26,11 @@ let env = process.env.NODE_ENV = process.env.NODE_ENV || 'development',
 const db = mongoose.connect(config.db);
 
 // Bootstrap models
-const models_path = `${__dirname }/app/models`;
+const modelsPath = `${__dirname}/app/models`;
 var walk = function (path) {
   fs.readdirSync(path).forEach((file) => {
-    let newPath = `${path  }/${  file}`;
-    let stat = fs.statSync(newPath);
+    const newPath = `${path}/${file}`;
+    const stat = fs.statSync(newPath);
     if (stat.isFile()) {
       if (/(.*)\.(js|coffee)/.test(file)) {
         require(newPath);
@@ -37,13 +40,13 @@ var walk = function (path) {
     }
   });
 };
-walk(models_path);
+walk(modelsPath);
 
 // bootstrap passport config
 require('./config/passport')(passport);
 
 const app = express();
-
+app.use('/bower', express.static(path.join(__dirname, './bower_components')));
 app.use((req, res, next) => {
   next();
 });
