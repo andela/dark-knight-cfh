@@ -5,6 +5,7 @@ angular.module('mean.system')/* eslint-disable-line */
       $scope.winningCardPicked = false;
       $scope.showTable = false;
       $scope.modalShown = false;
+      $scope.search_input = '';
       $scope.game = game;
       $scope.startUserGame = false;
       $scope.level = '';
@@ -12,6 +13,11 @@ angular.module('mean.system')/* eslint-disable-line */
       $scope.pickedCards = [];
       // let makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
       // $scope.makeAWishFact = makeAWishFacts.pop();
+
+
+      $scope.searchUser = function (playerInfo) {
+        game.searchUser($scope.search_input, playerInfo);
+      };
 
       $scope.pickCard = function (card) {
         if (!$scope.hasPickedCards) {

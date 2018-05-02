@@ -1,4 +1,3 @@
-
 angular.module('mean.system')/* eslint-disable-line */
   .controller('HeaderController', ['$scope', 'Global', function ($scope, Global) {
     $scope.global = Global;

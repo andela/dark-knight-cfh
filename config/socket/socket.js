@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 const Game = require('./game');
 const Player = require('./player');
 require('console-stamp')(console, 'm/dd HH:MM:ss');
@@ -38,7 +40,6 @@ module.exports = function (io) {
     });
 
     socket.on('joinGame', (data) => {
-      console.log('i am from the backend joingame1 ', data.timing);
       if (!allPlayers[socket.id]) {
         joinGame(socket, data);
       }
@@ -70,13 +71,29 @@ module.exports = function (io) {
       exitGame(socket);
     });
 
+    socket.on('searchError', (data) => {
+      socket.to(data.id).emit('searchErr');
+    });
+
+    socket.on('inviteSuccessful', (data) => {
+      socket.to(data.id).emit('inviteSuccess');
+    });
+
+    socket.on('startError', (data) => {
+      socket.to(data.id).emit('err');
+    });
+
+    socket.on('search', (data) => {
+      socket.to(data.id).emit('searchSuccess', { user: data.user });
+    });
+
     socket.on('disconnect', () => {
       console.log('Rooms on Disconnect ', io.sockets.manager.rooms);
       exitGame(socket);
     });
   });
 
-  var joinGame = function (socket, data) {
+  const joinGame = function (socket, data) {
     const player = new Player(socket);
     data = data || {};
     player.userID = data.userID || 'unauthenticated';
@@ -137,7 +154,7 @@ module.exports = function (io) {
           game.prepareGame();
         }
       } else {
-        // TODO: Send an error message back to this user saying the game has already started
+        socket.to(socket.id).emit('started');
       }
     } else {
       // Put players into the general queue
@@ -150,7 +167,7 @@ module.exports = function (io) {
     }
   };
 
-  var fireGame = function (player, socket) {
+  const fireGame = function (player, socket) {
     let game;
     if (gamesNeedingPlayers.length <= 0) {
       gameID += 1;
@@ -184,7 +201,7 @@ module.exports = function (io) {
     }
   };
 
-  var createGameWithFriends = function (player, socket, timing) {
+  const createGameWithFriends = function (player, socket, timing) {
     let isUniqueRoom = false;
     let uniqueRoom = '';
     // Generate a random 6-character game ID
@@ -211,7 +228,7 @@ module.exports = function (io) {
     game.sendUpdate();
   };
 
-  var exitGame = function (socket) {
+  const exitGame = function (socket) {
     console.log(socket.id, 'has disconnected');
     if (allGames[socket.gameID]) { // Make sure game exists
       const game = allGames[socket.gameID];

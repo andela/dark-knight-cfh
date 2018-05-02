@@ -1,12 +1,12 @@
 /**
  * Module dependencies.
  */
-const mongoose = require('mongoose');
-
-const User = mongoose.model('User');
+let mongoose = require('mongoose'),
+  User = mongoose.model('User');
 const avatars = require('./avatars').all();
+const nodemailer = require('nodemailer');
 // const jwt = require('jsonwebtoken');
-const { generateToken } = require('../../config/authMiddleware');
+const { signToken } = require('../../config/middlewares/authorization');
 
 /**
  * Auth callback
@@ -112,7 +112,7 @@ exports.register = (req, res) => {
               picture: newUser.picture,
               publicId: newUser.publicId
             };
-            const token = generateToken(payload);
+            const token = signToken(payload);
             return res.status(201).send({
               success: true,
               message: 'Registration successful!',
@@ -167,6 +167,68 @@ exports.create = (req, res) => {
   }
 };
 
+
+exports.search = function (req, res) {
+  const { username, value } = req.body;
+  User.findOne({
+    name: value
+  }).exec((err, existingUser) => {
+    if (!existingUser) {
+      return res.status(500).send({
+        error: 'An error occured!',
+      });
+    }
+    User.find({ name: username.toString() })
+      .exec((error, user) => {
+        if (error) {
+          return res.status(500).send({
+            error,
+          });
+        }
+        if (user.length === 0) {
+          return res.status(404).send({
+            status: 'Unsucessful',
+            message: 'User not found on db',
+          });
+        }
+        return res.status(200).send({
+          status: 'sucessful',
+          message: 'User found',
+          user,
+        });
+      });
+  });
+};
+
+exports.invite = function (req, res) {
+  const { email, msg } = req.body;
+  const transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+      user: 'darknight0455@gmail.com',
+      pass: 'p3nn1s01',
+    },
+  });
+  const mailOptions = {
+    from: 'darknight0455@gmail.com',
+    to: email,
+    subject: 'Cards for humanity game invite',
+    text: msg,
+  };
+  transporter.sendMail(mailOptions, (err, info) => {
+    if (err) {
+      res.status(500).send({
+        status: 'unsuccessful',
+        message: 'An error occured!'
+      });
+    } else {
+      res.status(200).send({
+        status: 'Successful',
+        message: `Invite successfully sent - ${info}`
+      });
+    }
+  });
+};
 /**
  * Assign avatar to user
  */

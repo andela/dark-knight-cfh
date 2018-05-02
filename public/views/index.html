@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="../css/common2.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
-<div>
+<div  ng-controller="IndexController">
     <!-- Navbar -->
     <div class="navbar-fixed">
         <nav>
@@ -11,8 +11,9 @@
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         <li><a href="#charity" class="grey-text text-lighten-2 animate swell-1 turn-purple">CHARITY</a></li>
                         <li><a href="#" class="grey-text text-lighten-2 animate swell-1 turn-purple">ABOUT US</a></li>
-                        <li><a href="#!/signup" class="grey-text text-lighten-2 animate swell-1 turn-purple">SIGN UP</a></li>
-                        <li><a href="#!/signin" class="grey-text text-lighten-2 animate swell-1 turn-purple">LOGIN</a></li>
+                        <li><a href="#!/signup" class="grey-text text-lighten-2 animate swell-1 turn-purple" data-ng-hide="global.authenticated">SIGN UP</a></li>
+                        <li><a href="#!/signin" class="grey-text text-lighten-2 animate swell-1 turn-purple" data-ng-hide="global.authenticated">LOGIN</a></li>
+                        <li><a href="" ng-click="logout()" class="grey-text text-lighten-2 animate swell-1 turn-purple" data-ng-show="global.authenticated">SIGN OUT</a></li>
                     </ul>
                 </div>
             </div>
@@ -22,14 +23,66 @@
     <ul class="sidenav" id="mobile">
         <li><a href="#charity">CHARITY</a></li>
         <li><a href="#">ABOUT US</a></li>
-        <li><a href="#!/signup">SIGN UP</a></li>
-        <li><a href="#!/signin">LOGIN</a></li>
+        <li><a href="#!/signup" data-ng-hide="global.authenticated">SIGN UP</a></li>
+        <li><a href="#!/signin" data-ng-hide="global.authenticated">LOGIN</a></li>
+        <li><a href="" ng-click="logout()" data-ng-show="global.authenticated">SIGN OUT</a></li>
     </ul>
     <!-- Introduction Section -->
     <div class="row landing-page-row parallax intro-container">
         <div class="row">
             <div class="col s12 m12 intro-title grey-text lighten-6">A GAME FOR HORRIBLE PEOPLE <span class="purple-text lighten-3">DESPERATELY</span> TRYING TO DO GOOD</div></h2>
         </div>
+        <!-- Teaser Slogan Start -->
+        <div class="wpb-slogan bgColor">
+          <h2>A Game for Horrible People <span id="third-word">Desperately</span> Trying to do Good</h2>
+        <!-- Teaser Text End -->
+        <span id='send-link' ng-show="showOptions"> *To send a private link to your friends, sign up! </span>
+        <div id="sign-up">
+          <span ng-show="showOptions">
+          <a href="#!/signup"><div id="sign-up-btn-landing">Sign Up</div></a>
+            <div id="sign-up-text"><a href="/play">
+              <span id="first-word">or Play</span>
+              <span id="second-word">as</span>
+              <span id="third-word">Guest</span></a>
+            </div>
+            <span id="tweet-container-index">
+              <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://cfh.io" data-text="Cards for Humanity: A Game for Horrible People Desperately Trying to do Good" data-related="CFH_App">Tweet</a>
+              <a href="https://twitter.com/cfh_app" class="twitter-follow-button" data-show-count="false" data-dnt="true">Follow @cfh_app</a>
+            </span>
+            <span id='facebook-share'>
+                <a href="#"
+                  onclick="
+                    window.open(
+                      'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),
+                      'facebook-share-dialog',
+                      'width=626,height=436');
+                    return false;">
+                  Share on Facebook
+                </a>
+            </span>
+          </span>
+          <span ng-hide="showOptions">
+            <a href="/play"><div id="sign-up-btn-landing">Play Game with Strangers</div></a>
+            <a href="/play?custom"><div id="sign-up-btn-landing">Play Game with Friends</div></a>
+                <span id='twitter-facebook'>
+                  <span id="tweet-container-index">
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://cfh.io" data-text="Cards for Humanity: A Game for Horrible People Desperately Trying to do Good" data-related="CFH_App">Tweet</a>
+                  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                  </span>
+                  <span id='facebook-share'>
+                      <a href="#"
+                        onclick="
+                          window.open(
+                            'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),
+                            'facebook-share-dialog',
+                            'width=626,height=436');
+                          return false;">
+                        Share on Facebook
+                      </a>
+                  </span>
+                </span>
+          </span>
+         </div>
         <div class="intro-details grey-text lighten-6">Cards for Humanity is a fast-paced online version of the popular card game, Cards Against Humanity, that gives you the opportunity to donate to children in need
         </div>
         <div class="row intro-buttons center">

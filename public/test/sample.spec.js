@@ -9,3 +9,18 @@ describe('Filters', () => {
     });
   });
 });
+
+describe('GameController', () => {
+  beforeEach(module('mean.system'));
+
+  let $controller;
+
+  beforeEach(inject((_game_) => {
+    Users = _game_;
+  }));
+
+  // A simple test to verify the Users service exists
+  it('should exist', () => {
+    expect(Users).toBeDefined();
+  });
+});

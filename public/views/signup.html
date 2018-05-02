@@ -1,122 +1,61 @@
-<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="../bower/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="../css/common.css">
 <link rel="stylesheet" href="../css/style.css">
-<div id="main-bod">
-  <!-- Fixed Logo & Menu Bar Start -->
-  <div id="top-part">
-    <div class="wpb-top-bar">
-      <div class="mod-contain" id="navver">
-        <div class="row">
-          <!-- Logo -->
-          <div class="wpb-logo-container">
-            <div id="landing-logo">
-              <span id="first-word">Cards</span>
-              <span id="second-word"> for</span>
-              <span id="third-word">Humanity</span>
+
+<div id="auth-center" class="page-bg" ng-controller="IndexController">
+  <div id="auth-box">
+    <div id="auth-data">
+      <h2 id="slogan">Register</h2>
+
+      <div class="auth-body">
+        <form ng-submit='register()'>
+          <div class="row">
+            <div class="col-md-4 image-div">
+              <img src="/img/profile-image.png" class="profile-image img-circle invert-color" alt="avatar" />
+              <div>
+                <input class="custom-file-input" onchange="previewImage()" type="file" id="profilePic">
+                <label for="profilePic" class="btn btn-upload">Upload image</label>
+              </div>
             </div>
-            <div class="col-md-9 wpb-menu-container">
-              <ul class="wpb-main-menu">
-                <li><a href="/">Home</a></li>
-              </ul>
+
+            <div class="col-md-8">
+              <div class="form-group">
+                <input type="text" class="form-control" ng-model='name' name='name' placeholder="Full Name" required novalidate>
+              </div>
+              <div class="form-group">
+                <input type="email" class="form-control" ng-model='email' name='email' placeholder="Email" required novalidate>
+              </div>
+              <div class="form-group">
+                <input type="password" class="form-control" ng-model='password' name='password' placeholder="Password" required novalidate>
+              </div>
+              <button type="submit" id="sign-up-btn-other" class="btn">Register</button>
             </div>
+          </div>
+
+        </form>
+        <h4 class="text-in-line lead text-white">
+          <span> Register using a social account</span>
+        </h4>
+        <div id="login-buttons">
+          <a href="/auth/facebook" class="btn btn-facebook btn-social">
+            <img class="login-item" src="/img/icons/facebook.png"> Sign up with Facebook</a>
+          <a href="/auth/twitter" class="btn btn-twitter btn-social">
+            <img class="login-item" src="/img/icons/twitter.png"> Sign up with Twitter</a>
+          <a href="/auth/google" class="btn btn-google-plus btn-social">
+            <img class="login-item" src="/img/icons/google.png"> Sign up with Google+</a>
+        </div>
+        <hr/>
+        <div class="reg-redirect lead">
+          <span>Already have an account?
+            <strong>
+              <a href="#!/signin">LOGIN</a>
+            </strong>
+          </span>
+          <div>
+            <a href="/" class="redirect-text">Or redirect to homepage</a>
           </div>
         </div>
       </div>
     </div>
   </div>
-<!-- Fixed Logo & Menu Bar End -->
-
-<!-- Landing Start -->
-<div class="wpb-teaser parallax-background" id="homer">
-  <div class="background-opacity"></div>
-  <div class="modified-container">
-    <div class="row" id="main-text">
-    <!-- Teaser Text Start -->
-    <div id="landing-logo">
-      <h2 id="slogan">Sign Up with:</h2>
-      <div id="login-buttons">
-        <a href="/auth/facebook"><img class="login-item" src="/img/icons/facebook.png"></a>
-        <a href="/auth/github"><img class="login-item" src="/img/icons/github.png"></a>
-        <a href="/auth/twitter"><img class="login-item" src="/img/icons/twitter.png"></a>
-        <a href="/auth/google"><img class="login-item" src="/img/icons/google.png"></a>
-      </div>
-      <p id="create">Or create a username/password and select an avatar:</p>
-
-          <div class="sign-body">
-            <div class="more-sign" ng-controller="IndexController">
-              <form class="signup form-horizontal" ng-submit="register()" method="post">
-                <div class="image-div">
-                  <img src="/img/profile-image.png" class="profile-image img-circle invert-color" alt="avatar" />
-                  <div>
-                    <input class="custom-file-input" onchange="previewImage()" type="file" id="profilePic">
-                    <label for="profilePic" class="btn btn-success">Upload profile image</label>
-                  </div>
-                </div>
-                <div class="control-group">
-                  <label for="name" class="control-label"></label>
-                  <div class="controls">
-                    <input class="input-info" ng-model="name" id="name" type="text" name="name" placeholder="Full name" required novalidate />
-                  </div>
-                </div>
-                <div class="control-group">
-                  <label for="email" class="control-label"></label>
-                  <div class="controls">
-                    <input class="input-info" ng-model="email" id="email" type="email" name="email" placeholder="Email" required novalidate />
-                  </div>
-                </div>
-                <div class="control-group">
-                  <label for="password" class="control-label"></label>
-                  <div class="controls">
-                    <input class="input-info" id="password" ng-model="password" type="password" name="password" placeholder="Password" required
-                      novalidate />
-                  </div>
-                </div>
-                <div id="contain-avatars">
-                  <ul ng-controller="IndexController" class="avatar-list">
-                    <li ng-repeat="avatar in avatars" class="avatars ng-scope">
-                      <input name="avatar" type='radio' value="{{$index}}">
-                      <img ng-src="{{avatar}}">
-                      </input>
-                    </li>
-                  </ul>
-                </div>
-                <div class="form-actions">
-                  <button id="sign-up-btn-other" type='submit'>Sign Up</button>
-                </div>
-              </form>
-            </div>
-            <div class="control-group">
-              <label for="email" class="control-label"></label>
-              <div class="controls">
-                <input class="input-info" id="email" type="email" name="email" placeholder="Email" required novalidate />
-              </div>
-            </div>
-            <div class="control-group">
-              <label for="password" class="control-label"></label>
-              <div class="controls">
-                <input class="input-info" id="password" type="password" name="password" placeholder="Password" required novalidate />
-              </div>
-            </div>
-            <div id="contain-avatars">
-              <ul ng-controller="IndexController" class="avatar-list">
-                <li ng-repeat="avatar in avatars" class="avatars ng-scope">
-                  <input name="avatar" type='radio' value="{{$index}}">
-                    <img ng-src="{{avatar}}">
-                  </input>
-                </li>
-              </ul>
-            </div>
-            <div class="form-actions">
-              <button id="sign-up-btn-other" type='submit'>Sign Up</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-    </div>
-    </div>
-  </div>
 </div>
-
-
-

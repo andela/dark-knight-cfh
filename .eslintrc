@@ -5,12 +5,14 @@
     "node": true,
     "es6": true,
     "mocha": true
-  },"globals": {
+  },
+  "globals": {
     "angular": true,
     "localStorage": true,
     "window": true,
     "user": true,
-    "io": true
+    "io": true,
+    "$": true
   },
   "rules": {
     "one-var": 0,

@@ -20,6 +20,13 @@ const guestNames = [
   'Dingle Dangle'
 ];
 
+  /**
+  * @description creates a new game object
+  *
+  * @param {number} gameID a review object
+  * @param {object} io a review object
+  * @return {object} return an array of objects
+  */
 function Game(gameID, io) {
   this.io = io;
   this.gameID = gameID;
@@ -30,8 +37,8 @@ function Game(gameID, io) {
   this.winnerAutopicked = false;
   this.czar = -1; // Index in this.players
   this.playerMinLimit = 3;
-  this.playerMaxLimit = 4;
-  this.pointLimit = 1;
+  this.playerMaxLimit = 12;
+  this.pointLimit = 5;
   this.state = 'awaiting players';
   this.round = 0;
   this.questions = null;
@@ -100,7 +107,8 @@ Game.prototype.assignGuestNames = function () {
   this.players.forEach((player) => {
     if (player.username === 'Guest') {
       const randIndex = Math.floor(Math.random() * self.guestNames.length);
-      player.username = self.guestNames.splice(randIndex, 1)[0];
+      const [a] = self.guestNames.splice(randIndex, 1); // changed!
+      player.username = a;
       if (!self.guestNames.length) {
         self.guestNames = guestNames.slice();
       }
@@ -109,10 +117,7 @@ Game.prototype.assignGuestNames = function () {
 };
 
 Game.prototype.prepareGame = function () {
-  // console.log('halllleluyah', timing);
   this.state = 'game in progress';
-
-  // this.timeLimits.stateChoosing = timing;
 
   this.io.sockets.in(this.gameID).emit(
     'prepareGame',
@@ -134,8 +139,9 @@ Game.prototype.prepareGame = function () {
       if (err) {
         console.log(err);
       }
-      self.questions = results[0];
-      self.answers = results[1];
+      const [a, b] = results;
+      self.questions = a; // changed!
+      self.answers = b;
 
       self.startGame();
     }

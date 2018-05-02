@@ -16,6 +16,8 @@ module.exports = (app, passport) => {
   app.post('/users', users.create);
   app.post('/api/auth/signup', users.register);
   app.post('/users/avatars', users.avatars);
+  app.post('/api/search/users', users.search);
+  app.post('/api/invite/users', users.invite);
 
   // Donation Routes
   app.post('/donations', users.addDonation);
@@ -29,7 +31,7 @@ module.exports = (app, passport) => {
       req.logIn(user, (err) => {
         if (err) { return next(err); }
 
-        const token = signToken(req.user);
+        const token = signToken(req.user.toJSON());
         res.send({ token, user: req.user });
       });
     })(req, res, next);
@@ -89,6 +91,7 @@ module.exports = (app, passport) => {
   app.param('answerId', answers.answer);
 
   // Question Routes
+  const questions = require('../app/controllers/questions');
   app.get('/questions', questions.all);
   app.get('/questions/:questionId', questions.show);
   // Finish with setting up the questionId param

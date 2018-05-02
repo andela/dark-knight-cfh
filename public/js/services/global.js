@@ -1,3 +1,4 @@
+/* eslint-disable */
 angular.module('mean.system')
   .factory('Global', [() => {
     const _this = this;/*eslint-disable-line */
