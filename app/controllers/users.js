@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const avatars = require('./avatars').all();
 // const jwt = require('jsonwebtoken');
-const { generateToken } = require('../../config/authMiddleware');
+const { signToken } = require('../../config/middlewares/authorization');
 
 /**
  * Auth callback
@@ -112,7 +112,7 @@ exports.register = (req, res) => {
               picture: newUser.picture,
               publicId: newUser.publicId
             };
-            const token = generateToken(payload);
+            const token = signToken(payload);
             return res.status(201).send({
               success: true,
               message: 'Registration successful!',

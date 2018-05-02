@@ -40,13 +40,7 @@
   border-radius: 3px;
   margin-left: 10px;
   background-color: #f8f8f8;
-  background-image: -webkit-gradient(
-    linear,
-    left top,
-    left bottom,
-    from(#fff),
-    to(#dedede)
-  );
+  background-image: -webkit-gradient( linear, left top, left bottom, from(#fff), to(#dedede));
   background-image: -moz-linear-gradient(top, #fff, #dedede);
   background-image: -o-linear-gradient(top, #fff, #dedede);
   background-image: -ms-linear-gradient(top, #fff, #dedede);
@@ -96,11 +90,9 @@
     float: left;
     margin-top: -50px;
   }
-
   #info-box {
     margin-left: 0%;
   }
-
   #landing-charity {
     width: 67% !important;
     margin-left: 21% !important;
@@ -114,11 +106,9 @@
   #landing-charity {
     margin-bottom: -60px;
   }
-
   #info-box {
     margin-left: 0%;
   }
-
   .some-text {
     margin: 0;
   }
@@ -132,6 +122,7 @@
 }
 
 /**** Links ****/
+
 a {
   color: #60b197;
   -webkit-transition: color 0.5s ease;
@@ -156,6 +147,7 @@ p a:hover {
 }
 
 /**** Top Bar ****/
+
 #menu-container {
   width: 100%;
   -webkit-border-radius: 8px;
@@ -347,6 +339,7 @@ p a:hover {
 }
 
 /**** Section Title ****/
+
 .wpb-section-title {
   background-color: #24272a;
   height: 100px;
@@ -397,25 +390,28 @@ p a:hover {
 
 #sign-up-btn-other {
   display: inline-block;
-  border-radius: 8px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
+  width: 100%;
+  border-radius: 0 !important;
+  -moz-border-radius: 0 !important;
+  -webkit-border-radius: 0 !important;
   font-size: 20px;
   font-size: 1.35em;
   font-weight: 400;
   text-align: center;
   color: white;
-  background: #c54141;
+  background: #000;
   margin-top: 3px;
   margin-bottom: 3px;
   margin-right: 10px;
-  padding: 0.1em 35px;
+  padding: 0.6em 35px;
   cursor: pointer;
+  transition: all 600ms ease-in-out;
 }
 
 /**** About Us ****/
+
 #main-bod {
-  max-width: 1400px;
+  max-width: 100%;
   margin: 0px auto;
 }
 
@@ -437,10 +433,15 @@ p a:hover {
 
 #login-buttons {
   text-align: center;
+  padding: 20px;
+}
+
+#login-buttons .btn {
+  margin: 5px;
 }
 
 .login-item {
-  max-width: 48%;
+  max-width: 48px;
 }
 
 .input-info {
@@ -541,6 +542,7 @@ li {
 }
 
 /**** Portfolio ****/
+
 .wpb-portfolio-list .wpb-portfolio-item {
   margin-left: 10px;
   list-style-type: none;
@@ -565,7 +567,7 @@ li {
   position: relative;
 }
 
-.wpb-portfolio-item .wpb-portfolio-thumbnail > img {
+.wpb-portfolio-item .wpb-portfolio-thumbnail>img {
   position: absolute;
   width: 100%;
 }
@@ -605,8 +607,6 @@ li {
 }
 
 /**** Portfolio ****/
-.wpb-portfolio-body {
-}
 
 .wpb-portfolio-body .wpb-teaser {
   min-height: 350px;
@@ -657,6 +657,7 @@ li {
 }
 
 /**** Team List ****/
+
 .wpb-team-list .wpb-team-item {
   margin-left: 0px;
   margin-right: 10px;
@@ -681,7 +682,7 @@ li {
   opacity: 1;
 }
 
-.wpb-team-item .wpb-team-thumbnail > img {
+.wpb-team-item .wpb-team-thumbnail>img {
   position: absolute;
   width: 100%;
 }
@@ -706,28 +707,28 @@ li {
   min-width: none !important;
 }
 
-.wpb-team-item .wpb-team-thumbnail .wpb-team-overlay > div {
+.wpb-team-item .wpb-team-thumbnail .wpb-team-overlay>div {
   line-height: 500px;
   width: 100%;
   text-align: center;
   font-size: 3em;
 }
 
-.wpb-team-item .wpb-team-thumbnail .wpb-team-overlay > div div.content h3 {
+.wpb-team-item .wpb-team-thumbnail .wpb-team-overlay>div div.content h3 {
   color: #ffffff !important;
   font-size: 18px;
 }
 
-.wpb-team-item .wpb-team-thumbnail .wpb-team-overlay > div div.content a {
+.wpb-team-item .wpb-team-thumbnail .wpb-team-overlay>div div.content a {
   color: #ffffff !important;
 }
 
-.wpb-team-item .wpb-team-thumbnail .wpb-team-overlay > div div.content i {
+.wpb-team-item .wpb-team-thumbnail .wpb-team-overlay>div div.content i {
   font-size: 1.5em;
   padding-right: 5px;
 }
 
-.wpb-team-item .wpb-team-thumbnail .wpb-team-overlay > div div.content {
+.wpb-team-item .wpb-team-thumbnail .wpb-team-overlay>div div.content {
   text-transform: uppercase;
   color: #ffffff !important;
   font-size: 14px;
@@ -735,7 +736,7 @@ li {
   margin-top: 125px;
 }
 
-.wpb-team-item .wpb-team-thumbnail .wpb-team-overlay > div div.content p {
+.wpb-team-item .wpb-team-thumbnail .wpb-team-overlay>div div.content p {
   line-height: normal;
   display: inline-block;
   width: 100%;
@@ -756,8 +757,6 @@ li {
 }
 
 /**** Single Portfolio Item ****/
-.wpb-single-portfolio {
-}
 
 .wpb-single-portfolio .wpb-content-inner {
   padding: 0px;
@@ -796,7 +795,7 @@ li {
   opacity: 1;
 }
 
-.wpb-single-portfolio .wpb-portfolio-thumbnail > img {
+.wpb-single-portfolio .wpb-portfolio-thumbnail>img {
   position: absolute;
   min-height: 100%;
   height: 100%;
@@ -866,6 +865,7 @@ li {
 }
 
 /**** Contact Us ****/
+
 .wpb-contact-us {
   min-height: 540px;
   position: relative;
@@ -899,6 +899,7 @@ li {
 }
 
 /**** Contact Us Information ****/
+
 .wpb-contact-us-info {
   margin-top: 25px;
   color: #fff;
@@ -980,6 +981,7 @@ li {
 }
 
 /*Override Bootstrap Row Class*/
+
 .row {
   margin-left: 0;
   margin-right: 9px;
@@ -995,7 +997,6 @@ li {
   .row {
     margin: 0 0 -9px 0;
   }
-
   .wpb-logo-container {
     margin-right: 0;
   }
@@ -1005,7 +1006,6 @@ li {
   .wpb-menu-container {
     display: none;
   }
-
   .mod-contain {
     text-align: center;
   }
@@ -1018,7 +1018,6 @@ li {
     margin-top: -77px;
     font-size: 0.85em;
   }
-
   .wpb-menu-container .wpb-main-menu li a {
     display: block;
     height: 100%;
@@ -1042,13 +1041,11 @@ li {
     font-size: 11px;
     max-width: 99%;
   }
-
   .wpb-teaser .container {
     position: relative;
     z-index: 1000;
     padding-top: 70px;
   }
-
   .landing-card {
     font-size: 0.8em;
   }
@@ -1062,7 +1059,6 @@ li {
     font-size: 0.9em;
     margin-right: 35px;
   }
-
   .wpb-menu-container .wpb-main-menu li a {
     display: block;
     height: 100%;
@@ -1085,17 +1081,16 @@ li {
     margin-right: 10px;
     font-size: 11px;
   }
-
   .wpb-teaser .container {
     position: relative;
     z-index: 1000;
     padding-top: 70px;
   }
-
   #ang-logo {
     width: 37% !important;
   }
 }
+
 @media (max-width: 480px) {
   #sign-up-btn {
     font-size: 1.5rem;
@@ -1105,7 +1100,6 @@ li {
     z-index: 1000;
     padding: 0;
   }
-
   .wpb-teaser {
     min-height: 360px;
     position: relative;
@@ -1115,7 +1109,6 @@ li {
     border-radius: 8px;
     padding: 30px;
   }
-
   .wpb-teaser .wpb-slogan h2 {
     color: #fff;
     font-weight: bold;
@@ -1124,7 +1117,6 @@ li {
     text-align: center;
     line-height: 24px;
   }
-
   .wpb-top-bar {
     height: 60px;
     background: transparent;
@@ -1134,46 +1126,39 @@ li {
     z-index: 10000;
     max-width: 1400px;
   }
-
   .mod-contain {
     width: 100%;
     text-align: center;
   }
-
   #homer {
     padding-top: 0;
   }
-
   #main-text {
     margin: 0;
   }
-
   .wpb-menu-container {
     display: none;
   }
-
   .wpb-teaser .parallax-background {
-    padding: 10% 0 0 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
-
   #avatars {
     display: none;
   }
-
   #slogan {
     text-align: center;
     color: white;
     font-size: 1.3em;
   }
-
   #how-to-play {
     margin-top: 0;
   }
-
   #how-to-play {
     margin-top: 80px;
   }
-
   .landing-card {
     position: relative;
     display: block;
@@ -1186,45 +1171,37 @@ li {
     font-family: Arial;
     font-size: 20px;
     font-weight: bold;
-    vertical-align: top;
     width: 100%;
   }
-
   .wpb-portfolio-list .wpb-portfolio-item {
     margin-left: -20px;
     border-radius: 8px;
     list-style-type: none;
     width: 100%;
   }
-
   .wpb-contact-us {
     min-height: 0;
     position: relative;
     z-index: 890;
     margin-top: 50px;
   }
-
   .wpb-team-details h3 {
     font-size: 0.94em;
     margin-top: -5px;
   }
-
   #how-to-container {
     padding-top: 0;
   }
-
   .avatar-list {
     overflow: hidden;
     padding-left: 0px;
     margin-left: 0;
   }
-
   .avatars {
     position: relative;
     float: left;
     margin: 2px 17px;
   }
-
   .foot {
     bottom: 0;
     max-width: 1400px;
@@ -1235,20 +1212,24 @@ li {
     width: 100%;
     margin: 30px auto;
   }
-
   .row {
     margin: 0 0 0 4px;
+  } 
+  #auth-box {
+    width: 100%;
+    height: 100%;
+    overflow: scroll !important;
   }
 }
+
 .image-div {
   margin-bottom: 1em;
 }
 .profile-image {
-  margin: auto;
-  width: 100%;
-  height: 400px;
+  margin: 5px;
+  width: 100px;
+  height: 100px;
 }
-
 .text-center {
   text-align: center;
 }
@@ -1258,3 +1239,104 @@ li {
 input[type="file"] {
   display: none;
 }
+#auth-center {
+  height: 100%
+}
+#auth-box {
+  position: absolute;
+  border-radius: 8px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: inherit;
+  overflow: hidden;
+}
+#auth-box:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: inherit;
+  box-shadow: inset 0 0 0 200px rgba(255, 255, 255, 0.2);
+  filter: blur(10px);
+  z-index: -1;
+}
+.btn-facebook {
+  background: #3B5998;
+}
+.btn-twitter {
+  background: #00ACEE;
+}
+.btn-google-plus {
+  background: #E93F2E;
+}
+.btn-social,
+.btn-social:hover {
+  border-radius: 10px !important;
+  color: #fff;
+  padding: 0 10px 0 0;
+}
+.btn-social:hover {
+  color: #000
+}
+.auth-body {
+  text-align: center;
+  margin-top: 1em;
+}
+.auth-body form {
+  padding: 0 20px;
+  margin-bottom: 20px;
+}
+.reg-redirect {
+  text-align: center;
+  padding-bottom: 20px;
+  color: #fff
+}
+.reg-redirect a {
+  color: #fff
+}
+.redirect-text{
+  font-size: 0.8em;
+}
+.reg-redirect a:hover{
+  text-decoration: underline;
+}
+.text-in-line::after {
+  content: " ------------ ";
+  letter-spacing: -3px;
+}
+.text-in-line::before {
+  content: " ------------";
+  letter-spacing: -3px;
+}
+.text-white {
+  color: #fff
+}
+.page-bg{
+  min-height: 100%;
+  background-attachment: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url('../img/bg.jpg');
+}
+.btn-upload{
+  color: #fff;
+  background-color: #333333;
+}
+.btn-upload:hover{
+  color: #fff;
+  background-color: #000;
+}
+.logo-text{
+  color: #fff;
+  padding: 10px;
+  font-weight: bold;
+  font-size: 1.5em;
+  text-transform: uppercase;
+  line-height: 60px;
+  border: 1px solid #fff;
+  text-align: left;
+}
+.logo-text:hover{color: #fff;background: #000;}
