@@ -1297,6 +1297,12 @@ input[type="file"] {
 .reg-redirect a {
   color: #fff
 }
+.redirect-text{
+  font-size: 0.8em;
+}
+.reg-redirect a:hover{
+  text-decoration: underline;
+}
 .text-in-line::after {
   content: " ------------ ";
   letter-spacing: -3px;

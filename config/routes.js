@@ -29,7 +29,7 @@ module.exports = (app, passport) => {
       req.logIn(user, (err) => {
         if (err) { return next(err); }
 
-        const token = signToken(req.user);
+        const token = signToken(req.user.toJSON());
         res.send({ token, user: req.user });
       });
     })(req, res, next);

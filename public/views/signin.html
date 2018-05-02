@@ -4,9 +4,6 @@
 <div id="auth-center" class="page-bg" ng-controller="IndexController">
   <div id="auth-box">
     <div id="auth-data">
-      <div>
-        <a href="/" class="logo-text">Home</a>
-      </div>
       <h2 id="slogan">Login</h2>
 
       <div class="auth-body">
@@ -24,7 +21,9 @@
           </div>
           <button type="submit" id="sign-up-btn-other" class="btn">Login</button>
         </form>
-        <h4 class="text-in-line lead text-white"><span> Login using a social account</span>  </h4>
+        <h4 class="text-in-line lead text-white">
+          <span> Login using a social account</span>
+        </h4>
         <div id="login-buttons">
           <a href="/auth/facebook" class="btn btn-facebook btn-social">
             <img class="login-item" src="/img/icons/facebook.png"> Login with Facebook</a>
@@ -36,8 +35,13 @@
         <hr/>
         <div class="reg-redirect lead">
           <span>Don't have an account?
-            <strong><a href="#!/signup">REGISTER NOW!</a></strong>
+            <strong>
+              <a href="#!/signup">REGISTER NOW!</a>
+            </strong>
           </span>
+          <div>
+            <a href="/" class="redirect-text">Or redirect to homepage</a>
+          </div>
         </div>
       </div>
     </div>

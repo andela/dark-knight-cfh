@@ -57,7 +57,7 @@ exports.verifyJWT = (req, res, next) => {
    * @returns {string} token
    */
 exports.signToken = (payload) => {
-  const token = jwt.sign(payload.toJSON(), process.env.SECRET_KEY, {
+  const token = jwt.sign(payload, process.env.SECRET_KEY, {
     expiresIn: '36h'
   });
   return token;

@@ -4,10 +4,7 @@
 
 <div id="auth-center" class="page-bg" ng-controller="IndexController">
   <div id="auth-box">
-    <div id="auth-data">    
-      <div>
-        <a href="/" class="logo-text">Home</a>
-      </div>
+    <div id="auth-data">
       <h2 id="slogan">Register</h2>
 
       <div class="auth-body">
@@ -30,7 +27,7 @@
               </div>
               <div class="form-group">
                 <input type="password" class="form-control" ng-model='password' name='password' placeholder="Password" required novalidate>
-              </div> 
+              </div>
               <button type="submit" id="sign-up-btn-other" class="btn">Register</button>
             </div>
           </div>
@@ -50,8 +47,13 @@
         <hr/>
         <div class="reg-redirect lead">
           <span>Already have an account?
-            <strong><a href="#!/signin">LOGIN</a></strong>
+            <strong>
+              <a href="#!/signin">LOGIN</a>
+            </strong>
           </span>
+          <div>
+            <a href="/" class="redirect-text">Or redirect to homepage</a>
+          </div>
         </div>
       </div>
     </div>
