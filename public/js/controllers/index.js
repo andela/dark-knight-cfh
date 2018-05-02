@@ -1,13 +1,13 @@
 /* eslint-disable */
 angular.module('mean.system').controller('IndexController', [
-    '$scope',
-    'Global',
-    '$http',
-    '$window',
-    '$location',
-    'socket',
-    'game',
-    'AvatarService',
+  '$scope',
+  'Global',
+  '$http',
+  '$window',
+  '$location',
+  'socket',
+  'game',
+  'AvatarService',
   ($scope, Global, $http, $window, $location, socket, game, AvatarService) => {
     $scope.global = Global;
 
@@ -16,9 +16,9 @@ angular.module('mean.system').controller('IndexController', [
       $location.path('/app');
     };
 
-    
+
     $scope.showError = () => {
-        return $location.search().error;
+      return $location.search().error;
     };
 
     $scope.avatars = [];
@@ -113,13 +113,13 @@ angular.module('mean.system').controller('IndexController', [
       }
     };
 
-    const previewImage = () => {
-      const myFile = $('#profilePic').prop('files')[0];
-      const fReader = new FileReader();
-      fReader.readAsDataURL(myFile);
-      fReader.onload = (e) => {
-        $('.profile-image').attr('src', e.target.result);
-      };
-    };
   }
 ]);
+const previewImage = () => {
+  const myFile = $('#profilePic').prop('files')[0];
+  const fReader = new FileReader();
+  fReader.readAsDataURL(myFile);
+  fReader.onload = (e) => {
+    $('.profile-image').attr('src', e.target.result);
+  };
+};
