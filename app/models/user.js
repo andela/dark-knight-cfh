@@ -17,7 +17,6 @@ const UserSchema = new Schema({
   username: String,
   points: Number,
   provider: String,
-  picture: String,
   publicId: String,
   avatar: String,
   premium: Number, // null or 0 for non-donors, 1 for everyone else (for now)

@@ -36,9 +36,9 @@ function Game(gameID, io) {
   this.gameWinner = -1; // Index in this.players
   this.winnerAutopicked = false;
   this.czar = -1; // Index in this.players
-  this.playerMinLimit = 3;
+  this.playerMinLimit = 2;
   this.playerMaxLimit = 12;
-  this.pointLimit = 5;
+  this.pointLimit = 1;
   this.state = 'awaiting players';
   this.round = 0;
   this.questions = null;
@@ -68,6 +68,7 @@ Game.prototype.payload = function () {
       hand: player.hand,
       points: player.points,
       username: player.username,
+      id: player.id,
       avatar: player.avatar,
       premium: player.premium,
       socketID: player.socket.id,
