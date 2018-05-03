@@ -342,9 +342,7 @@ p a:hover {
    max-width: 585px;
    padding-bottom: 20px;
  }
-  color: #fc575e;
-}
-
+ 
 .wpb-top-bar {
   height: 60px;
   background: transparent;
@@ -1520,24 +1518,6 @@ html, body, .main-container, .cont, #first-section, #inner-container {
 	height: 100%;
 }
 
-html {
-  /* IE10 Consumer Preview */
-	background-image: -ms-linear-gradient(top left, #0B394E 0%, #ABCE8D 100%);
-  /* Mozilla Firefox */
-	background-image: -moz-linear-gradient(top left, #0B394E 0%, #ABCE8D 100%);
-  /* Opera */
-	background-image: -o-linear-gradient(top left, #0B394E 0%, #ABCE8D 100%);
-  /* Webkit (Safari/Chrome 10) */
-	background-image: -webkit-gradient(linear, left top, right bottom, color-stop(0, #0B394E), color-stop(1, #ABCE8D));
-  /* Webkit (Chrome 11+) */
-	background-image: -webkit-linear-gradient(top left, #0B394E 0%, #ABCE8D 100%);
-  /* W3C Markup, IE10 Release Preview */
-	background-image: linear-gradient(to bottom right, #0B394E 0%, #ABCE8D 100%);
-	background-attachment: fixed;
-	background-repeat: no-repeat;
-	position: relative;
-}
-
 @media (max-width: 520px) {
 	html {
 		margin-top: 0px;
@@ -1547,7 +1527,7 @@ html {
 body {
 	font-family: "helvetica neue", helvetica, sans-serif;
 	background: transparent;
-	margin: 10px;
+	margin: 0;
 }
 
 @media only screen and (min-width: 521px) and (max-width: 768px) {
@@ -2679,6 +2659,253 @@ body {
 
 .gradientButton .donateNow {
 	border-top: 0px solid black !important;
+}
+
+@media (min-width: 1430px) {
+  .row {
+    margin: 0 0 -9px 0;
+  }
+  .wpb-logo-container {
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 680px) {
+  .wpb-menu-container {
+    display: none;
+  }
+  .mod-contain {
+    text-align: center;
+  }
+}
+
+@media (min-width: 480px) and (max-width: 865px) {
+  .wpb-menu-container .wpb-main-menu {
+    text-align: right;
+    height: 100px;
+    margin-top: -77px;
+    font-size: 0.85em;
+  }
+  .wpb-menu-container .wpb-main-menu li a {
+    display: block;
+    height: 100%;
+    line-height: 100px;
+    font-weight: bold;
+    color: white;
+    padding: 0px 3px;
+    -webkit-transition: color 0.5s ease;
+    -moz-transition: color 0.5s ease;
+    -ms-transition: color 0.5s ease;
+    -o-transition: color 0.5s ease;
+    transition: color 0.5s ease;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 1000;
+  }
+  .wpb-logo-container {
+    color: #fff;
+    font-weight: bold;
+    margin-right: 0;
+    font-size: 11px;
+    max-width: 99%;
+  }
+  .wpb-teaser .container {
+    position: relative;
+    z-index: 1000;
+    padding-top: 70px;
+  }
+  .landing-card {
+    font-size: 0.8em;
+  }
+}
+
+@media (min-width: 865px) and (max-width: 1024px) {
+  .wpb-menu-container .wpb-main-menu {
+    text-align: right;
+    height: 100px;
+    margin-top: -77px;
+    font-size: 0.9em;
+    margin-right: 35px;
+  }
+  .wpb-menu-container .wpb-main-menu li a {
+    display: block;
+    height: 100%;
+    line-height: 100px;
+    font-weight: bold;
+    color: white;
+    padding: 0px 6px;
+    -webkit-transition: color 0.5s ease;
+    -moz-transition: color 0.5s ease;
+    -ms-transition: color 0.5s ease;
+    -o-transition: color 0.5s ease;
+    transition: color 0.5s ease;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 1000;
+  }
+  .wpb-logo-container {
+    color: #fff;
+    font-weight: bold;
+    margin-right: 10px;
+    font-size: 11px;
+  }
+  .wpb-teaser .container {
+    position: relative;
+    z-index: 1000;
+    padding-top: 70px;
+  }
+  #ang-logo {
+    width: 37% !important;
+  }
+}
+
+@media (max-width: 480px) {
+  #sign-up-btn {
+    font-size: 1.5rem;
+  }
+  .wpb-teaser .container {
+    position: relative;
+    z-index: 1000;
+    padding: 0;
+  }
+  .wpb-teaser {
+    min-height: 360px;
+    position: relative;
+    z-index: 990;
+    width: 98%;
+    margin: 0px auto;
+    border-radius: 8px;
+    padding: 30px;
+  }
+  .wpb-teaser .wpb-slogan h2 {
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.6em;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 24px;
+  }
+  .wpb-top-bar {
+    height: 60px;
+    background: transparent;
+    position: relative;
+    top: 0;
+    width: 100%;
+    z-index: 10000;
+    max-width: 1400px;
+  }
+  .mod-contain {
+    width: 100%;
+    text-align: center;
+  }
+  #homer {
+    padding-top: 0;
+  }
+  #main-text {
+    margin: 0;
+  }
+  .wpb-menu-container {
+    display: none;
+  }
+  .wpb-teaser .parallax-background {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  #avatars {
+    display: none;
+  }
+  #slogan {
+    text-align: center;
+    color: white;
+    font-size: 1.3em;
+  }
+  #how-to-play {
+    margin-top: 0;
+  }
+  #how-to-play {
+    margin-top: 80px;
+  }
+  .landing-card {
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    padding: 4%;
+    margin: 5% 0;
+    background-color: #fff;
+    border-radius: 8px;
+    color: #252525;
+    font-family: Arial;
+    font-size: 20px;
+    font-weight: bold;
+    width: 100%;
+  }
+  .wpb-portfolio-list .wpb-portfolio-item {
+    margin-left: -20px;
+    border-radius: 8px;
+    list-style-type: none;
+    width: 100%;
+  }
+  .wpb-contact-us {
+    min-height: 0;
+    position: relative;
+    z-index: 890;
+    margin-top: 50px;
+  }
+  .wpb-team-details h3 {
+    font-size: 0.94em;
+    margin-top: -5px;
+  }
+  #how-to-container {
+    padding-top: 0;
+  }
+  .avatar-list {
+    overflow: hidden;
+    padding-left: 0px;
+    margin-left: 0;
+  }
+  .avatars {
+    position: relative;
+    float: left;
+    margin: 2px 17px;
+  }
+  .foot {
+    bottom: 0;
+    max-width: 1400px;
+    height: 60px;
+    border-radius: 8px;
+    background: #252525;
+    padding: 5px 5px 5px 13px;
+    width: 100%;
+    margin: 30px auto;
+  }
+  .row {
+    margin: 0 0 0 4px;
+  } 
+  #auth-box {
+    width: 100%;
+    height: 100%;
+    overflow: scroll !important;
+  }
+}
+
+.image-div {
+  margin-bottom: 1em;
+}
+.profile-image {
+  margin: 5px;
+  width: 100px;
+  height: 100px;
+}
+.text-center {
+  text-align: center;
+}
+.image-circle {
+  margin-top: 1em;
+}
+input[type="file"] {
+  display: none;
 }
 #auth-center {
   height: 100%
