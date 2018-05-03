@@ -104,7 +104,17 @@ module.exports = (passport) => {
     {
       clientID: process.env.FB_CLIENT_ID,
       clientSecret: process.env.FB_CLIENT_SECRET,
-      callbackURL: config.facebook.callbackURL
+      callbackURL: config.facebook.callbackURL,
+      profileFields: [
+        'id',
+        'birthday',
+        'email',
+        'first_name',
+        'last_name',
+        'gender',
+        'picture.width(200).height(200)',
+        'photos'
+      ]
     },
     (accessToken, refreshToken, profile, done) => {
       User.findOne(
@@ -117,13 +127,14 @@ module.exports = (passport) => {
           }
           if (!user) {
             console.log(profile);
+
             user = new User({
               name: profile.displayName,
               email: (profile.emails && profile.emails[0].value) || '',
               username: profile.username,
               provider: 'facebook',
               facebook: profile._json,
-              avatar: profile._json.picture || profile.json.picture.data.url
+              picture: profile._json.picture || profile.json.picture.data.url || profile.photos[0].value
             });
             user.save((err) => {
               if (err) console.log(err);
@@ -161,7 +172,7 @@ module.exports = (passport) => {
               username: profile.username,
               provider: 'google',
               google: profile._json,
-              avatar: profile._json.picture
+              picture: profile._json.picture
             });
             user.save((err) => {
               if (err) console.log(err);
