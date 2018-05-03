@@ -13,7 +13,7 @@ angular.module('mean.system')/* eslint-disable-line */
       $scope.pickedCards = [];
       // let makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
       // $scope.makeAWishFact = makeAWishFacts.pop();
-
+      $scope.name = 'ello bae';
 
       $scope.searchUser = function (playerInfo) {
         game.searchUser($scope.search_input, playerInfo);
