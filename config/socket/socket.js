@@ -114,17 +114,17 @@ module.exports = function (io) {
           player.premium = user.premium || 0;
           player.avatar = user.avatar || avatars[Math.floor(Math.random() * 4) + 12];
         }
-        getGame(player, socket, data.room, data.createPrivate);
+        getGame(player, socket, data.room, data.createPrivate, data.timing);
       });
     } else {
       // If the user isn't authenticated (guest)
       player.username = 'Guest';
       player.avatar = avatars[Math.floor(Math.random() * 4) + 12];
-      getGame(player, socket, data.room, data.createPrivate);
+      getGame(player, socket, data.room, data.createPrivate, data.timing);
     }
   };
 
-  var getGame = function (player, socket, requestedGameId, createPrivate) {
+  const getGame = function (player, socket, requestedGameId, createPrivate, timing) {
     requestedGameId = requestedGameId || '';
     createPrivate = createPrivate || false;
     console.log(socket.id, 'is requesting room', requestedGameId);
@@ -147,6 +147,7 @@ module.exports = function (io) {
         game.assignPlayerColors();
         game.assignGuestNames();
         game.sendUpdate();
+        console.log('seal team', game);
         game.sendNotification(`${player.username} has joined the game!`);
         if (game.players.length >= game.playerMaxLimit) {
           gamesNeedingPlayers.shift();
@@ -159,7 +160,7 @@ module.exports = function (io) {
       // Put players into the general queue
       console.log('Redirecting player', socket.id, 'to general queue');
       if (createPrivate) {
-        createGameWithFriends(player, socket);
+        createGameWithFriends(player, socket, timing);
       } else {
         fireGame(player, socket);
       }
@@ -217,6 +218,8 @@ module.exports = function (io) {
     const game = new Game(uniqueRoom, io);
     allPlayers[socket.id] = true;
     game.players.push(player);
+    console.log('happpy me', timing);
+    game.timeLimits.stateChoosing = timing;
     allGames[uniqueRoom] = game;
     socket.join(game.gameID);
     socket.gameID = game.gameID;

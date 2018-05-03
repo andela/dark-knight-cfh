@@ -1,3 +1,5 @@
+const expect = require('chai');
+
 describe('Filters', () => {
   beforeEach(module('app'));
 
