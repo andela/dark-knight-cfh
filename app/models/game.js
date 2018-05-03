@@ -9,32 +9,25 @@ const mongoose = require('mongoose'),
 /**
  * Question Schema
  */
-const QuestionSchema = new Schema({
+const GameSchema = new Schema({
   id: {
     type: Number
   },
-  text: {
-    type: String,
-    default: '',
-    trim: true
+  players: {
+    type: Array,
   },
-  numAnswers: {
-    type: Number
+  winner: {
+    type: String
   },
-  official: {
-    type: Boolean
-  },
-  expansion: {
-    type: String,
-    default: '',
-    trim: true
+  gameId: {
+    type: String
   }
 });
 
 /**
  * Statics
  */
-QuestionSchema.statics = {
+GameSchema.statics = {
   load(id, cb) {
     this.findOne({
       id
@@ -42,4 +35,4 @@ QuestionSchema.statics = {
   }
 };
 
-mongoose.model('Question', QuestionSchema);
+mongoose.model('Game', GameSchema);

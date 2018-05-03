@@ -15,8 +15,8 @@ const UserSchema = new Schema({
   name: String,
   email: String,
   username: String,
+  points: Number,
   provider: String,
-  picture: String,
   publicId: String,
   avatar: String,
   premium: Number, // null or 0 for non-donors, 1 for everyone else (for now)
@@ -27,9 +27,6 @@ const UserSchema = new Schema({
   google: {}
 });
 
-/**
- * Virtuals
- */
 UserSchema.virtual('password')
   .set(function (password) {
     this._password = password;

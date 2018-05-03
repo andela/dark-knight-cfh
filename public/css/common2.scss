@@ -1,5 +1,7 @@
 $purple-darken-2: #7b1fa2;
 $purple-lighten-2: #e1bee7;
+$navy-blue: #344454;
+$navy-blue-lighten-1: #445464;
 
 .landing-page-row {
   width: 100%;
@@ -11,6 +13,7 @@ $purple-lighten-2: #e1bee7;
     margin-bottom: 20px;
     font-size: 50px;
     font-family: 'Righteous';
+    color: $navy-blue;
   }
 
   button {
@@ -27,12 +30,29 @@ $purple-lighten-2: #e1bee7;
   }
 }
 
-.text-purple-darken-2 {
-  color: $purple-darken-2;
+.gray-slate-text {
+  color: $navy-blue !important;
+  &.text-lighten-1 {
+    color: $navy-blue-lighten-1;
+  }
+  &.text-lighten-2 {
+    color: #2b3342;
+  }
+  &.text-lighten-3 {
+    color: #394355;
+  }
 }
 
-.text-white {
-  color: #ffffff;
+.gray-slate {
+  background-color: $navy-blue;
+  &.lighten-1 {
+    background-color: $navy-blue-lighten-1;
+  }
+}
+
+.glow {
+
+  text-shadow: 0px 0px 5px white;
 }
 
 .underline {
@@ -55,12 +75,34 @@ $purple-lighten-2: #e1bee7;
     }
   }
 
+  &.turn-gray-slate {
+    &:hover {
+      background-color: $navy-blue-lighten-1;
+    }
+  }
+
+  &.turn-gray-slate-text {
+    &:hover {
+      color: $navy-blue-lighten-1;
+    }
+  }
+
   &.swell-2 {
     -webkit-transition: transform 1s;
     transition: transform 1s;
     &:hover {
       -webkit-transform: scale(1.1, 1.1);
       transform: scale(1.1, 1.1);
+    }
+  }
+
+  &.invert-gray-slate {
+    &:hover {
+      background-color: white;
+      border: 2px $navy-blue solid;
+      i {
+        color: $navy-blue !important;
+      }
     }
   }
 }
@@ -78,7 +120,6 @@ $purple-lighten-2: #e1bee7;
   60% {transform: translateY(-15px);}
 }
 
-
 .card {
   border-radius: 5px !important;
   &:hover {
@@ -88,7 +129,6 @@ $purple-lighten-2: #e1bee7;
   animation-name: bounce;
   }
 }
-
 
 .match-children-height {
   height: auto;
@@ -150,6 +190,12 @@ $purple-lighten-2: #e1bee7;
   font-family: 'Montserrat';
 }
 
+.intro-border-button {
+  border: 3px $navy-blue solid;
+  background-color: transparent !important;
+  color: white !important;
+}
+
 .card-image {
   display: flex;
   align-items: center;
@@ -169,6 +215,8 @@ $purple-lighten-2: #e1bee7;
 
 .card-content {
   height: 200px;
+  font-family: 'Quicksand';
+  font-size: 16px;
 }
 
 .charity-section {
@@ -181,11 +229,13 @@ $purple-lighten-2: #e1bee7;
 .charity-title {
   font-size: 50px;
   font-family: 'Righteous';
+  color: $navy-blue;
 }
 
 .charity-main {
   font-size: 20px;
-  font-family: Inconsolata;
+  font-family: 'Quicksand';
+  margin-top: 40px;
 }
 
 .charity-quote {
@@ -194,7 +244,7 @@ $purple-lighten-2: #e1bee7;
   align-items: center;
   font-size: 50px;
   flex-direction: column;
-  font-family: Lobster;
+  font-family: 'Lobster';
   margin-top: 40px;
 
   .charity-quote-attribute {
@@ -207,14 +257,18 @@ $purple-lighten-2: #e1bee7;
 }
 
 .charity-video {
-  margin-top: 7%;
+  margin-top: 45px;
 }
 
 .charity-body {
   margin-top: 40px;
   margin-bottom: 20px;
   font-size: 25px;
-  font-family: Inconsolata;
+  font-family: 'Quicksand';
+}
+
+.charity-twitter {
+  margin-top: 45px;
 }
 
 .makeawish-section {
@@ -255,34 +309,3 @@ $purple-lighten-2: #e1bee7;
   max-width: 1500px !important;
   justify-self: center;
 }
-
-/*
-.team-details {
-  font-size: 25px;
-  margin-bottom: 15px;
-  text-align: center;
-}
-
-.team-img {
-  border: 5px solid white;
-  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, .2);
-  width: 150px;
-}
-
-.team-name {
-  font-size: 20px;
-}
-
-.team-center-img {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 300px;
-  margin-left: 100px;
-  img {
-    border: 5px solid white;
-    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, .2);
-    width: 220px;
-  }
-}
-*/

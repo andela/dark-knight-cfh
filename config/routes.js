@@ -1,9 +1,10 @@
-const { signToken } = require('./middlewares/authorization');
+const { signToken, verifyJWT } = require('./middlewares/authorization');
 const questions = require('../app/controllers/questions');
 const answers = require('../app/controllers/answers');
 const avatars = require('../app/controllers/avatars');
 const index = require('../app/controllers/index');
 const users = require('../app/controllers/users');
+const games = require('../app/controllers/games');
 
 module.exports = (app, passport) => {
   // User Routes
@@ -16,6 +17,8 @@ module.exports = (app, passport) => {
   app.post('/users', users.create);
   app.post('/api/auth/signup', users.register);
   app.post('/users/avatars', users.avatars);
+  app.post('/api/search/users', users.search);
+  app.post('/api/invite/users', users.invite);
 
   // Donation Routes
   app.post('/donations', users.addDonation);
@@ -116,7 +119,12 @@ module.exports = (app, passport) => {
   // Avatar Routes
   app.get('/avatars', avatars.allJSON);
 
+  // Games history
+  app.get('/api/games/history', verifyJWT, games.history);
+
   // Home route
   app.get('/play', index.play);
   app.get('/', index.render);
+
+  app.post('/api/games/:id/start', index.start);
 };
