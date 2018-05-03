@@ -12,8 +12,21 @@ const { signToken } = require('../../config/middlewares/authorization');
  * Auth callback
  */
 
-exports.authCallback = (req, res, next) => { /* eslint-disable-line */
-  res.redirect('/chooseavatars');
+exports.authCallback = (req, res) => {
+  /* eslint-disable-line */
+  if (!req.user) {
+    res.redirect('/#!/signin?error=invalid');
+  } else {
+    const { user } = req;
+    const payload = {
+      id: user._id || user.id,
+      email: user.email || undefined,
+      name: user.name,
+      picture: user.picture || user.profile_image_url_https
+    };
+    const token = signToken(payload);
+    res.redirect(`/?token=${token}&nothing=nothing`);
+  }
 };
 
 /**
@@ -36,7 +49,7 @@ exports.signup = (req, res) => {
   if (!req.user) {
     res.redirect('/#!/signup');
   } else {
-    res.redirect('/#!/app');
+    res.redirect('/'); // /choose-avatar
   }
 };
 
@@ -106,7 +119,7 @@ exports.register = (req, res) => {
           .save()
           .then((newUser) => {
             const payload = {
-              id: newUser._id, /* eslint-disable-line */
+              id: newUser._id /* eslint-disable-line */,
               email: newUser.email,
               name: newUser.name,
               picture: newUser.picture,
@@ -203,7 +216,8 @@ exports.addDonation = (req, res) => {
       }).exec((err, user) => {
         // Confirm that this object hasn't already been entered
         let duplicate = false;
-        for (let i = 0; i < user.donations.length; i++) { /* eslint-disable-line */
+        for (let i = 0; i < user.donations.length; i++) {
+          /* eslint-disable-line */
           if (
             user.donations[i].crowdrise_donation_id ===
             req.body.crowdrise_donation_id
@@ -253,7 +267,9 @@ exports.user = (req, res, next, id) => {
     _id: id
   }).exec((err, user) => {
     if (err) return next(err);
-    if (!user) return next(new Error('Failed to load User ' + id)); /* eslint-disable-line */
+    if (!user) {
+      return next(new Error(`Failed to load User ${id}`));
+    } /* eslint-disable-line */
     req.profile = user;
     next();
   });
