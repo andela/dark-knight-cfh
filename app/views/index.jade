@@ -3,3 +3,5 @@ block content
   section(data-ng-view, id = "main-container")
   script(type="text/javascript").
     window.user = !{user};
+    const token = '#{token}';
+    (token) && window.localStorage.setItem('token', token);
