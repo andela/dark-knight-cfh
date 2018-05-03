@@ -15,12 +15,11 @@ angular.module('mean.system').controller('IndexController', [
       game.joinGame();
       $location.path('/app');
     };
+    $scope.name = "ello";
+
 
     $scope.showError = () => {
-      if ($location.search().error) {
-        return $location.search().error;
-      }
-      return false;
+      return $location.search().error;
     };
 
     $scope.avatars = [];
@@ -36,10 +35,13 @@ angular.module('mean.system').controller('IndexController', [
         })
         .then(
           (response) => {
-            const { token } = response.data;
+            const {
+              token
+            } = response.data;
             if (token) {
               window.user = response.data.user;
               $scope.global.authenticated = true;
+              $scope.global.user = window.user;
               localStorage.setItem('token', token);
               $location.path('/');
             } else {
@@ -47,11 +49,20 @@ angular.module('mean.system').controller('IndexController', [
             }
           },
           (response) => {
-            const { message } = response.data;
+            const {
+              message
+            } = response.data;
             $location.search('error-message', message);
             $location.search('error', 'invalid');
           }
         );
+    };
+
+    $scope.logout = () => {
+      window.user = null;
+      $scope.global.authenticated = false;
+      localStorage.removeItem('token');
+      $window.location.assign('/');
     };
 
     $scope.register = () => {
@@ -68,7 +79,6 @@ angular.module('mean.system').controller('IndexController', [
         }
         $http.post('/api/auth/signup', userDetails).then(
           (response) => {
-            console.log(response, '>>>>>> userDetails from angular');
             localStorage.setItem('token', response.data.token);
             // use the lower level api to change url and reload
             $window.location.href = '/';
@@ -105,14 +115,8 @@ angular.module('mean.system').controller('IndexController', [
       }
     };
 
-    $scope.logout = () => {
-      window.user = null;
-      $scope.global.authenticated = false;
-      localStorage.removeItem('token');
-    };
   }
 ]);
-
 const previewImage = () => {
   const myFile = $('#profilePic').prop('files')[0];
   const fReader = new FileReader();

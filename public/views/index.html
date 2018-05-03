@@ -1,6 +1,20 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+<script type="text/javascript">
+    $(window).on('load',function(){
+        let isMouseOver = false;
+        let first = true;
+
+        const fab = document.querySelector('.fixed-action-btn');
+        const sidenav = document.querySelector('.sidenav');
+
+        const fabInstance = M.FloatingActionButton.init(fab, { });
+        const instance = M.Sidenav.init(sidenav, { });
+    });
+</script>
+
 <link rel="stylesheet" href="../css/common2.css">
-<div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+<div ng-controller="IndexController">
     <!-- Navbar -->
     <div class="navbar-fixed">
         <nav>
@@ -11,8 +25,9 @@
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         <li><a href="#charity" class="gray-slate-text animate swell-1 turn-gray-slate-text">CHARITY</a></li>
                         <li><a href="#" class="gray-slate-text animate swell-1 turn-gray-slate-text">ABOUT US</a></li>
-                        <li><a href="#!/signup" class="gray-slate-text animate swell-1 turn-gray-slate-text">SIGN UP</a></li>
-                        <li><a href="#!/signin" class="gray-slate-text animate swell-1 turn-gray-slate-text">LOGIN</a></li>
+                        <li><a href="#!/signup" class="gray-slate-text animate swell-1 turn-gray-slate-text" data-ng-hide="global.authenticated">SIGN UP</a></li>
+                        <li><a href="#!/signin" class="gray-slate-text animate swell-1 turn-gray-slate-text" data-ng-hide="global.authenticated">LOGIN</a></li>
+                        <li><a href="" ng-click="logout()" class="gray-slate-text animate swell-1 turn-gray-slate-text" data-ng-show="global.authenticated">SIGN OUT</a></li>
                     </ul>
                 </div>
             </div>
@@ -22,8 +37,9 @@
     <ul class="sidenav" id="mobile">
         <li><a href="#charity">CHARITY</a></li>
         <li><a href="#">ABOUT US</a></li>
-        <li><a href="#!/signup">SIGN UP</a></li>
-        <li><a href="#!/signin">LOGIN</a></li>
+        <li><a href="#!/signup" data-ng-hide="global.authenticated">SIGN UP</a></li>
+        <li><a href="#!/signin" data-ng-hide="global.authenticated">LOGIN</a></li>
+        <li><a href="" ng-click="logout()" data-ng-show="global.authenticated">SIGN OUT</a></li>
     </ul>
     <!-- Introduction Section -->
     <div class="row landing-page-row parallax intro-container">
@@ -135,15 +151,3 @@
         </ul>
     </div>
 </div>
-
-<!-- Init -->
-<script>
-    let isMouseOver = false;
-    let first = true;
-
-    const fab = document.querySelector('.fixed-action-btn');
-    const sidenav = document.querySelector('.sidenav');
-
-    const fabInstance = M.FloatingActionButton.init(fab, { });
-    const instance = M.Sidenav.init(sidenav, { });
-</script>
