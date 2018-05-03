@@ -109,7 +109,7 @@ exports.register = (req, res) => {
               id: newUser._id, /* eslint-disable-line */
               email: newUser.email,
               name: newUser.name,
-              picture: newUser.picture,
+              avatar: newUser.avatar,
               publicId: newUser.publicId
             };
             const token = signToken(payload);

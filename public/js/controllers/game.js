@@ -1,4 +1,4 @@
-angular.module('mean.system')/* eslint-disable-line */
+angular.module('mean.system') /* eslint-disable-line */
   .controller('GameController', ['$scope', 'game', '$timeout', '$location', 'MakeAWishFactsService', '$dialog',
     function ($scope, game, $timeout, $location, MakeAWishFactsService, $dialog) { /* eslint-disable-line */
       $scope.hasPickedCards = false;
@@ -13,7 +13,7 @@ angular.module('mean.system')/* eslint-disable-line */
       $scope.pickedCards = [];
       // let makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
       // $scope.makeAWishFact = makeAWishFacts.pop();
-
+      $scope.name = 'ello bae';
 
       $scope.searchUser = function (playerInfo) {
         game.searchUser($scope.search_input, playerInfo);
@@ -27,8 +27,8 @@ angular.module('mean.system')/* eslint-disable-line */
               $scope.sendPickedCards();
               $scope.hasPickedCards = true;
             } else if (game.curQuestion.numAnswers === 2 &&
-            $scope.pickedCards.length === 2) {
-            // delay and send
+              $scope.pickedCards.length === 2) {
+              // delay and send
               $scope.hasPickedCards = true;
               $timeout($scope.sendPickedCards, 300);
             }
@@ -38,25 +38,41 @@ angular.module('mean.system')/* eslint-disable-line */
         }
       };
 
-      $scope.$watch('game.level', (newValue, oldValue) => {/* eslint-disable-line */
+      $scope.$watch('game.level', (newValue, oldValue) => { /* eslint-disable-line */
         if (newValue !== '') {
-          localStorage.setItem('level', newValue);/* eslint-disable-line */
+          localStorage.setItem('level', newValue); /* eslint-disable-line */
         }
       });
 
       $scope.pointerCursorStyle = function () {
         if ($scope.isCzar() && $scope.game.state === 'waiting for czar to decide') {
-          return { cursor: 'pointer' };
+          return {
+            cursor: 'pointer'
+          };
         }
         return {};
       };
 
-      $scope.$watch('game.state', (newValue, oldValue) => {/* eslint-disable-line */
+      $scope.$watch('game.state', (newValue, oldValue) => { /* eslint-disable-line */
         if (newValue === 'game ended' && game.playerIndex === 0) {
-          const winner = game.players[game.gameWinner].username;
-          const { players } = game;
+          const winner = game.players[game.gameWinner].id;
+          const {
+            players
+          } = game;
+          const newPlayers = players.map((player) => {
+            const {
+              id,
+              points,
+              username
+            } = player;
+            return {
+              id,
+              points,
+              username
+            };
+          });
           const gameId = game.gameID;
-          game.saveGame(winner, players, gameId);
+          game.saveGame(winner, newPlayers, gameId);
         }
       });
 
@@ -64,7 +80,7 @@ angular.module('mean.system')/* eslint-disable-line */
         $scope.startUserGame = true;
       };
 
-      $scope.$watch('startUserGame', (newValue, oldValue) => {/* eslint-disable-line */
+      $scope.$watch('startUserGame', (newValue, oldValue) => { /* eslint-disable-line */
         if (newValue) {
           if ($location.search().game && !(/^\d+$/).test($location.search().game)) {
             game.joinGame('joinGame', $location.search().game);
@@ -187,20 +203,25 @@ angular.module('mean.system')/* eslint-disable-line */
       $scope.$watch('game.gameID', () => {
         if (game.gameID && game.state === 'awaiting players') {
           if (!$scope.isCustomGame() && $location.search().game) {
-          // If the player didn't successfully enter the request room,
-          // reset the URL so they don't think they're in the requested room.
+            // If the player didn't successfully enter the request room,
+            // reset the URL so they don't think they're in the requested room.
             $location.search({});
           } else if ($scope.isCustomGame() && !$location.search().game) {
-          // Once the game ID is set, update the URL if this is a game with friends,
-          // where the link is meant to be shared.
-            $location.search({ game: game.gameID });
+            // Once the game ID is set, update the URL if this is a game with friends,
+            // where the link is meant to be shared.
+            $location.search({
+              game: game.gameID
+            });
             if (!$scope.modalShown) {
               setTimeout(() => {
                 const link = document.URL; /* eslint-disable-line */
                 const txt = 'Give the following link to your friends so they can join your game: ';
                 $('#lobby-how-to-play').text(txt);
                 $('#oh-el').css({
-                  'text-align': 'center', 'font-size': '22px', background: 'white', color: 'black'
+                  'text-align': 'center',
+                  'font-size': '22px',
+                  background: 'white',
+                  color: 'black'
                 }).text(link);
               }, 200);
               $scope.modalShown = true;
