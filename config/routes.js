@@ -51,15 +51,6 @@ module.exports = (app, passport) => {
     failureRedirect: '/signin'
   }), users.authCallback);
 
-  // Setting the github oauth routes
-  app.get('/auth/github', passport.authenticate('github', {
-    failureRedirect: '/signin'
-  }), users.signin);
-
-  app.get('/auth/github/callback', passport.authenticate('github', {
-    failureRedirect: '/signin'
-  }), users.authCallback);
-
   // Setting the twitter oauth routes
   app.get('/auth/twitter', passport.authenticate('twitter', {
     failureRedirect: '/signin'
@@ -78,9 +69,11 @@ module.exports = (app, passport) => {
     ]
   }), users.signin);
 
+
   app.get('/auth/google/callback', passport.authenticate('google', {
     failureRedirect: '/signin'
   }), users.authCallback);
+
 
   // Finish with setting up the userId param
   app.param('userId', users.user);

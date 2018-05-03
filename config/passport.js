@@ -2,12 +2,10 @@ const mongoose = require('mongoose'),
   LocalStrategy = require('passport-local').Strategy,
   TwitterStrategy = require('passport-twitter').Strategy,
   FacebookStrategy = require('passport-facebook').Strategy,
-  GitHubStrategy = require('passport-github').Strategy,
   GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
   User = mongoose.model('User'),
   config = require('./config');
 
-// const User = mongoose.model('User');
 require('dotenv').config();
 /**
  * @param {any} passport
@@ -65,7 +63,6 @@ module.exports = (passport) => {
       );
     }
   ));
-
   // Use twitter strategy
   passport.use(new TwitterStrategy(
     {
@@ -74,7 +71,6 @@ module.exports = (passport) => {
       callbackURL: config.twitter.callbackURL
     },
     (token, tokenSecret, profile, done) => {
-      console.log('>>>>>>>>>> twitter profile', profile);
       User.findOne(
         {
           'twitter.id_str': profile.id
@@ -142,44 +138,6 @@ module.exports = (passport) => {
       );
     }
   ));
-
-  // Use github strategy
-  passport.use(new GitHubStrategy(
-    {
-      clientID: process.env.GITHUB_CLIENT_ID,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET,
-      callbackURL: config.github.callbackURL
-    },
-    (accessToken, refreshToken, profile, done) => {
-      User.findOne(
-        {
-          'github.id': profile.id
-        },
-        (err, user) => {
-          if (err) {
-            return done(err);
-          }
-          if (!user) {
-            user = new User({
-              name: profile.displayName,
-              email: profile.emails[0].value,
-              username: profile.username,
-              provider: 'github',
-              github: profile._json,
-              avatar: profile._json.avatar_url
-            });
-            user.save((err) => {
-              if (err) console.log(err);
-              return done(err, user);
-            });
-          } else {
-            return done(err, user);
-          }
-        }
-      );
-    }
-  ));
-
   // Use google strategy
   passport.use(new GoogleStrategy(
     {
