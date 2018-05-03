@@ -1,14 +1,23 @@
-angular.module('mean.system')
+angular.module('mean.system')/* eslint-disable-line */
   .controller('GameController', ['$scope', 'game', '$timeout', '$location', 'MakeAWishFactsService', '$dialog',
-    function ($scope, game, $timeout, $location, MakeAWishFactsService, $dialog) {
+    function ($scope, game, $timeout, $location, MakeAWishFactsService, $dialog) { /* eslint-disable-line */
       $scope.hasPickedCards = false;
       $scope.winningCardPicked = false;
       $scope.showTable = false;
       $scope.modalShown = false;
+      $scope.search_input = '';
       $scope.game = game;
+      $scope.startUserGame = false;
+      $scope.level = '';
+      $scope.owner = false;
       $scope.pickedCards = [];
-      let makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
-      $scope.makeAWishFact = makeAWishFacts.pop();
+      // let makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
+      // $scope.makeAWishFact = makeAWishFacts.pop();
+
+
+      $scope.searchUser = function (playerInfo) {
+        game.searchUser($scope.search_input, playerInfo);
+      };
 
       $scope.pickCard = function (card) {
         if (!$scope.hasPickedCards) {
@@ -29,50 +38,76 @@ angular.module('mean.system')
         }
       };
 
-      $scope.pointerCursorStyle = function() {
-      if ($scope.isCzar() && $scope.game.state === 'waiting for czar to decide') {
-        return {'cursor': 'pointer'};
-      } 
+      $scope.$watch('game.level', (newValue, oldValue) => {/* eslint-disable-line */
+        if (newValue !== '') {
+          localStorage.setItem('level', newValue);/* eslint-disable-line */
+        }
+      });
+
+      $scope.pointerCursorStyle = function () {
+        if ($scope.isCzar() && $scope.game.state === 'waiting for czar to decide') {
+          return { cursor: 'pointer' };
+        }
         return {};
-      
-    };
+      };
+
+      $scope.$watch('game.state', (newValue, oldValue) => {/* eslint-disable-line */
+        if (newValue === 'game ended' && game.playerIndex === 0) {
+          const winner = game.players[game.gameWinner].username;
+          const { players } = game;
+          const gameId = game.gameID;
+          game.saveGame(winner, players, gameId);
+        }
+      });
+
+      $scope.startSession = function () {
+        $scope.startUserGame = true;
+      };
+
+      $scope.$watch('startUserGame', (newValue, oldValue) => {/* eslint-disable-line */
+        if (newValue) {
+          if ($location.search().game && !(/^\d+$/).test($location.search().game)) {
+            game.joinGame('joinGame', $location.search().game);
+          } else if ($location.search().custom) {
+            game.joinGame('joinGame', null, true);
+          } else {
+            game.joinGame();
+          }
+        }
+      });
 
       $scope.sendPickedCards = function () {
         game.pickCards($scope.pickedCards);
         $scope.showTable = true;
       };
 
-      $scope.cardIsFirstSelected = function(card) {
-      if (game.curQuestion.numAnswers > 1) {
-        return card === $scope.pickedCards[0];
-      } 
+      $scope.cardIsFirstSelected = function (card) {
+        if (game.curQuestion.numAnswers > 1) {
+          return card === $scope.pickedCards[0];
+        }
         return false;
-      
-    };
+      };
 
-      $scope.cardIsSecondSelected = function(card) {
-      if (game.curQuestion.numAnswers > 1) {
-        return card === $scope.pickedCards[1];
-      } 
+      $scope.cardIsSecondSelected = function (card) {
+        if (game.curQuestion.numAnswers > 1) {
+          return card === $scope.pickedCards[1];
+        }
         return false;
-      
-    };
+      };
 
-      $scope.firstAnswer = function($index){
-      if($index % 2 === 0 && game.curQuestion.numAnswers > 1){
-        return true;
-      } 
+      $scope.firstAnswer = function ($index) {
+        if ($index % 2 === 0 && game.curQuestion.numAnswers > 1) {
+          return true;
+        }
         return false;
-      
-    };
+      };
 
-      $scope.secondAnswer = function($index){
-      if($index % 2 === 1 && game.curQuestion.numAnswers > 1){
-        return true;
-      } 
+      $scope.secondAnswer = function ($index) {
+        if ($index % 2 === 1 && game.curQuestion.numAnswers > 1) {
+          return true;
+        }
         return false;
-      
-    };
+      };
 
       $scope.showFirst = function (card) {
         return game.curQuestion.numAnswers > 1 && $scope.pickedCards[0] === card.id;
@@ -102,13 +137,12 @@ angular.module('mean.system')
         return $index === game.czar;
       };
 
-      $scope.winningColor = function($index) {
-      if (game.winningCardPlayer !== -1 && $index === game.winningCard) {
-        return $scope.colors[game.players[game.winningCardPlayer].color];
-      } 
+      $scope.winningColor = function ($index) {
+        if (game.winningCardPlayer !== -1 && $index === game.winningCard) {
+          return $scope.colors[game.players[game.winningCardPlayer].color];
+        }
         return '#f9f9f9';
-      
-    };
+      };
 
       $scope.pickWinning = function (winningSet) {
         if ($scope.isCzar()) {
@@ -133,52 +167,52 @@ angular.module('mean.system')
       // Catches changes to round to update when no players pick card
       // (because game.state remains the same)
       $scope.$watch('game.round', () => {
-      $scope.hasPickedCards = false;
-      $scope.showTable = false;
-      $scope.winningCardPicked = false;
-      $scope.makeAWishFact = makeAWishFacts.pop();
-      if (!makeAWishFacts.length) {
-        makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
-      }
-      $scope.pickedCards = [];
-    });
+        $scope.hasPickedCards = false;
+        $scope.showTable = false;
+        $scope.winningCardPicked = false;
+        $scope.makeAWishFact = makeAWishFacts.pop();
+        if (!makeAWishFacts.length) {
+          makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
+        }
+        $scope.pickedCards = [];
+      });
 
       // In case player doesn't pick a card in time, show the table
       $scope.$watch('game.state', () => {
-      if (game.state === 'waiting for czar to decide' && $scope.showTable === false) {
-        $scope.showTable = true;
-      }
-    });
+        if (game.state === 'waiting for czar to decide' && $scope.showTable === false) {
+          $scope.showTable = true;
+        }
+      });
 
       $scope.$watch('game.gameID', () => {
-      if (game.gameID && game.state === 'awaiting players') {
-        if (!$scope.isCustomGame() && $location.search().game) {
+        if (game.gameID && game.state === 'awaiting players') {
+          if (!$scope.isCustomGame() && $location.search().game) {
           // If the player didn't successfully enter the request room,
           // reset the URL so they don't think they're in the requested room.
-          $location.search({});
-        } else if ($scope.isCustomGame() && !$location.search().game) {
+            $location.search({});
+          } else if ($scope.isCustomGame() && !$location.search().game) {
           // Once the game ID is set, update the URL if this is a game with friends,
           // where the link is meant to be shared.
-          $location.search({game: game.gameID});
-          if(!$scope.modalShown){
-            setTimeout(function(){
-              var link = document.URL;
-              var txt = 'Give the following link to your friends so they can join your game: ';
-              $('#lobby-how-to-play').text(txt);
-              $('#oh-el').css({'text-align': 'center', 'font-size':'22px', 'background': 'white', 'color': 'black'}).text(link);
-            }, 200);
-            $scope.modalShown = true;
+            $location.search({ game: game.gameID });
+            if (!$scope.modalShown) {
+              setTimeout(() => {
+                const link = document.URL; /* eslint-disable-line */
+                const txt = 'Give the following link to your friends so they can join your game: ';
+                $('#lobby-how-to-play').text(txt);
+                $('#oh-el').css({
+                  'text-align': 'center', 'font-size': '22px', background: 'white', color: 'black'
+                }).text(link);
+              }, 200);
+              $scope.modalShown = true;
+            }
           }
         }
-      }
-    });
+      });
 
-      if ($location.search().game && !(/^\d+$/).test($location.search().game)) {
-        console.log('joining custom game');
-        game.joinGame('joinGame', $location.search().game);
-      } else if ($location.search().custom) {
-        game.joinGame('joinGame', null, true);
+      if ($location.search().game === undefined) {
+        $scope.owner = true;
       } else {
-        game.joinGame();
+        game.joinGame('joinGame', $location.search().game);
       }
-    }]);
+    }
+  ]);
