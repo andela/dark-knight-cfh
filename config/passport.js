@@ -105,7 +105,7 @@ module.exports = (passport) => {
       clientID: process.env.FB_CLIENT_ID,
       clientSecret: process.env.FB_CLIENT_SECRET,
       callbackURL: config.facebook.callbackURL,
-      profileFields: ['id', 'birthday', 'email', 'first_name', 'last_name', 'gender', 'picture.width(200).height(200)', 'photos']
+      profileFields: ['id', 'birthday', 'email', 'first_name', 'last_name', 'gender', 'picture.width(200).height(200)']
     },
     (accessToken, refreshToken, profile, done) => {
       User.findOne(
