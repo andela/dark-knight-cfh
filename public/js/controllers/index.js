@@ -15,6 +15,7 @@ angular.module('mean.system').controller('IndexController', [
       game.joinGame();
       $location.path('/app');
     };
+    $scope.name = "ello";
 
 
     $scope.showError = () => {
