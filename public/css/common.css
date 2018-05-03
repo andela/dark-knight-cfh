@@ -90,6 +90,9 @@ body {
   margin-top: 50px;
   width: 70%; }
 
+.bgColor2 {
+  background: red; }
+
 #main-container {
   height: 100%; }
   #main-container #app-container {

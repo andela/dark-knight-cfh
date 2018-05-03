@@ -15,6 +15,7 @@ angular.module('mean.system').controller('IndexController', [
       game.joinGame();
       $location.path('/app');
     };
+    $scope.name = "ello";
 
 
     $scope.showError = () => {
@@ -40,6 +41,7 @@ angular.module('mean.system').controller('IndexController', [
             if (token) {
               window.user = response.data.user;
               $scope.global.authenticated = true;
+              $scope.global.user = window.user;
               localStorage.setItem('token', token);
               $location.path('/');
             } else {
