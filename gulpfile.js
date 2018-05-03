@@ -19,7 +19,7 @@ gulp.task('watch', () => {
 
 gulp.task('sass', () => {
   gulp.watch(
-    ['public/css/common.scss, public/css/common2.scss, public/css/views/articles.scss'],
+    ['public/css/common.scss, public/css/common2.scss'],
     ['sass:dist']
   );
 });
