@@ -18,7 +18,6 @@ exports.authCallback = (req, res) => {
     res.redirect('/#!/signin?error=invalid');
   } else {
     const { user } = req;
-    console.log('###USER', user.twitter, user.twitter.profile_image_url_https);
     const payload = {
       id: user._id || user.id,
       email: user.email || undefined,
