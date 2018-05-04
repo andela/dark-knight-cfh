@@ -108,6 +108,7 @@ module.exports = (passport) => {
       profileFields: ['id', 'birthday', 'email', 'first_name', 'last_name', 'gender', 'picture.width(200).height(200)']
     },
     (accessToken, refreshToken, profile, done) => {
+      console.log(profile);
       User.findOne(
         {
           'facebook.id': profile.id
@@ -117,8 +118,6 @@ module.exports = (passport) => {
             return done(err);
           }
           if (!user) {
-            console.log(profile);
-
             user = new User({
               name: profile.displayName,
               email: (profile.emails && profile.emails[0].value) || '',
