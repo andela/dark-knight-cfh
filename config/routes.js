@@ -94,6 +94,7 @@ module.exports = (app, passport) => {
   app.get('/avatars', avatars.allJSON);
 
   // Games history
+  // app.get('/api/games/history', games.history);
   app.get('/api/games/history', verifyJWT, games.history);
 
   // Home route
@@ -101,4 +102,5 @@ module.exports = (app, passport) => {
   app.get('/', index.render);
 
   app.post('/api/games/:id/start', index.start);
+  app.get('/api/profile', verifyJWT, users.profile);
 };

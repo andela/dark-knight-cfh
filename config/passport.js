@@ -124,7 +124,8 @@ module.exports = (passport) => {
               username: profile.username,
               provider: 'facebook',
               facebook: profile._json,
-              picture: profile.photos[0].value || profile._json.picture
+              avatar: profile.photos[0].value || profile._json.picture || profile._json.avatar || profile.json.picture.data.url || profile.json.avatar.data.url
+
             });
             user.save((err) => {
               if (err) console.log(err);
@@ -162,7 +163,7 @@ module.exports = (passport) => {
               username: profile.username,
               provider: 'google',
               google: profile._json,
-              picture: profile._json.picture
+              avatar: profile._json.picture || profile._json.avatar
             });
             user.save((err) => {
               if (err) console.log(err);

@@ -105,6 +105,7 @@ module.exports = function (io) {
           console.log('err', err);
           return err; // Hopefully this never happens.
         }
+        console.log('######*******', data.avatar);
         if (!user) {
           // If the user's ID isn't found (rare)
           player.username = 'Guest';
@@ -113,7 +114,7 @@ module.exports = function (io) {
           player.username = user.name;
           player.id = user._id;
           player.premium = user.premium || 0;
-          player.avatar = user.avatar || avatars[Math.floor(Math.random() * 4) + 12];
+          player.avatar = user.avatar || data.avatar || avatars[Math.floor(Math.random() * 4) + 12];
         }
         getGame(player, socket, data.room, data.createPrivate, data.timing);
       });

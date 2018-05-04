@@ -21,6 +21,10 @@ const GameSchema = new Schema({
   },
   gameId: {
     type: String
+  },
+  played: {
+    type: Date,
+    default: Date.now()
   }
 });
 
