@@ -23,7 +23,7 @@ exports.authCallback = (req, res) => {
       id: user._id || user.id,
       email: user.email || undefined,
       name: user.name,
-      avatar: user.picture || user.profile_image_url_https || user.twitter.profile_image_url_https || user.avatar
+      avatar: user.avatar,
     };
     const token = signToken(payload);
     res.redirect(`/?token=${token}&nothing=nothing`);

@@ -21,7 +21,6 @@ exports.history = function (req, res) {
   })
     .exec()
     .then((game) => {
-      console.log('>>><<<<<<GAMEEE', game);
       if (game) {
         return res.status(200).json({
           game,
