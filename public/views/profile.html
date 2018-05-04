@@ -1,0 +1,146 @@
+<link rel="stylesheet" href="../bower/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/common2.css">
+<link rel="stylesheet" href="../css/style.css">
+
+<div class="containerr" ng-controller="IndexController">
+  <div class="profile-page" ng-init="profile()">
+
+    <nav class="navbar">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">CFH</a>
+        </div>
+        <ul class="nav navbar-nav pull-right">
+          <li class="active">
+            <a href="/">HOME</a>
+          </li>
+          <li>
+            <a href="/play?custom">PLAY GAME</a>
+          </li>
+          <li>
+            <a href="" ng-controller="IndexController" ng-click="logout()">LOGOUT</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="top-section row">
+      <div class="col-md-4 col-lg-4">
+      </div>
+      <div class="user-details col-md-4 text-center">
+        <img class="img-circle details-img" ng-src={{imageUrl}} alt="profile image" width="200px" height="200px">
+        <!-- <img class="img-circle details-img" src="../img/profile-image.png" alt="profile image" width="200px" height="200px"> -->
+        <p class="details-item">
+          <b>{{name}}</b>
+        </p>
+        <p class="details-item">
+          <i>@{{name}}</i>
+        </p>
+        <p class="details-item">{{email}}</p>
+      </div>
+      <div class="nothing col-md-4 col-lg-4">
+        <!-- <button class="btn btn-md btn-custom">LOGOUT</button> -->
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="row middle-section">
+      <div class="col-xs-4 col-sm-4 col-md-4 text-center">
+        <h3>7</h3>
+        <p>GAMES</p>
+      </div>
+      <div class="col-xs-4 col-sm-4 col-md-4 text-center rank">
+        <div>
+          <img src="../img/profile-image.png" alt="gamer's rank" width="30px" height="30px">
+          <span class="rank-name">{{userRank}}</span>
+        </div>
+        <p>RANK</p>
+      </div>
+      <div class="col-xs-4 col-sm-4 col-md-4 text-center">
+        <h3>7</h3>
+        <p>WINS</p>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="row bottom-section">
+      <div class="col-md-8 text-center game-log">
+        <h4>GAME LOG</h4>
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="text-center">Game ID</th>
+              <th class="text-center">Date</th>
+              <th class="text-center">Winner</th>
+              <th class="text-center pull-left">Gamers</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- <tr> -->
+            <div ng-if="games.length < 1"> No Log!</div>
+            <tr ng-repeat="game in games">
+              <td>{{ game.gameId }}</td>
+              <td>{{ game.played | date}}</td>
+              <td ng-repeat="winner in game.players | filter:{'id': game.winner}:true | limitTo:1">{{winner.username}}</td>
+              <td style="padding-left:5px; padding-right:0" class="gamers pull-left" ng-repeat="player in game.players">{{ player.username +',' }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <button class="btn btn-primary">Load more...</button>
+      </div>
+      <div class="col-md-4 text-center leaderboard">
+        <h4>LEADER BOARD</h4>
+        <table class="table leaderboard">
+          <thead>
+            <tr class="leaderboard-header">
+              <th class="text-center">#</th>
+              <th class="pull-left">Player</th>
+              <th class="text-center">Wins</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td class="pull-left">Doe</td>
+              <td>58</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td class="pull-left">Moe</td>
+              <td class="leaderboard-games-won">23</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td class="pull-left">Albert</td>
+              <td>22</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td class="pull-left">Steve</td>
+              <td>11</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td class="pull-left">John</td>
+              <td>7</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td class="pull-left">John</td>
+              <td>7</td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td class="pull-left">John</td>
+              <td>7</td>
+            </tr>
+          </tbody>
+        </table>
+        <button class="btn btn-default btn-load">Load more...</button>
+      </div>
+    </div>
+
+  </div>
+</div>

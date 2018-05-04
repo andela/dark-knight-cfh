@@ -31,6 +31,9 @@
   .gray-slate.lighten-1 {
     background-color: #445464; }
 
+.btn-large {
+  padding: 0; }
+
 .glow {
   text-shadow: 0px 0px 5px white; }
 
@@ -43,9 +46,6 @@
   .animate.swell-1:hover {
     -webkit-transform: scale(1.1, 1.1);
     transform: scale(1.1, 1.1); }
-
-.animate.turn-purple:hover {
-  color: #e1bee7 !important; }
 
 .animate.turn-gray-slate:hover {
   background-color: #445464; }
@@ -67,7 +67,11 @@
     color: #344454 !important; }
 
 @-webkit-keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
     -webkit-transform: translateY(0); }
   40% {
     -webkit-transform: translateY(-30px); }
@@ -75,7 +79,11 @@
     -webkit-transform: translateY(-15px); } }
 
 @keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
     transform: translateY(0); }
   40% {
     transform: translateY(-30px); }
@@ -224,3 +232,94 @@
 .intro-title {
   max-width: 1500px !important;
   justify-self: center; }
+
+/*
+.team-details {
+  font-size: 25px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.team-img {
+  border: 5px solid white;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, .2);
+  width: 150px;
+}
+
+.team-name {
+  font-size: 20px;
+}
+
+.team-center-img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  margin-left: 100px;
+  img {
+    border: 5px solid white;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, .2);
+    width: 220px;
+  }
+}
+*/
+.navbar a {
+  color: #344454; }
+
+.profile-page {
+  background-color: #e4e4e4;
+  padding-bottom: 40px;
+  margin: 0; }
+  .profile-page hr.divider {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    border-top: 1px solid #8a92cd; }
+  .profile-page .top-section {
+    color: white;
+    background-color: #344454;
+    padding-bottom: 20px; }
+    .profile-page .top-section .profile-buttons {
+      margin-top: 50px; }
+      .profile-page .top-section .profile-buttons .btn-custom {
+        background-color: #8a92cd;
+        color: white;
+        margin-top: 10px; }
+    .profile-page .top-section .user-details {
+      margin-top: 50px; }
+      .profile-page .top-section .user-details .details-img {
+        margin-bottom: 10px; }
+      .profile-page .top-section .user-details .details-item {
+        margin-bottom: 0px; }
+  .profile-page .middle-section div > h3 {
+    font-weight: 600; }
+  .profile-page .middle-section .rank {
+    margin-top: 20px; }
+  .profile-page .middle-section .rank-name {
+    margin-top: 30px;
+    margin-bottom: 0; }
+  .profile-page .bottom-section {
+    padding-top: 30px; }
+    .profile-page .bottom-section .list-group-item {
+      background-color: inherit; }
+    .profile-page .bottom-section div.game-log tr {
+      color: #2a2727; }
+    .profile-page .bottom-section div.game-log tr.you {
+      background-color: #fff;
+      color: #4077ff; }
+    .profile-page .bottom-section div.game-log tr:hover {
+      background-color: #34495e;
+      color: #fafaff;
+      font-weight: bold; }
+    .profile-page .bottom-section .leaderboard {
+      background-color: #344454;
+      color: #fff; }
+      .profile-page .bottom-section .leaderboard tr:hover {
+        background-color: white;
+        color: #344454; }
+      .profile-page .bottom-section .leaderboard tr > td {
+        border-top: 1px none #ddd; }
+      .profile-page .bottom-section .leaderboard .leaderboard-header {
+        background-color: white;
+        color: black; }
+      .profile-page .bottom-section .leaderboard .btn-load {
+        margin-bottom: 30px; }
