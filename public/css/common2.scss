@@ -1,7 +1,6 @@
-$purple-darken-2: #7b1fa2;
-$purple-lighten-2: #e1bee7;
 $navy-blue: #344454;
 $navy-blue-lighten-1: #445464;
+$black: #000;
 
 .landing-page-row {
   width: 100%;
@@ -49,9 +48,10 @@ $navy-blue-lighten-1: #445464;
     background-color: $navy-blue-lighten-1;
   }
 }
-
+.btn-large{
+  padding: 0;
+}
 .glow {
-
   text-shadow: 0px 0px 5px white;
 }
 
@@ -69,9 +69,21 @@ $navy-blue-lighten-1: #445464;
     }
   }
 
-  &.turn-purple {
+  // &.turn-purple {
+  //   &:hover {
+  //     color: $purple-lighten-2 !important;
+  //   }
+  // }
+
+  &.turn-gray-slate {
     &:hover {
-      color: $purple-lighten-2 !important;
+      background-color: $navy-blue-lighten-1;
+    }
+  }
+
+  &.turn-gray-slate-text {
+    &:hover {
+      color: $navy-blue-lighten-1;
     }
   }
 
@@ -107,26 +119,45 @@ $navy-blue-lighten-1: #445464;
   }
 }
 
-
 @-webkit-keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {-webkit-transform: translateY(0);}
-  40% {-webkit-transform: translateY(-30px) }
-  60% {-webkit-transform: translateY(-15px);}
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    -webkit-transform: translateY(0);
+  }
+  40% {
+    -webkit-transform: translateY(-30px);
+  }
+  60% {
+    -webkit-transform: translateY(-15px);
+  }
 }
 
 @keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-  40% {transform: translateY(-30px);}
-  60% {transform: translateY(-15px);}
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-30px);
+  }
+  60% {
+    transform: translateY(-15px);
+  }
 }
 
 .card {
   border-radius: 5px !important;
   &:hover {
-  -webkit-animation-duration: 1s;
-  animation-duration: 1s;
-  -webkit-animation-name: bounce;
-  animation-name: bounce;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-name: bounce;
+    animation-name: bounce;
   }
 }
 
@@ -135,13 +166,9 @@ $navy-blue-lighten-1: #445464;
 }
 
 .parallax {
-  background-image: url("../img/humanity-cards-1.jpg");
-  background:
-  linear-gradient(
-    rgba(0, 0, 0, 0.45),
-    rgba(0, 0, 0, 0.45)
-  ),
-  url("../img/humanity-cards-1.jpg");
+  background-image: url('../img/humanity-cards-1.jpg');
+  background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+    url('../img/humanity-cards-1.jpg');
   min-height: 750px;
   background-attachment: fixed;
   background-position: center;
@@ -220,7 +247,6 @@ $navy-blue-lighten-1: #445464;
 }
 
 .charity-section {
-
   .row {
     margin-bottom: 0%;
   }
@@ -303,9 +329,110 @@ $navy-blue-lighten-1: #445464;
 }
 
 @media only screen and (min-width: 1024px) {
-
 }
 .intro-title {
   max-width: 1500px !important;
   justify-self: center;
+}
+
+.navbar {
+  a {
+    color: #344454;
+  }
+}
+.profile-page {
+  background-color: #e4e4e4;
+  padding-bottom: 40px;
+  margin: 0;
+
+  hr.divider {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    border-top: 1px solid #8a92cd;
+  }
+
+  .top-section {
+    color: white;
+    background-color: #344454;
+    // background-color: #34495E;
+    padding-bottom: 20px;
+
+    .profile-buttons {
+      margin-top: 50px;
+      .btn-custom {
+        background-color: #8a92cd;
+        color: white;
+        margin-top: 10px;
+      }
+    }
+    .user-details {
+      margin-top: 50px;
+      .details-img {
+        margin-bottom: 10px;
+      }
+      .details-item {
+        margin-bottom: 0px;
+      }
+    }
+  }
+
+  .middle-section {
+    div > h3 {
+      font-weight: 600;
+    }
+    .rank {
+      margin-top: 20px;
+      // width: 50px;
+    }
+    .rank-name {
+      margin-top: 30px;
+      margin-bottom: 0;
+    }
+  }
+
+  .bottom-section {
+    padding-top: 30px;
+    .list-group-item {
+      background-color: inherit;
+    }
+
+    div.game-log {
+      tr {
+        color: #2a2727;
+      }
+
+      tr.you {
+        background-color: #fff;
+        color: #4077ff;
+      }
+
+      tr:hover {
+        background-color: #34495e;
+        color: #fafaff;
+        font-weight: bold;
+      }
+    }
+
+    .leaderboard {
+      background-color: #344454;
+      color: #fff;
+
+      tr:hover {
+        background-color: white;
+        color: #344454;
+      }
+
+      tr>td {
+        border-top: 1px none #ddd;
+      }
+      .leaderboard-header {
+        background-color: white;
+        color: black;
+      }
+
+      .btn-load{
+        margin-bottom: 30px;
+      }
+    }
+  }
 }

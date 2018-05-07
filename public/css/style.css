@@ -2987,7 +2987,8 @@ input[type="file"] {
   background-attachment: fixed;
   background-size: cover;
   background-repeat: no-repeat;
-  background-image: url('../img/bg.jpg');
+  background-image: url('../img/humanity-cards-1.jpg');
+  /* background-image: url('../img/bg.jpg'); */
 }
 .btn-upload{
   color: #fff;

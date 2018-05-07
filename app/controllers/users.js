@@ -22,7 +22,7 @@ exports.authCallback = (req, res) => {
       id: user._id || user.id,
       email: user.email || undefined,
       name: user.name,
-      picture: user.picture || user.profile_image_url_https
+      avatar: user.avatar,
     };
     const token = signToken(payload);
     res.redirect(`/?token=${token}&nothing=nothing`);
@@ -118,8 +118,9 @@ exports.register = (req, res) => {
         user
           .save()
           .then((newUser) => {
+            newUser.hashed_password = null;
             const payload = {
-              id: newUser._id /* eslint-disable-line */,
+              _id: newUser._id /* eslint-disable-line */,
               email: newUser.email,
               name: newUser.name,
               avatar: newUser.avatar,
@@ -129,7 +130,8 @@ exports.register = (req, res) => {
             return res.status(201).send({
               success: true,
               message: 'Registration successful!',
-              token
+              token,
+              newUser
             });
           })
           .catch(error =>
@@ -335,4 +337,25 @@ exports.user = (req, res, next, id) => {
     req.profile = user;
     next();
   });
+};
+
+exports.profile = (req, res, next)=>{
+  const userID = req.verified._id;
+  User.findOne({
+    _id: userID
+  })
+    .exec()
+    .then((user) => {
+      if (!user) {
+        return res.status(404).json({
+          message: 'User not found'
+        });
+      }
+      user.hashed_password = null;
+      return res.status(200).json({
+        user
+      });
+    })
+    .catch(error =>
+      res.status(500).json(error.message || 'Unable to query the database'));
 };

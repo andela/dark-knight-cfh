@@ -48,7 +48,7 @@ exports.verifyJWT = (req, res, next) => {
   } else {
     res.status(403).send('Token not provided');
   }
-  next();
+  //next();
 };
 
 /**

@@ -3,7 +3,8 @@ angular.module('mean.system')
   .factory('Global', [() => {
     const _this = this;/*eslint-disable-line */
     _this._data = {/*eslint-disable-line */
-      user: localStorage.getItem('token'),
+      user: window.user,
+      // user: localStorage.getItem('token'),
       authenticated: !!localStorage.getItem('token')
     };
 
