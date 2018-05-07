@@ -12,8 +12,21 @@ const { signToken } = require('../../config/middlewares/authorization');
  * Auth callback
  */
 
-exports.authCallback = (req, res, next) => { /* eslint-disable-line */
-  res.redirect('/chooseavatars');
+exports.authCallback = (req, res) => {
+  /* eslint-disable-line */
+  if (!req.user) {
+    res.redirect('/#!/signin?error=invalid');
+  } else {
+    const { user } = req;
+    const payload = {
+      id: user._id || user.id,
+      email: user.email || undefined,
+      name: user.name,
+      avatar: user.avatar,
+    };
+    const token = signToken(payload);
+    res.redirect(`/?token=${token}&nothing=nothing`);
+  }
 };
 
 /**
@@ -36,7 +49,7 @@ exports.signup = (req, res) => {
   if (!req.user) {
     res.redirect('/#!/signup');
   } else {
-    res.redirect('/#!/app');
+    res.redirect('/'); // /choose-avatar
   }
 };
 
@@ -105,18 +118,20 @@ exports.register = (req, res) => {
         user
           .save()
           .then((newUser) => {
+            newUser.hashed_password = null;
             const payload = {
-              id: newUser._id, /* eslint-disable-line */
+              _id: newUser._id /* eslint-disable-line */,
               email: newUser.email,
               name: newUser.name,
-              picture: newUser.picture,
+              avatar: newUser.avatar,
               publicId: newUser.publicId
             };
             const token = signToken(payload);
             return res.status(201).send({
               success: true,
               message: 'Registration successful!',
-              token
+              token,
+              newUser
             });
           })
           .catch(error =>
@@ -265,7 +280,8 @@ exports.addDonation = (req, res) => {
       }).exec((err, user) => {
         // Confirm that this object hasn't already been entered
         let duplicate = false;
-        for (let i = 0; i < user.donations.length; i++) { /* eslint-disable-line */
+        for (let i = 0; i < user.donations.length; i++) {
+          /* eslint-disable-line */
           if (
             user.donations[i].crowdrise_donation_id ===
             req.body.crowdrise_donation_id
@@ -315,8 +331,31 @@ exports.user = (req, res, next, id) => {
     _id: id
   }).exec((err, user) => {
     if (err) return next(err);
-    if (!user) return next(new Error('Failed to load User ' + id)); /* eslint-disable-line */
+    if (!user) {
+      return next(new Error(`Failed to load User ${id}`));
+    } /* eslint-disable-line */
     req.profile = user;
     next();
   });
+};
+
+exports.profile = (req, res, next)=>{
+  const userID = req.verified._id;
+  User.findOne({
+    _id: userID
+  })
+    .exec()
+    .then((user) => {
+      if (!user) {
+        return res.status(404).json({
+          message: 'User not found'
+        });
+      }
+      user.hashed_password = null;
+      return res.status(200).json({
+        user
+      });
+    })
+    .catch(error =>
+      res.status(500).json(error.message || 'Unable to query the database'));
 };

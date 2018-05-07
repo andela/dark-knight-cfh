@@ -15,15 +15,13 @@ angular.module('mean.system').controller('IndexController', [
       game.joinGame();
       $location.path('/app');
     };
-    $scope.name = "ello";
-
 
     $scope.showError = () => {
       return $location.search().error;
     };
 
     $scope.avatars = [];
-    AvatarService.getAvatars().then((data) => {
+    AvatarService.getAvatars().then(data => {
       $scope.avatars = data;
     });
 
@@ -34,10 +32,8 @@ angular.module('mean.system').controller('IndexController', [
           password: $scope.password
         })
         .then(
-          (response) => {
-            const {
-              token
-            } = response.data;
+          response => {
+            const { token } = response.data;
             if (token) {
               window.user = response.data.user;
               $scope.global.authenticated = true;
@@ -48,10 +44,8 @@ angular.module('mean.system').controller('IndexController', [
               $location.search('error', 'invalid');
             }
           },
-          (response) => {
-            const {
-              message
-            } = response.data;
+          response => {
+            const { message } = response.data;
             $location.search('error-message', message);
             $location.search('error', 'invalid');
           }
@@ -67,23 +61,34 @@ angular.module('mean.system').controller('IndexController', [
 
     $scope.register = () => {
       const myFile = $('#profilePic').prop('files')[0];
-      const signup = (res) => {
+      const signup = res => {
         const userDetails = {
           name: $scope.name,
           email: $scope.email,
-          password: $scope.password,
+          password: $scope.password
         };
         if (res) {
-          userDetails.picture = res.secure_url;
+          userDetails.avatar = res.secure_url;
           userDetails.publicId = res.public_id;
         }
         $http.post('/api/auth/signup', userDetails).then(
-          (response) => {
-            localStorage.setItem('token', response.data.token);
-            // use the lower level api to change url and reload
-            $window.location.href = '/';
+          response => {
+            const { token } = response.data;
+            if (token) {
+              console.log(token);
+              window.user = response.data.newUser;
+              $scope.global.authenticated = true;
+              $scope.global.user = window.user;
+              localStorage.setItem('token', token);
+              $location.path('/');
+            } else {
+              $location.search('error', 'invalid');
+            }
+            // localStorage.setItem('token', response.data.token);
+            // // use the lower level api to change url and reload
+            // $window.location.href = '/';
           },
-          (error) => {
+          error => {
             $scope.global.error = error.data.message || error.data;
           }
         );
@@ -114,14 +119,62 @@ angular.module('mean.system').controller('IndexController', [
         signup();
       }
     };
+    $scope.namez = 'jane';
 
+    $scope.games = [];
+    $scope.userPoints = 0;
+    $scope.profile = () => {
+      const token = localStorage.getItem('token');
+      // $http
+      //   .get('/api/profile', {
+      //     headers: {
+      //       'x-access-token': token
+      //     }
+      //   })
+      //   .then(response => $scope.userPoints = response.data.user.points)
+      //   .catch(error => $scope.error = error.message || 'Unable to fetch games from the db');
+
+      // $scope.userRank = '';
+      // const x = $scope.userPoints;
+      // console.log('##$#%', $scope.userPoints);
+
+      // if (x < 20) {
+      //   $scope.userRank = 'Pawn';
+      // } else if (x < 20) {
+      //   $scope.userRank = 'Knight';
+      // } else if (x < 50) {
+      //   $scope.userRank = 'Bishop';
+      // } else if (x < 100) {
+      //   $scope.userRank = 'Rook';
+      // } else if (x < 200) {
+      //   $scope.userRank = 'Queen';
+      // } else if (x < 250) {
+      //   $scope.userRank = 'King';
+      // }
+
+      const userData = jwt_decode(token);
+      if (token) {
+        $scope.imageUrl = userData.avatar;
+        $scope.email = userData.email || userData.phone || null;
+        $scope.name = userData.name || userData.username || null;
+      }
+
+      $http
+        .get('/api/games/history', {
+          headers: {
+            'x-access-token': token
+          }
+        })
+        .then(response => ($scope.games = response.data.game))
+        .catch(error => ($scope.error = error.message || 'Unable to fetch games from the db'));
+    };
   }
 ]);
 const previewImage = () => {
   const myFile = $('#profilePic').prop('files')[0];
   const fReader = new FileReader();
   fReader.readAsDataURL(myFile);
-  fReader.onload = (e) => {
+  fReader.onload = e => {
     $('.profile-image').attr('src', e.target.result);
   };
 };

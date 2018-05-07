@@ -2,12 +2,10 @@ const mongoose = require('mongoose'),
   LocalStrategy = require('passport-local').Strategy,
   TwitterStrategy = require('passport-twitter').Strategy,
   FacebookStrategy = require('passport-facebook').Strategy,
-  GitHubStrategy = require('passport-github').Strategy,
   GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
   User = mongoose.model('User'),
   config = require('./config');
 
-// const User = mongoose.model('User');
 require('dotenv').config();
 /**
  * @param {any} passport
@@ -65,7 +63,6 @@ module.exports = (passport) => {
       );
     }
   ));
-
   // Use twitter strategy
   passport.use(new TwitterStrategy(
     {
@@ -74,7 +71,6 @@ module.exports = (passport) => {
       callbackURL: config.twitter.callbackURL
     },
     (token, tokenSecret, profile, done) => {
-      console.log('>>>>>>>>>> twitter profile', profile);
       User.findOne(
         {
           'twitter.id_str': profile.id
@@ -89,7 +85,7 @@ module.exports = (passport) => {
               username: profile.username,
               provider: 'twitter',
               twitter: profile._json,
-              picture: profile._json.profile_image_url
+              avatar: profile._json.profile_image_url
             });
             user.save((err) => {
               if (err) console.log(err);
@@ -108,9 +104,11 @@ module.exports = (passport) => {
     {
       clientID: process.env.FB_CLIENT_ID,
       clientSecret: process.env.FB_CLIENT_SECRET,
-      callbackURL: config.facebook.callbackURL
+      callbackURL: config.facebook.callbackURL,
+      profileFields: ['id', 'birthday', 'email', 'first_name', 'last_name', 'gender', 'picture.width(200).height(200)']
     },
     (accessToken, refreshToken, profile, done) => {
+      console.log(profile);
       User.findOne(
         {
           'facebook.id': profile.id
@@ -120,14 +118,14 @@ module.exports = (passport) => {
             return done(err);
           }
           if (!user) {
-            console.log(profile);
             user = new User({
               name: profile.displayName,
               email: (profile.emails && profile.emails[0].value) || '',
               username: profile.username,
               provider: 'facebook',
               facebook: profile._json,
-              picture: profile._json.picture || profile.json.picture.data.url
+              avatar: profile.photos[0].value || profile._json.picture || profile._json.avatar || profile.json.picture.data.url || profile.json.avatar.data.url
+
             });
             user.save((err) => {
               if (err) console.log(err);
@@ -142,44 +140,6 @@ module.exports = (passport) => {
       );
     }
   ));
-
-  // Use github strategy
-  passport.use(new GitHubStrategy(
-    {
-      clientID: process.env.GITHUB_CLIENT_ID,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET,
-      callbackURL: config.github.callbackURL
-    },
-    (accessToken, refreshToken, profile, done) => {
-      User.findOne(
-        {
-          'github.id': profile.id
-        },
-        (err, user) => {
-          if (err) {
-            return done(err);
-          }
-          if (!user) {
-            user = new User({
-              name: profile.displayName,
-              email: profile.emails[0].value,
-              username: profile.username,
-              provider: 'github',
-              github: profile._json,
-              picture: profile._json.avatar_url
-            });
-            user.save((err) => {
-              if (err) console.log(err);
-              return done(err, user);
-            });
-          } else {
-            return done(err, user);
-          }
-        }
-      );
-    }
-  ));
-
   // Use google strategy
   passport.use(new GoogleStrategy(
     {
@@ -203,7 +163,7 @@ module.exports = (passport) => {
               username: profile.username,
               provider: 'google',
               google: profile._json,
-              picture: profile._json.picture
+              avatar: profile._json.picture || profile._json.avatar
             });
             user.save((err) => {
               if (err) console.log(err);

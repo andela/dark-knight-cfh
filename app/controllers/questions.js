@@ -60,8 +60,8 @@ exports.all = function (req, res) {
 * @param {function} cb a review object
 * @return {object} return an array of objects
 */
-exports.allQuestionsForGame = function (cb) {
-  Question.find({ official: true, numAnswers: { $lt: 3 } }).select('-_id').exec((err, questions) => {
+exports.allQuestionsForGame = function (regionId, cb) {
+  Question.find({ official: true, $and: [{ numAnswers: { $lt: 3 } }, { regionId }] }).select('-_id').exec((err, questions) => {
     if (err) {
       console.log(err);
     } else {

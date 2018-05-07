@@ -1,4 +1,4 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script> -->
 <script type="text/javascript">
     $(window).on('load',function(){
         let isMouseOver = false;
@@ -12,22 +12,23 @@
     });
 </script>
 
-<link rel="stylesheet" href="../css/common2.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
-<div  ng-controller="IndexController">
+<link rel="stylesheet" href="../css/common2.css">
+<div ng-controller="IndexController">
     <!-- Navbar -->
     <div class="navbar-fixed">
         <nav>
-            <div class="nav-wrapper grey darken-4">
+            <div class="nav-wrapper grey lighten-2">
                 <div class="container">
                     <div class="brand-logo animate swell-2"><img src="../img/playing-cards.svg" alt=""></div>
-                    <a href="#" data-target="mobile" class="sidenav-trigger"><i class="material-icons grey-text text-darken-2">menu</i></a>
+                    <a data-target="mobile" class="sidenav-trigger"><i class="material-icons grey-text text-darken-4">menu</i></a>
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
-                        <li><a href="#charity" class="grey-text text-lighten-2 animate swell-1 turn-purple">CHARITY</a></li>
-                        <li><a href="#" class="grey-text text-lighten-2 animate swell-1 turn-purple">ABOUT US</a></li>
-                        <li><a href="#!/signup" class="grey-text text-lighten-2 animate swell-1 turn-purple" data-ng-hide="global.authenticated">SIGN UP</a></li>
-                        <li><a href="#!/signin" class="grey-text text-lighten-2 animate swell-1 turn-purple" data-ng-hide="global.authenticated">LOGIN</a></li>
-                        <li><a href="" ng-click="logout()" class="grey-text text-lighten-2 animate swell-1 turn-purple" data-ng-show="global.authenticated">SIGN OUT</a></li>
+                        <li><a href="#charity" class="gray-slate-text animate swell-1 turn-gray-slate-text">CHARITY</a></li>
+                        <li><a href="#" class="gray-slate-text animate swell-1 turn-gray-slate-text">ABOUT US</a></li>
+                        <li><a href="#!/profile" class="gray-slate-text animate swell-1 turn-gray-slate-text" data-ng-show="global.authenticated">PROFILE</a></li>
+                        <li><a href="#!/signup" class="gray-slate-text animate swell-1 turn-gray-slate-text" data-ng-hide="global.authenticated">SIGN UP</a></li>
+                        <li><a href="#!/signin" class="gray-slate-text animate swell-1 turn-gray-slate-text" data-ng-hide="global.authenticated">LOGIN</a></li>
+                        <li><a href="" ng-click="logout()" class="gray-slate-text animate swell-1 turn-gray-slate-text" data-ng-show="global.authenticated">SIGN OUT</a></li>
                     </ul>
                 </div>
             </div>
@@ -39,18 +40,21 @@
         <li><a href="#">ABOUT US</a></li>
         <li><a href="#!/signup" data-ng-hide="global.authenticated">SIGN UP</a></li>
         <li><a href="#!/signin" data-ng-hide="global.authenticated">LOGIN</a></li>
+        <li><a href="#!/profile" data-ng-show="global.authenticated">PROFILE</a></li>
         <li><a href="" ng-click="logout()" data-ng-show="global.authenticated">SIGN OUT</a></li>
     </ul>
     <!-- Introduction Section -->
     <div class="row landing-page-row parallax intro-container">
         <div class="row">
-            <div class="col s12 m12 intro-title grey-text lighten-6">A GAME FOR HORRIBLE PEOPLE <span class="purple-text lighten-3">DESPERATELY</span> TRYING TO DO GOOD</div></h2>
+            <div class="col s12 m12 intro-title grey-text lighten-6">A GAME FOR HORRIBLE PEOPLE <span class="glow gray-slate-text text-lighten-3">DESPERATELY</span> TRYING TO DO GOOD</div></h2>
         </div>
         <div class="intro-details grey-text lighten-6">Cards for Humanity is a fast-paced online version of the popular card game, Cards Against Humanity, that gives you the opportunity to donate to children in need
         </div>
         <div class="row intro-buttons center">
-            <div class="col s12 m6"><a href="#!/signup"><button class="btn-large purple darken-2 animate swell-2">SIGN UP</button></a></div>
-            <div class="col s12 m6"><a href="/play?custom"><button class="btn-large purple darken-2 animate swell-2">PLAY AS GUEST</button></a></div>
+            <div class="col s12 m6" data-ng-hide="global.authenticated"><a href="#!/signup"><button class="btn-large gray-slate animate swell-2 turn-gray-slate">SIGN UP</button></a></div>
+            <div class="col s12 m6" data-ng-hide="global.authenticated"><a href="/play"><button class="btn-large gray-slate intro-border-button  animate swell-2 turn-gray-slate">PLAY AS GUEST</button></a></div>
+            <div class="col s12 m6" data-ng-show="global.authenticated"><a href="/play?custom"><button class="btn-large gray-slate animate swell-2 turn-gray-slate">PLAY WITH GUEST</button></a></div>
+            <div class="col s12 m6" data-ng-show="global.authenticated"><a href="/play?custom"><button class="btn-large intro-border-button white gray-slate-text animate swell-1 turn-gray-slate-text">PLAY WITH FRIENDS</button></a></div>
         </div>
         <div class="intro-warning grey-text lighten-6"><span class="red-text">Warning!</span> This game contains offensive, profane, explicit content created by Cards Against Humanity and provided here, uncensored and complete, in digital form.</div>
     </div>
@@ -94,20 +98,27 @@
                 <div class="col s12 m12 l6 charity-quote">
                     <div class="">"if you don't give back, no one will like you™"</div>
                     <div class="charity-quote-attribute">- crowdrise</div>
-                    <a href="http://www.crowdrise.com/cfhio/fundraiser/cards4humanity"><button class="btn btn-large purple darken-2 animate swell-1">DONATE</button></a>
+                    <a href="http://www.crowdrise.com/cfhio/fundraiser/cards4humanity"><button class="btn btn-large gray-slate animate turn-gray-slate swell-1">DONATE</button></a>
                 </div>
                 <div class="col s12 m12 l6 charity-body">We're quite sure you feel the same way, so we've integrated donation widgets (via crowdrise.com), along with some not-so-subtle reminders throughout the game to give you the opportunity to donate. If you're signed in when you donate, we'll even upgrade your account and place a crown on your avatar's head (to remind other players how much better you are than them). All donations go to the Make-a-Wish Foundation and benefit children in need.</div>
             </div>
         </div>
     </div>
-    <!-- MakeAWish Section -->
+    <!-- Make-A-Wish Section -->
     <div class="makeawish-section grey lighten-1">
         <div class="container charity-section">
             <div class="charity-title center">MAKE A WISH</div>
-            <div class="charity-main center">All donations go to the Make-a-Wish Foundation and benefit children in need.</div>
-            <div class="container">
-                <div class="video-container responsive-video charity-video">
-                    <iframe width="480" src="https://www.youtube.com/embed/-RGQu-SPqHU?rel=0" type="video/mp4" frameborder="0" allowfullscreen></iframe>
+            <div class=" charity-main center">
+                All donations go to the Make-a-Wish Foundation and benefit children in need.
+            </div>
+            <div class="row">
+                <div class="col s12 m5 l5 responsive-video charity-twitter">
+                    <a class="twitter-timeline" data-height="373" data-theme="dark" data-link-color="#F5F8FA" href="https://twitter.com/MakeAWish?ref_src=twsrc%5Etfw">Tweets by MakeAWish</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+                <div class="col s12 m7 l7 container">
+                    <div class="video-container responsive-video charity-video">
+                        <iframe src="https://www.youtube.com/embed/-RGQu-SPqHU?rel=0" type="video/mp4" frameborder="0" allowfullscreen></iframe>
+                    </div>
                 </div>
             </div>
         </div>
@@ -131,17 +142,16 @@
     </footer>
     <!-- FAB -->
     <div class="fixed-action-btn">
-        <a class="btn-floating btn-large purple darken-2">
+        <a class="btn-floating btn-large gray-slate animate turn-gray-slate">
             <i class="large material-icons">share</i>
         </a>
         <ul>
-            <li><a href="#" onclick="
-                window.open(
-                  'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),
-                  'facebook-share-dialog',
-                  'width=626,height=436');
-                return false;" class="btn-floating purple lighten-1"><i class="icon ion-social-facebook text-white"></i></a></li>
-            <li><a href="https://twitter.com/cfh_app" class="btn-floating purple lighten-1"><i class="icon ion-social-twitter text-white"></i></a></li>
+            <li>
+                <a target="_blank" href="https://www.facebook.com/dialog/share?app_id=145634995501895&display=popup&href=https://dark-knights-demo1.herokuapp.com/#!/&redirect_uri=https%3A%2F%2Fdevelopers.facebook.com%2Ftools%2Fexplorer" class="btn-floating gray-slate animate invert-gray-slate">
+                    <i class="icon ion-social-facebook text-white"></i>
+                </a>
+            <li>
+            <li><a target="_blank" href="http://twitter.com/share?text=Help%20children%20in%20need.%20Play%20Card%20for%20Humanity!&url=https://dark-knights-demo1.herokuapp.com/&hashtags=cfh,cardforhumanity,crowdrise" class="btn-floating gray-slate animate invert-gray-slate"><i class="icon ion-social-twitter text-white"></i></a></li>
         </ul>
     </div>
 </div>

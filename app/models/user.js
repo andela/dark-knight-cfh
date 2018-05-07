@@ -6,7 +6,7 @@ const mongoose = require('mongoose'),
   { Schema } = mongoose,
   bcrypt = require('bcryptjs'),
   _ = require('underscore'),
-  authTypes = ['github', 'twitter', 'facebook', 'google'];
+  authTypes = ['twitter', 'facebook', 'google'];
 
 /**
  * User Schema
@@ -17,7 +17,6 @@ const UserSchema = new Schema({
   username: String,
   points: Number,
   provider: String,
-  picture: String,
   publicId: String,
   avatar: String,
   premium: Number, // null or 0 for non-donors, 1 for everyone else (for now)
@@ -25,7 +24,6 @@ const UserSchema = new Schema({
   hashed_password: String,
   facebook: {},
   twitter: {},
-  github: {},
   google: {}
 });
 

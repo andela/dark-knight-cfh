@@ -1,9 +1,10 @@
-const { signToken } = require('./middlewares/authorization');
+const { signToken, verifyJWT } = require('./middlewares/authorization');
 const questions = require('../app/controllers/questions');
 const answers = require('../app/controllers/answers');
 const avatars = require('../app/controllers/avatars');
 const index = require('../app/controllers/index');
 const users = require('../app/controllers/users');
+const games = require('../app/controllers/games');
 
 module.exports = (app, passport) => {
   // User Routes
@@ -42,20 +43,11 @@ module.exports = (app, passport) => {
 
   // Setting the facebook oauth routes
   app.get('/auth/facebook', passport.authenticate('facebook', {
-    scope: ['email'],
+    scope: ['public_profile', 'email'],
     failureRedirect: '/signin'
   }), users.signin);
 
   app.get('/auth/facebook/callback', passport.authenticate('facebook', {
-    failureRedirect: '/signin'
-  }), users.authCallback);
-
-  // Setting the github oauth routes
-  app.get('/auth/github', passport.authenticate('github', {
-    failureRedirect: '/signin'
-  }), users.signin);
-
-  app.get('/auth/github/callback', passport.authenticate('github', {
     failureRedirect: '/signin'
   }), users.authCallback);
 
@@ -77,9 +69,11 @@ module.exports = (app, passport) => {
     ]
   }), users.signin);
 
+
   app.get('/auth/google/callback', passport.authenticate('google', {
     failureRedirect: '/signin'
   }), users.authCallback);
+
 
   // Finish with setting up the userId param
   app.param('userId', users.user);
@@ -91,7 +85,6 @@ module.exports = (app, passport) => {
   app.param('answerId', answers.answer);
 
   // Question Routes
-  const questions = require('../app/controllers/questions');
   app.get('/questions', questions.all);
   app.get('/questions/:questionId', questions.show);
   // Finish with setting up the questionId param
@@ -100,9 +93,14 @@ module.exports = (app, passport) => {
   // Avatar Routes
   app.get('/avatars', avatars.allJSON);
 
+  // Games history
+  // app.get('/api/games/history', games.history);
+  app.get('/api/games/history', verifyJWT, games.history);
+
   // Home route
   app.get('/play', index.play);
   app.get('/', index.render);
 
   app.post('/api/games/:id/start', index.start);
+  app.get('/api/profile', verifyJWT, users.profile);
 };
