@@ -25,7 +25,9 @@ const getQuerystring = (key) => {
 if (getQuerystring('token')) {
   window.location.assign('/');
 }
+
 window.user = jwt_decode(localStorage.getItem('token'));
+
 // console.log(window.location);
 // window.location.href = window.location.origin;
 // $(document).ready(function() {
