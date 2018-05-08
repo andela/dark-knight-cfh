@@ -22,6 +22,7 @@ module.exports = (app, passport) => {
 
   // Donation Routes
   app.post('/donations', users.addDonation);
+  app.get('/api/donations', verifyJWT, users.getDonation);
 
   app.post('/api/auth/login', (req, res, next) => {
     passport.authenticate('local', (err, user) => {

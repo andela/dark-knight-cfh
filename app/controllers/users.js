@@ -1,7 +1,7 @@
 /**
  * Module dependencies.
  */
-let mongoose = require('mongoose'),
+const mongoose = require('mongoose'),
   User = mongoose.model('User');
 const avatars = require('./avatars').all();
 const nodemailer = require('nodemailer');
@@ -322,6 +322,9 @@ exports.user = (req, res, next, id) => {
   });
 };
 
+/**
+ * Find user by ID
+ */
 exports.profile = (req, res, next) => {
   const userID = req.verified._id;
   User.findOne({
@@ -367,4 +370,31 @@ exports.leaderboard = (req, res) => {
       });
     })
     .catch(error => res.status(500).json(error.message || 'Unable to query the database'));
+};
+
+/**
+ * Find donations by user ID
+ * @param {object} req
+ * @param {object} res
+ * @returns {object}
+ */
+
+exports.getDonation = (req, res) => {
+  const userID = req.verified._id;
+  User.findOne({
+    _id: userID
+  }, 'donations')
+    .exec()
+    .then((user) => {
+      if (!user) {
+        return res.status(404).json({
+          message: 'User not found'
+        });
+      }
+      return res.status(200).json({
+        user
+      });
+    })
+    .catch(error =>
+      res.status(500).json(error.message || 'Unable to query the database'));
 };
