@@ -29,6 +29,7 @@ angular.module('mean.system').factory('game', [
       errorMessage: '',
       gameStarted: '',
       allUsers: [],
+      regId: null,
       inviteSent: false
     };
 
@@ -204,6 +205,7 @@ angular.module('mean.system').factory('game', [
 
     game.joinGame = function (mode, room, createPrivate) {
       const level = localStorage.getItem('level');
+      const { regId } = game;
       if (level === 'beginner') {
         timing = 30;
       } else if (level === 'intermidiate') {
@@ -211,7 +213,6 @@ angular.module('mean.system').factory('game', [
       } else if (level === 'legend') {
         timing = 15;
       }
-      console.log('this is the timing', timing);
       mode = mode || 'joinGame';
       room = room || '';
       createPrivate = createPrivate || false;
@@ -221,7 +222,8 @@ angular.module('mean.system').factory('game', [
         avatar: user.avatar,
         room,
         createPrivate,
-        timing
+        timing,
+        regId
       });
     };
 

@@ -1,7 +1,7 @@
 /**
  * Module dependencies.
  */
-let mongoose = require('mongoose'),
+const mongoose = require('mongoose'),
   User = mongoose.model('User');
 const avatars = require('./avatars').all();
 const nodemailer = require('nodemailer');
@@ -18,12 +18,11 @@ exports.authCallback = (req, res) => {
     res.redirect('/#!/signin?error=invalid');
   } else {
     const { user } = req;
-    console.log('###USER', user.twitter, user.twitter.profile_image_url_https);
     const payload = {
       id: user._id || user.id,
       email: user.email || undefined,
       name: user.name,
-      avatar: user.picture || user.profile_image_url_https || user.twitter.profile_image_url_https || user.avatar
+      avatar: user.avatar,
     };
     const token = signToken(payload);
     res.redirect(`/?token=${token}&nothing=nothing`);
@@ -340,7 +339,7 @@ exports.user = (req, res, next, id) => {
   });
 };
 
-exports.profile = (req, res, next)=>{
+exports.profile = (req, res, next) => {
   const userID = req.verified._id;
   User.findOne({
     _id: userID

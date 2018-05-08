@@ -10,6 +10,7 @@ angular.module('mean.system') /* eslint-disable-line */
       $scope.startUserGame = false;
       $scope.level = '';
       $scope.owner = false;
+      $scope.guest = false;
       $scope.pickedCards = [];
       // let makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
       // $scope.makeAWishFact = makeAWishFacts.pop();
@@ -229,11 +230,15 @@ angular.module('mean.system') /* eslint-disable-line */
           }
         }
       });
+      console.log('***********>> ', $location.search().custom);
 
-      if ($location.search().game === undefined) {
+      if ($location.search().custom === true) {
         $scope.owner = true;
-      } else {
+      } else if ($location.search().game !== undefined) {
         game.joinGame('joinGame', $location.search().game);
+      } else if ($location.search().custom === undefined) {
+        $scope.guest = true;
+        $scope.owner = true;
       }
     }
   ]);

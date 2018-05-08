@@ -5,10 +5,11 @@ angular.module('mean.system').controller('IndexController', [
   '$http',
   '$window',
   '$location',
+  '$q',
   'socket',
   'game',
   'AvatarService',
-  ($scope, Global, $http, $window, $location, socket, game, AvatarService) => {
+  ($scope, Global, $http, $window, $location, $q, socket, game, AvatarService) => {
     $scope.global = Global;
 
     $scope.playAsGuest = () => {
@@ -125,48 +126,57 @@ angular.module('mean.system').controller('IndexController', [
     $scope.userPoints = 0;
     $scope.profile = () => {
       const token = localStorage.getItem('token');
-      // $http
-      //   .get('/api/profile', {
-      //     headers: {
-      //       'x-access-token': token
-      //     }
-      //   })
-      //   .then(response => $scope.userPoints = response.data.user.points)
-      //   .catch(error => $scope.error = error.message || 'Unable to fetch games from the db');
+      // const userData = jwt_decode(token);
 
-      // $scope.userRank = '';
-      // const x = $scope.userPoints;
-      // console.log('##$#%', $scope.userPoints);
+      $scope.profileData = $http.get('/api/profile', {
+        headers: {
+          'x-access-token': token
+        }
+      });
 
-      // if (x < 20) {
-      //   $scope.userRank = 'Pawn';
-      // } else if (x < 20) {
-      //   $scope.userRank = 'Knight';
-      // } else if (x < 50) {
-      //   $scope.userRank = 'Bishop';
-      // } else if (x < 100) {
-      //   $scope.userRank = 'Rook';
-      // } else if (x < 200) {
-      //   $scope.userRank = 'Queen';
-      // } else if (x < 250) {
-      //   $scope.userRank = 'King';
+      // if (token) {
+      //   $scope.imageUrl = userData.avatar;
+      //   $scope.email = userData.email || userData.phone || null;
+      //   $scope.name = userData.name || userData.username || null;
       // }
 
-      const userData = jwt_decode(token);
-      if (token) {
-        $scope.imageUrl = userData.avatar;
-        $scope.email = userData.email || userData.phone || null;
-        $scope.name = userData.name || userData.username || null;
-      }
+      $scope.historyData = $http.get('/api/games/history', {
+        headers: {
+          'x-access-token': token
+        }
+      });
+      $q.all([$scope.profileData, $scope.historyData]).then(response => {
+        if (response) {
+          const userData = response[0].data.user;
+          const gameData = response[1].data.game;
+          console.log('>>>>>>>>>>>>>', userData);
+          console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+          console.log('>>>>>>>>>>>>>', gameData);
+          $scope.imageUrl = userData.avatar;
+          $scope.email = userData.email || userData.phone || null;
+          $scope.name = userData.name || userData.username || null;
+          $scope.userPoints = userData.points;
 
-      $http
-        .get('/api/games/history', {
-          headers: {
-            'x-access-token': token
+          $scope.games = gameData;
+
+          $scope.userRank = '';
+          const x = $scope.userPoints;
+
+          if (x < 20) {
+            $scope.userRank = 'Pawn';
+          } else if (x < 20) {
+            $scope.userRank = 'Knight';
+          } else if (x < 50) {
+            $scope.userRank = 'Bishop';
+          } else if (x < 100) {
+            $scope.userRank = 'Rook';
+          } else if (x < 200) {
+            $scope.userRank = 'Queen';
+          } else if (x < 250) {
+            $scope.userRank = 'King';
           }
-        })
-        .then(response => ($scope.games = response.data.game))
-        .catch(error => ($scope.error = error.message || 'Unable to fetch games from the db'));
+        }
+      });
     };
   }
 ]);

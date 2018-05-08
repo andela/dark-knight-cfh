@@ -53,6 +53,12 @@
 .animate.turn-gray-slate-text:hover {
   color: #445464; }
 
+.animate.turn-gray-slate:hover {
+  background-color: #445464; }
+
+.animate.turn-gray-slate-text:hover {
+  color: #445464; }
+
 .animate.swell-2 {
   -webkit-transition: transform 1s;
   transition: transform 1s; }
@@ -233,41 +239,11 @@
   max-width: 1500px !important;
   justify-self: center; }
 
-/*
-.team-details {
-  font-size: 25px;
-  margin-bottom: 15px;
-  text-align: center;
-}
-
-.team-img {
-  border: 5px solid white;
-  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, .2);
-  width: 150px;
-}
-
-.team-name {
-  font-size: 20px;
-}
-
-.team-center-img {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 300px;
-  margin-left: 100px;
-  img {
-    border: 5px solid white;
-    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, .2);
-    width: 220px;
-  }
-}
-*/
 .navbar a {
   color: #344454; }
 
 .profile-page {
-  background-color: #e4e4e4;
+  background-color: white;
   padding-bottom: 40px;
   margin: 0; }
   .profile-page hr.divider {
@@ -297,6 +273,12 @@
   .profile-page .middle-section .rank-name {
     margin-top: 30px;
     margin-bottom: 0; }
+  .profile-page .navbar-profile {
+    background-color: #e0e0e0 !important;
+    padding-top: 0; }
+    .profile-page .navbar-profile ul {
+      padding-right: 90px;
+      padding-top: 15px; }
   .profile-page .bottom-section {
     padding-top: 30px; }
     .profile-page .bottom-section .list-group-item {
@@ -323,3 +305,47 @@
         color: black; }
       .profile-page .bottom-section .leaderboard .btn-load {
         margin-bottom: 30px; }
+  .profile-page .main {
+    margin-top: 90px;
+    height: 100vh;
+    background-color: white;
+    padding-left: 20px; }
+    .profile-page .main .image-section {
+      height: inherit;
+      margin-right: 10px;
+      color: white;
+      background-color: #344454;
+      min-height: inherit; }
+      .profile-page .main .image-section img {
+        display: block;
+        margin: auto;
+        margin-top: 15px; }
+      .profile-page .main .image-section .user-details {
+        margin-top: 25px;
+        margin-right: 25px; }
+    .profile-page .main .gamelog-section {
+      padding-top: 15px;
+      color: #344454;
+      background-color: #e4e4e4;
+      height: inherit; }
+      .profile-page .main .gamelog-section nav {
+        width: 100%; }
+      .profile-page .main .gamelog-section tr:hover {
+        color: white;
+        background-color: #344454; }
+    .profile-page .main .leaderboard-section {
+      margin-left: 10px;
+      padding-top: 15px;
+      color: white;
+      background-color: #344454;
+      height: inherit; }
+      .profile-page .main .leaderboard-section tr:hover {
+        color: #344454;
+        background-color: white; }
+    @media only screen and (max-width: 660px) {
+      .profile-page .main .leaderboard-section,
+      .profile-page .main .gamelog-section,
+      .profile-page .main .image-section,
+      .profile-page .main .navbar-profile {
+        height: auto;
+        width: auto; } }
