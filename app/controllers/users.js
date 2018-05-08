@@ -22,7 +22,7 @@ exports.authCallback = (req, res) => {
       id: user._id || user.id,
       email: user.email || undefined,
       name: user.name,
-      avatar: user.avatar,
+      avatar: user.avatar
     };
     const token = signToken(payload);
     res.redirect(`/?token=${token}&nothing=nothing`);
@@ -134,8 +134,7 @@ exports.register = (req, res) => {
               newUser
             });
           })
-          .catch(error =>
-            res.status(500).json(error.message || 'Unable to create user'));
+          .catch(error => res.status(500).json(error.message || 'Unable to create user'));
       } else {
         return res.status(400).json({
           success: false,
@@ -143,8 +142,7 @@ exports.register = (req, res) => {
         });
       }
     })
-    .catch(error =>
-      res.status(500).json(error.message || 'Unable to query the database'));
+    .catch(error => res.status(500).json(error.message || 'Unable to query the database'));
 };
 
 /**
@@ -182,7 +180,6 @@ exports.create = (req, res) => {
   }
 };
 
-
 exports.search = function (req, res) {
   const { username, value } = req.body;
   User.findOne({
@@ -190,28 +187,27 @@ exports.search = function (req, res) {
   }).exec((err, existingUser) => {
     if (!existingUser) {
       return res.status(500).send({
-        error: 'An error occured!',
+        error: 'An error occured!'
       });
     }
-    User.find({ name: username.toString() })
-      .exec((error, user) => {
-        if (error) {
-          return res.status(500).send({
-            error,
-          });
-        }
-        if (user.length === 0) {
-          return res.status(404).send({
-            status: 'Unsucessful',
-            message: 'User not found on db',
-          });
-        }
-        return res.status(200).send({
-          status: 'sucessful',
-          message: 'User found',
-          user,
+    User.find({ name: username.toString() }).exec((error, user) => {
+      if (error) {
+        return res.status(500).send({
+          error
         });
+      }
+      if (user.length === 0) {
+        return res.status(404).send({
+          status: 'Unsucessful',
+          message: 'User not found on db'
+        });
+      }
+      return res.status(200).send({
+        status: 'sucessful',
+        message: 'User found',
+        user
       });
+    });
   });
 };
 
@@ -221,14 +217,14 @@ exports.invite = function (req, res) {
     service: 'Gmail',
     auth: {
       user: 'darknight0455@gmail.com',
-      pass: 'p3nn1s01',
-    },
+      pass: 'p3nn1s01'
+    }
   });
   const mailOptions = {
     from: 'darknight0455@gmail.com',
     to: email,
     subject: 'Cards for humanity game invite',
-    text: msg,
+    text: msg
   };
   transporter.sendMail(mailOptions, (err, info) => {
     if (err) {
@@ -250,13 +246,7 @@ exports.invite = function (req, res) {
 
 exports.avatars = (req, res) => {
   // Update the current user's profile to include the avatar choice they've made
-  if (
-    req.user &&
-    req.user._id &&
-    req.body.avatar !== undefined &&
-    /\d/.test(req.body.avatar) &&
-    avatars[req.body.avatar]
-  ) {
+  if (req.user && req.user._id && req.body.avatar !== undefined && /\d/.test(req.body.avatar) && avatars[req.body.avatar]) {
     User.findOne({
       _id: req.user._id
     }).exec((err, user) => {
@@ -270,11 +260,7 @@ exports.avatars = (req, res) => {
 exports.addDonation = (req, res) => {
   if (req.body && req.user && req.user._id) {
     // Verify that the object contains crowdrise data
-    if (
-      req.body.amount &&
-      req.body.crowdrise_donation_id &&
-      req.body.donor_name
-    ) {
+    if (req.body.amount && req.body.crowdrise_donation_id && req.body.donor_name) {
       User.findOne({
         _id: req.user._id
       }).exec((err, user) => {
@@ -282,10 +268,7 @@ exports.addDonation = (req, res) => {
         let duplicate = false;
         for (let i = 0; i < user.donations.length; i++) {
           /* eslint-disable-line */
-          if (
-            user.donations[i].crowdrise_donation_id ===
-            req.body.crowdrise_donation_id
-          ) {
+          if (user.donations[i].crowdrise_donation_id === req.body.crowdrise_donation_id) {
             duplicate = true;
           }
         }
@@ -342,7 +325,6 @@ exports.user = (req, res, next, id) => {
 /**
  * Find user by ID
  */
-
 exports.profile = (req, res, next) => {
   const userID = req.verified._id;
   User.findOne({
@@ -360,8 +342,34 @@ exports.profile = (req, res, next) => {
         user
       });
     })
-    .catch(error =>
-      res.status(500).json(error.message || 'Unable to query the database'));
+    .catch(error => res.status(500).json(error.message || 'Unable to query the database'));
+};
+/**
+ * @description Function to get users order by descending points
+ * @param {object} req
+ * @param {object} res
+ * @returns {object} json object containing array of user objects
+ */
+exports.leaderboard = (req, res) => {
+  User.find()
+    .sort({ points: -1 })
+    .exec()
+    .then((users) => {
+      if (!users) {
+        return res.status(404).json({
+          message: 'No Users found'
+        });
+      }
+      // nullify user password
+      const secureUsers = users.map((user) => {
+        user.hashed_password = null;
+        return user;
+      });
+      return res.status(200).json({
+        secureUsers
+      });
+    })
+    .catch(error => res.status(500).json(error.message || 'Unable to query the database'));
 };
 
 /**
