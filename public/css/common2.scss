@@ -346,6 +346,10 @@ $black: #000;
   padding-bottom: 40px;
   margin: 0;
 
+  .navbar-profile-hov:hover {
+    background-color: rgba(0, 0, 0, 0.1) !important;
+  }
+
   hr.divider {
     margin-top: 10px;
     margin-bottom: 5px;
@@ -458,9 +462,11 @@ $black: #000;
       height: inherit;
       margin-right: 10px;
       img {
-        display:block;
-        margin:auto;
+        display: block;
+        margin: auto;
         margin-top: 15px;
+        height: 180px;
+        width: 180px;
       }
       color: white;
       background-color: #344454;
@@ -504,6 +510,16 @@ $black: #000;
         width: auto;
       }
     }
+  }
+
+  .ClassA {
+    background-color: white;
+    color: #344454;
+  }
+
+  .ClassB {
+    background-color: #344454;
+    color: white;
   }
 }
 

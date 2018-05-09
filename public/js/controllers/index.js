@@ -91,7 +91,7 @@ angular.module('mean.system').controller('IndexController', [
           }
         );
       };
-      
+
       if (myFile) {
         const imageData = new FormData();
         const publicId = `${Date.now()}-${myFile.name}`;
@@ -118,10 +118,15 @@ angular.module('mean.system').controller('IndexController', [
         signup();
       }
     };
-    $scope.namez = 'jane';
+
+    if (localStorage.getItem('token')) {
+      $scope.pic = jwt_decode(localStorage.getItem('token')).avatar;
+    }
 
     $scope.games = [];
     $scope.userPoints = 0;
+    $scope.leaderboardInfo = [];
+
     $scope.profile = () => {
       const token = localStorage.getItem('token');
 
@@ -232,6 +237,7 @@ angular.module('mean.system').controller('IndexController', [
           $scope.count = response.data.count;
           $scope.numOfPages = response.data.numOfPages;
           $scope.disablePrevButton = false;
+          // $scope.leaderboardInfo.
         });
       };
 
@@ -267,6 +273,7 @@ angular.module('mean.system').controller('IndexController', [
           $scope.email = userData.email || userData.phone || null;
           $scope.name = userData.name || userData.username || null;
           $scope.userPoints = userData.points;
+          $scope.userId = userData._id;
           // $scope.page = 1
           $scope.count = response[2].data.count;
           $scope.numOfPages = response[2].data.numOfPages;
@@ -301,9 +308,18 @@ angular.module('mean.system').controller('IndexController', [
           }
         }
       });
+
+      // console.log($scope.leaderboardInfo);
+
+      $scope.highlightPlayerClass = id => {
+        if ($scope.userId === id) return 'ClassA';
+        return 'ClassB';
+      };
+
     };
   }
 ]);
+
 const previewImage = () => {
   const myFile = $('#profilePic').prop('files')[0];
   const fReader = new FileReader();

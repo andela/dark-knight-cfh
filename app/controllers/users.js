@@ -331,7 +331,7 @@ exports.user = (req, res, next, id) => {
  * @returns {object} user object
  */
 exports.profile = (req, res) => {
-  const userID = req.verified._id;
+  const userID = req.verified._id || req.verified.id;
   User.findOne({
     _id: userID
   })

@@ -246,6 +246,8 @@
   background-color: white;
   padding-bottom: 40px;
   margin: 0; }
+  .profile-page .navbar-profile-hov:hover {
+    background-color: rgba(0, 0, 0, 0.1) !important; }
   .profile-page hr.divider {
     margin-top: 10px;
     margin-bottom: 5px;
@@ -319,7 +321,9 @@
       .profile-page .main .image-section img {
         display: block;
         margin: auto;
-        margin-top: 15px; }
+        margin-top: 15px;
+        height: 180px;
+        width: 180px; }
       .profile-page .main .image-section .user-details {
         margin-top: 25px;
         margin-right: 25px; }
@@ -349,6 +353,12 @@
       .profile-page .main .navbar-profile {
         height: auto;
         width: auto; } }
+  .profile-page .ClassA {
+    background-color: white;
+    color: #344454; }
+  .profile-page .ClassB {
+    background-color: #344454;
+    color: white; }
 
 .pagination {
   background-color: red; }

@@ -22,13 +22,13 @@
 
         <ul class="nav navbar-nav navbar-right collapse navbar-collapse">
           <li>
-            <a href="/">HOME</a>
+            <a class="gray-slate-text animate swell-1 turn-gray-slate-text navbar-profile-hov" href="/">HOME</a>
           </li>
           <li>
-            <a href="/play?custom">PLAY GAME</a>
+            <a class="gray-slate-text animate swell-1 turn-gray-slate-text navbar-profile-hov" href="/play?custom">PLAY GAME</a>
           </li>
           <li>
-            <a href="" ng-controller="IndexController" ng-click="logout()">LOGOUT</a>
+            <a class="gray-slate-text animate swell-1 turn-gray-slate-text navbar-profile-hov" href="" ng-controller="IndexController" ng-click="logout()">LOGOUT</a>
           </li>
         </ul>
       </div>
@@ -43,9 +43,9 @@
           <p class="details-itemr">
             <b>{{name}}</b>
           </p>
-          <p class="details-item">{{email}}</p>
-          <p class="details-item">{{userRank}}</p>
-          <!-- <p class="details-item">22 {{wins}}wins || 60 played</p> -->
+          <p class="details-item">{{ email }}</p>
+          <p class="details-item">{{ userRank || 'Pawn' }}</p>
+          <p class="details-item">{{ userPoints || 0 }} points</p>
         </div>
       </div>
 
@@ -86,8 +86,9 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="user in leaderboardInfo">
-              <td>{{ leaderboardInfo.indexOf(user) + 1 }}</td>
+            <tr ng-repeat="user in leaderboardInfo" ng-class="highlightPlayerClass(user._id)">
+              <td>{{ (leaderboardInfo.indexOf(user) + 1) + (page*16) - page }}</td>
+              <td>{{ page }}</td>
               <td class="">{{ user.name }}</td>
               <td>{{ user.points || 0 }}</td>
             </tr>
