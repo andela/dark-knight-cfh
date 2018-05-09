@@ -3,30 +3,37 @@
 <link rel="stylesheet" href="../css/style.css">
 
 <div class="containerr" ng-controller="IndexController">
+
   <div class="profile-page" ng-init="profile()">
 
     <nav class="navbar navbar-default navbar-fixed-top navbar-profile">
-        <div class="container">
-          <div class="navbar-header">
-            <a class="navbar-brand brand-logo" href="#">
-              <img alt="" src="./img/playing-cards.svg" />
-            </a>
-            <button type='button' class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="sr-only">Toggle Navigation</span>
-            </button>
-          </div>
-    
-          <ul class="nav navbar-nav navbar-right collapse navbar-collapse">
-            <li><a href="/">HOME</a></li>
-            <li><a href="/play?custom">PLAY GAME</a></li>
-            <li><a href="" ng-controller="IndexController" ng-click="logout()">LOGOUT</a></li>
-          </ul>
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand brand-logo" href="#">
+            <img alt="" src="./img/playing-cards.svg" />
+          </a>
+          <button type='button' class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="sr-only">Toggle Navigation</span>
+          </button>
         </div>
-    
-      </nav>
+
+        <ul class="nav navbar-nav navbar-right collapse navbar-collapse">
+          <li>
+            <a href="/">HOME</a>
+          </li>
+          <li>
+            <a href="/play?custom">PLAY GAME</a>
+          </li>
+          <li>
+            <a href="" ng-controller="IndexController" ng-click="logout()">LOGOUT</a>
+          </li>
+        </ul>
+      </div>
+
+    </nav>
 
     <div class="row main">
 
@@ -50,7 +57,7 @@
               <th class="">Game ID</th>
               <th class="">Date</th>
               <th class="">Winner</th>
-              <th class=" pull-left">Gamers</th>
+              <th class="pull-left">Gamers</th>
             </tr>
           </thead>
           <tbody>
@@ -64,7 +71,8 @@
             </tr>
           </tbody>
         </table>
-        <!-- <button class="btn btn-primary">Load more...</button> -->
+        <button class="btn btn-default btn-load" ng-hide="disablePrevButtonGameLog" ng-click="fetchPrevPageGameLog()">Previous</button>
+        <button class="btn btn-default btn-load" ng-hide="disableNextButtonGameLog" ng-click="fetchNextPageGameLog()">Next</button>
       </div>
 
       <div class="col-md-3 leaderboard-section leaderboard">
@@ -73,49 +81,20 @@
           <thead>
             <tr class="leaderboard-header">
               <th class="">#</th>
-              <th class="pull-leftt">Player</th>
-              <th class="">Wins</th>
+              <th class="">Player</th>
+              <th class="">Points</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td class="pull-leftt">Doe</td>
-              <td>58</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td class="pull-leftt">Moe</td>
-              <td class="leaderboard-games-won">23</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td class="pull-leftt">Albert</td>
-              <td>22</td>
-            </tr>
-            <tr>
-              <td>4</td>
-              <td class="pull-leftt">Steve</td>
-              <td>11</td>
-            </tr>
-            <tr>
-              <td>5</td>
-              <td class="pull-leftt">John</td>
-              <td>7</td>
-            </tr>
-            <tr>
-              <td>6</td>
-              <td class="pull-leftt">John</td>
-              <td>7</td>
-            </tr>
-            <tr>
-              <td>7</td>
-              <td class="pull-leftt">John</td>
-              <td>7</td>
+            <tr ng-repeat="user in leaderboardInfo">
+              <td>{{ leaderboardInfo.indexOf(user) + 1 }}</td>
+              <td class="">{{ user.name }}</td>
+              <td>{{ user.points || 0 }}</td>
             </tr>
           </tbody>
         </table>
-        <!-- <button class="btn btn-default btn-load">Load more...</button> -->
+        <button class="btn btn-default btn-load" ng-hide="disablePrevButton" ng-click="fetchPrevPageLeaderboard()">Previous</button>
+        <button class="btn btn-default btn-load" ng-hide="disableNextButton" ng-click="fetchNextPageLeaderboard()">Next</button>
       </div>
     </div>
   </div>
