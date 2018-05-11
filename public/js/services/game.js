@@ -44,6 +44,7 @@ angular.module('mean.system').factory('game', [
     };
 
     const allUsers = function (data) {
+
       game.allUsers = data.user;
     };
 
