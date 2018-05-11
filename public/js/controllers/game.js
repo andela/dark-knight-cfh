@@ -14,7 +14,6 @@ angular.module('mean.system') /* eslint-disable-line */
       $scope.pickedCards = [];
       // let makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
       // $scope.makeAWishFact = makeAWishFacts.pop();
-      $scope.name = 'ello bae';
 
       $scope.searchUser = function (playerInfo) {
         game.searchUser($scope.search_input, playerInfo);
@@ -187,10 +186,10 @@ angular.module('mean.system') /* eslint-disable-line */
         $scope.hasPickedCards = false;
         $scope.showTable = false;
         $scope.winningCardPicked = false;
-        $scope.makeAWishFact = makeAWishFacts.pop();
-        if (!makeAWishFacts.length) {
-          makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
-        }
+        // $scope.makeAWishFact = makeAWishFacts.pop();
+        // if (!makeAWishFacts.length) {
+        //   makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
+        // }
         $scope.pickedCards = [];
       });
 
@@ -230,7 +229,6 @@ angular.module('mean.system') /* eslint-disable-line */
           }
         }
       });
-      console.log('***********>> ', $location.search().custom);
 
       if ($location.search().custom === true) {
         $scope.owner = true;
