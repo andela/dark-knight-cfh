@@ -10,10 +10,10 @@ angular.module('mean.system') /* eslint-disable-line */
       $scope.startUserGame = false;
       $scope.level = '';
       $scope.owner = false;
+      $scope.guest = false;
       $scope.pickedCards = [];
       // let makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
       // $scope.makeAWishFact = makeAWishFacts.pop();
-      $scope.name = 'ello bae';
 
       $scope.searchUser = function (playerInfo) {
         game.searchUser($scope.search_input, playerInfo);
@@ -186,10 +186,10 @@ angular.module('mean.system') /* eslint-disable-line */
         $scope.hasPickedCards = false;
         $scope.showTable = false;
         $scope.winningCardPicked = false;
-        $scope.makeAWishFact = makeAWishFacts.pop();
-        if (!makeAWishFacts.length) {
-          makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
-        }
+        // $scope.makeAWishFact = makeAWishFacts.pop();
+        // if (!makeAWishFacts.length) {
+        //   makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
+        // }
         $scope.pickedCards = [];
       });
 
@@ -230,10 +230,13 @@ angular.module('mean.system') /* eslint-disable-line */
         }
       });
 
-      if ($location.search().game === undefined) {
+      if ($location.search().custom === true) {
         $scope.owner = true;
-      } else {
+      } else if ($location.search().game !== undefined) {
         game.joinGame('joinGame', $location.search().game);
+      } else if ($location.search().custom === undefined) {
+        $scope.guest = true;
+        $scope.owner = true;
       }
     }
   ]);

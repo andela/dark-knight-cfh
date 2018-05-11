@@ -125,7 +125,6 @@ module.exports = (passport) => {
               provider: 'facebook',
               facebook: profile._json,
               avatar: profile.photos[0].value || profile._json.picture || profile._json.avatar || profile.json.picture.data.url || profile.json.avatar.data.url
-
             });
             user.save((err) => {
               if (err) console.log(err);

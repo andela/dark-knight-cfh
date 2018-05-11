@@ -25,25 +25,38 @@
               <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title " style="text-align: center"><b>Cards for humanity</b></h4>
+                    <h4 class="modal-title " style="text-align: center"><b>Cards for humanity.</b></h4>
                   </div>
                 <div class="modal-body">
-                    <h4 style="color: red;">Please select a difficulty level</h4>
+                    <h4 style="color: rgb(80, 73, 73);">Please select a region</h4>
                     <form>
                       <label class="radio-inline">
-                        <input class="active" value="beginner" ng-model="game.level" type="radio" name="optradio" checked> Beginner
+                        <input class="active" value="2" ng-model="game.regId" type="radio" name="optradio" checked> Africa
                       </label>
                       <label class="radio-inline">
-                        <input value="intermidiate" ng-model="game.level" type="radio" name="optradio"> Intermidiate
-                      </label>
-                      <label class="radio-inline active" >
-                        <input value="legend" ng-model="game.level"  type="radio" name="optradio" checked=""> Legend
+                        <input value="1" ng-model="game.regId" type="radio" name="optradio"> Global
                       </label>
                     </form>
+                    <div data-ng-hide="guest">
+                      <h4 style="color: red;">Please select a difficulty level</h4>
+                      <form>
+                        <label class="radio-inline">
+                          <input class="active" value="beginner" ng-model="game.level" type="radio" name="optradio" checked> Beginner
+                        </label>
+                        <label class="radio-inline">
+                          <input value="intermidiate" ng-model="game.level" type="radio" name="optradio"> Intermidiate
+                        </label>
+                        <label class="radio-inline active" >
+                          <input value="legend" ng-model="game.level"  type="radio" name="optradio" checked=""> Legend
+                        </label>
+                      </form>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" ng-click="startSession()" class="btn btn-success" 
+                    <button data-ng-hide="guest" type="button" ng-click="startSession()" class="btn btn-success" 
                     data-dismiss="modal">Start Game</button>
+                    <button data-ng-show="guest" type="button" ng-click="startSession()" class="btn btn-success" 
+                    data-dismiss="modal">join Game</button>
                     <button ng-click="abandonGame()" type="button" class="btn btn-danger" 
                     data-dismiss="modal">Go back</button>
                 </div>
@@ -66,7 +79,8 @@
   </br></br><span ng-if="game.errorMessage"></br></span>
   <div ng-if="game.allUsers"></br></br></br></div>
     <answers></answers>
-  </div>
+    <chat></chat>
+</div>
 </div>
 
 
