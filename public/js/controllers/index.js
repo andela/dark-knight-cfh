@@ -120,7 +120,7 @@ angular.module('mean.system').controller('IndexController', [
     };
 
     if (localStorage.getItem('token')) {
-      $scope.pic = jwt_decode(localStorage.getItem('token')).avatar;
+      $scope.pic = jwt_decode(localStorage.getItem('token')).avatar || '';
     }
 
     $scope.games = [];

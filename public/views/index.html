@@ -1,4 +1,4 @@
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
 <script type="text/javascript">
     $(window).on('load',function(){
         let isMouseOver = false;
@@ -28,7 +28,7 @@
                         <li><a href="#!/signup" class="gray-slate-text animate swell-1 turn-gray-slate-text" data-ng-hide="global.authenticated">SIGN UP</a></li>
                         <li><a href="#!/signin" class="gray-slate-text animate swell-1 turn-gray-slate-text" data-ng-hide="global.authenticated">LOGIN</a></li>
                         <li><a href="" ng-click="logout()" class="gray-slate-text animate swell-1 turn-gray-slate-text" data-ng-show="global.authenticated">SIGN OUT</a></li>
-                        <li><a href="#!/profile" data-ng-show="global.authenticated"><img class="circle" ng-src={{pic}} alt="profile image" width="40px" height="40px" style="margin-top:12px"></a></li>
+                        <li><a href="#!/profile" data-ng-show="global.authenticated"><img class="circle" ng-src="{{pic || '../img/profile-image.png'}}" alt="profile image" width="40px" height="40px" style="margin-top:12px"></a></li>
                     </ul>
                 </div>
             </div>
@@ -36,7 +36,7 @@
     </div>
     <!-- Navbar List -->
     <ul class="sidenav" id="mobile">
-        <li><a href="#!/profile" data-ng-show="global.authenticated"><img class="circle" ng-src={{pic}} alt="profile image" width="40px" height="40px"></a></li>
+        <li><a href="#!/profile" data-ng-show="global.authenticated"><img class="circle" ng-src="{{pic || '../img/profile-image.png'}}" alt="profile image" width="40px" height="40px"></a></li>
         <li><a href="#charity">CHARITY</a></li>
         <li><a href="#">ABOUT US</a></li>
         <li><a href="#!/signup" data-ng-hide="global.authenticated">SIGN UP</a></li>
