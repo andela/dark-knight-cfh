@@ -42,6 +42,7 @@ constructor(gameID, io) {
   this.pointLimit = 1;
   this.state = 'awaiting players';
   this.round = 0;
+  this.oline = null,
   this.questions = null;
   this.answers = null;
   this.curQuestion = null;
@@ -97,6 +98,10 @@ sendNotification(msg) {
   this.io.sockets.in(this.gameID).emit('notification', { notification: msg });
 };
 
+updateOnlineUsers(data) {
+  this.io.sockets.emit('updateOnlineUsers', data);
+};
+
 // Currently called on each joinGame event from socket.js
 // Also called on removePlayer IF game is in 'awaiting players' state
 assignPlayerColors() {
@@ -105,13 +110,18 @@ assignPlayerColors() {
   });
 };
 
-assignGuestNames() {
+assignGuestNames(id, verify, online) {
   const self = this;
   this.players.forEach((player) => {
     if (player.username === 'Guest') {
       const randIndex = Math.floor(Math.random() * self.guestNames.length);
       const [a] = self.guestNames.splice(randIndex, 1); // changed!
       player.username = a;
+      console.log('verify', verify);
+      if(verify.indexOf(a) === -1){
+        online.push({id, name: a})
+        verify.push(a);
+      }
       if (!self.guestNames.length) {
         self.guestNames = guestNames.slice();
       }
@@ -183,6 +193,7 @@ stateChoosing(self) {
   } else {
     self.czar++;
   }
+  console.log('********>>>111111', self.questions);
   self.sendUpdate();
 
   self.choosingTimeout = setTimeout(() => {

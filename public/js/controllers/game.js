@@ -12,9 +12,10 @@ angular.module('mean.system') /* eslint-disable-line */
       $scope.owner = false;
       $scope.guest = false;
       $scope.pickedCards = [];
+      $scope.searchFilter = '';
+      $scope.name = 'ello bae';
       // let makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
       // $scope.makeAWishFact = makeAWishFacts.pop();
-      $scope.name = 'ello bae';
 
       $scope.searchUser = function (playerInfo) {
         game.searchUser($scope.search_input, playerInfo);
@@ -44,6 +45,7 @@ angular.module('mean.system') /* eslint-disable-line */
           localStorage.setItem('level', newValue); /* eslint-disable-line */
         }
       });
+
 
       $scope.pointerCursorStyle = function () {
         if ($scope.isCzar() && $scope.game.state === 'waiting for czar to decide') {
@@ -88,6 +90,7 @@ angular.module('mean.system') /* eslint-disable-line */
           } else if ($location.search().custom) {
             game.joinGame('joinGame', null, true);
           } else {
+            console.log('juhgkkjk');
             game.joinGame();
           }
         }
@@ -200,6 +203,12 @@ angular.module('mean.system') /* eslint-disable-line */
           $scope.showTable = true;
         }
       });
+      $scope.init = function () {
+        game.onlineFunc();
+        const { online } = $scope.game;
+        console.log(online);
+      };
+
 
       $scope.$watch('game.gameID', () => {
         if (game.gameID && game.state === 'awaiting players') {

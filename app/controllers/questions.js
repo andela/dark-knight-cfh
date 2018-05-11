@@ -61,7 +61,8 @@ exports.all = function (req, res) {
 * @return {object} return an array of objects
 */
 exports.allQuestionsForGame = function (regionId, cb) {
-  Question.find({ official: true, $and: [{ numAnswers: { $lt: 3 } }, { regionId }] }).select('-_id').exec((err, questions) => {
+  const regId = regionId || 1;
+  Question.find({ official: true, $and: [{ numAnswers: { $lt: 3 } }, { regionId: regId }] }).select('-_id').exec((err, questions) => {
     if (err) {
       console.log(err);
     } else {

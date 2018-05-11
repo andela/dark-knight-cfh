@@ -17,6 +17,8 @@ module.exports = function (io) {
   const allPlayers = {};
   const gamesNeedingPlayers = [];
   let gameID = 0;
+  let onlineUsers = [];
+  let verifyUsers = [];
 
   io.sockets.on('connection', (socket) => {
     console.log(`${socket.id} Connected`);
@@ -45,7 +47,23 @@ module.exports = function (io) {
       }
     });
 
+    socket.on('onlineUsers', () => {
+      console.log(onlineUsers)
+      socket.emit('online', onlineUsers);
+    });
+
+    socket.on('pushNotification', (data) => {
+      const { msg, url, sender } = data;
+      io.sockets.socket(data.socketId).emit('sendNotification', { msg, url, sender});
+    });
+
+    socket.on('pushSent', (data) => {
+      console.log('fhjhfdkhfldfdf****>>>')
+      socket.to(data.id).emit('sendConfirmation');
+    });
+
     socket.on('joinNewGame', (data) => {
+      console.log('test test345')
       exitGame(socket);
       joinGame(socket, data);
     });
@@ -105,12 +123,17 @@ module.exports = function (io) {
           console.log('err', err);
           return err; // Hopefully this never happens.
         }
-        console.log('######*******', data.avatar);
         if (!user) {
           // If the user's ID isn't found (rare)
           player.username = 'Guest';
           player.avatar = avatars[Math.floor(Math.random() * 4) + 12];
         } else {
+          if(verifyUsers.indexOf(user.name) === -1){
+            onlineUsers.push({id: socket.id, name: user.name})
+            verifyUsers.push(user.name);
+            socket.emit('updateOnlineUsers', onlineUsers);
+          }
+          console.log(verifyUsers);
           player.username = user.name;
           player.id = user._id;
           player.premium = user.premium || 0;
@@ -146,8 +169,10 @@ module.exports = function (io) {
         socket.join(game.gameID);
         socket.gameID = game.gameID;
         game.assignPlayerColors();
-        game.assignGuestNames();
+        game.assignGuestNames(socket.id, verifyUsers, onlineUsers);
         game.sendUpdate();
+        const gamers = new Game(game.gameID, io);
+        gamers.updateOnlineUsers(onlineUsers);
         game.sendNotification(`${player.username} has joined the game!`);
         if (game.players.length >= game.playerMaxLimit) {
           gamesNeedingPlayers.shift();
@@ -162,12 +187,12 @@ module.exports = function (io) {
       if (createPrivate) {
         createGameWithFriends(player, socket, timing, regId);
       } else {
-        fireGame(player, socket);
+        fireGame(player, socket, regId);
       }
     }
   };
 
-  const fireGame = function (player, socket) {
+  const fireGame = function (player, socket, regId) {
     let game;
     if (gamesNeedingPlayers.length <= 0) {
       gameID += 1;
@@ -176,12 +201,15 @@ module.exports = function (io) {
       allPlayers[socket.id] = true;
       game.players.push(player);
       allGames[gameID] = game;
+      game.regionId = regId;
       gamesNeedingPlayers.push(game);
       socket.join(game.gameID);
       socket.gameID = game.gameID;
       console.log(socket.id, 'has joined newly created game', game.gameID);
       game.assignPlayerColors();
-      game.assignGuestNames();
+      game.assignGuestNames(socket.id, verifyUsers, onlineUsers);
+      console.log('heyyyo1', verifyUsers, onlineUsers)
+      game.updateOnlineUsers(onlineUsers);
       game.sendUpdate();
     } else {
       game = gamesNeedingPlayers[0];
@@ -191,8 +219,9 @@ module.exports = function (io) {
       socket.join(game.gameID);
       socket.gameID = game.gameID;
       game.assignPlayerColors();
-      game.assignGuestNames();
+      game.assignGuestNames(socket.id, verifyUsers, onlineUsers);
       game.sendUpdate();
+      game.updateOnlineUsers(onlineUsers);
       game.sendNotification(`${player.username} has joined the game!`);
       if (game.players.length >= game.playerMaxLimit) {
         gamesNeedingPlayers.shift();
@@ -224,7 +253,8 @@ module.exports = function (io) {
     socket.join(game.gameID);
     socket.gameID = game.gameID;
     game.assignPlayerColors();
-    game.assignGuestNames();
+    game.assignGuestNames(socket.id, verifyUsers, onlineUsers);
+    game.updateOnlineUsers(onlineUsers);
     game.sendUpdate();
   };
 
@@ -233,6 +263,15 @@ module.exports = function (io) {
     if (allGames[socket.gameID]) { // Make sure game exists
       const game = allGames[socket.gameID];
       console.log(socket.id, 'has left game', game.gameID);
+      onlineUsers.map((val, index) => {
+        if(val.id === socket.id){
+          onlineUsers.splice(index, 1);
+          verifyUsers.splice(verifyUsers.indexOf(val.name), 1);
+        }
+      })
+      const gamers = new Game(game.gameID, io);
+      gamers.updateOnlineUsers(onlineUsers);
+      // console.log('bye!!!!!!!!!', verifyUsers)
       delete allPlayers[socket.id];
       if (game.state === 'awaiting players' ||
         game.players.length - 1 >= game.playerMinLimit) {

@@ -1,24 +1,64 @@
 <link rel="stylesheet" href="../bower/bootstrap/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="../css/common.css">
 <link rel="stylesheet" href="../css/style.css">
-<div id="player-container" ng-repeat="player in game.players" style="background-color:{{colors[player.color]}}">
-  <div id ="above-czar-container">
-    <div id="avatar_">
-      <span ng-show="isPremium($index)">
-        <img ng-src="img/king.png" id="king">
-      </span>
-      <img ng-src="{{player.avatar}}"/>
-    </div>
-    <div id="player-container-inner">
-      <div id="player-name"><h4>{{player.username | upperFirstLetter}}</h4></div>
-      <div id="player-score"><h2>{{player.points}}/{{game.pointLimit}}</h2></div>
-      <div ng-show="isPlayer($index)" id="player-star">
-        <img src="../img/11.png"/>
-      </div>
-    </div>
-  </div>
-  <div id="czar-container" ng-show="currentCzar($index)">
-    <span id='the-czar'>CZAR</span>
-  </div>
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();   
+    });
+</script>
+<div id="" style="padding: 10px;">
+  <ul class="nav nav-tabs">
+      <li class="active"><a data-toggle="tab" href="#home">Players</a></li>
+      <li><a data-toggle="tab" href="#menu">Online</a></li>
+  </ul>
 </div>
+<div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+      <div id="player-container" ng-repeat="player in game.players" style="background-color:{{colors[player.color]}}">
+          <div id ="above-czar-container">
+            <div id="avatar_">
+              <span ng-show="isPremium($index)">
+                <img ng-src="img/king.png" id="king">
+              </span>
+              <img ng-src="{{player.avatar}}"/>
+            </div>
+            <div id="player-container-inner">
+              <div id="player-name"><h4>{{player.username | upperFirstLetter}}</h4></div>
+              <div id="player-score"><h2>{{player.points}}/{{game.pointLimit}}</h2></div>
+              <div ng-show="isPlayer($index)" id="player-star">
+                <img src="../img/11.png"/>
+              </div>
+            </div>
+          </div>
+          <div id="czar-container" ng-show="currentCzar($index)">
+            <span id='the-czar'>CZAR</span>
+          </div>
+        </div>
+      </div>
+    <div id="menu" class="tab-pane fade" 
+    style="padding: 10px 25px; color:white">
+    <div id="snackbar">Invite sent successfully!</div>
+      <form>
+        <div class="input-group">
+          <input ng-model="searchFilter" type="text" class="form-control" placeholder="Search">
+          <div class="input-group-btn">
+            <button class="btn btn-default" type="submit">
+              <i class="glyphicon glyphicon-search"></i>
+            </button>
+          </div>
+        </div>
+      </form>
+        <div class="list-type1">
+          <ol>
+            <li style="cursor: pointer;" 
+            ng-repeat="users in game.online | filter:searchFilter" title="Invite Player!">
+              <a ng-click="game.pushNotification(users.id, game)">
+                {{users.name}}
+              </a>
+            </li>
+          </ol>
+        </div>
+    </div>
+  </div>
+
 

@@ -21,16 +21,19 @@ angular.module('mean.system').factory('game', [
       state: null,
       round: 0,
       time: 0,
+      online: null,
       curQuestion: null,
       level: '',
       notification: null,
       timeLimits: {},
+      myMessage: { message: [], url: '' },
       joinOverride: false,
       errorMessage: '',
       gameStarted: '',
       allUsers: [],
       regId: null,
-      inviteSent: false
+      inviteSent: false,
+      pushSent: false
     };
 
     const notificationQueue = [];
@@ -203,9 +206,17 @@ angular.module('mean.system').factory('game', [
       gameStarted();
     });
 
+    game.send = function () {
+      console.log('running sendfunct...');
+      const x = document.getElementById('snackbar'); /* eslint-disable-line */
+      x.className = 'show';
+      setTimeout(() => { x.className = x.className.replace('show', ''); }, 3000);
+    };
+
     game.joinGame = function (mode, room, createPrivate) {
       const level = localStorage.getItem('level');
       const { regId } = game;
+
       if (level === 'beginner') {
         timing = 30;
       } else if (level === 'intermidiate') {
@@ -217,9 +228,10 @@ angular.module('mean.system').factory('game', [
       room = room || '';
       createPrivate = createPrivate || false;
       const userID = window.user ? user._id || user.id : 'unauthenticated';
+      const avatar = user ? user.avatar : 'avatar';
       socket.emit(mode, {
         userID,
-        avatar: user.avatar,
+        avatar,
         room,
         createPrivate,
         timing,
@@ -247,12 +259,22 @@ angular.module('mean.system').factory('game', [
       game.owner = data.id;
     });
 
+    socket.on('online', (data) => {
+      game.online = data;
+      console.log(game.online);
+    });
+
+    socket.on('updateOnlineUsers', (data) => {
+      game.online = data;
+    });
+
     socket.on('inviteSuccess', () => {
       game.inviteSent = true;
       game.allUsers = [];
       setTimeout(() => {
         game.inviteSent = false;
       }, 2000);
+      game.send();
     });
 
     socket.on('searchErr', () => {
@@ -261,6 +283,15 @@ angular.module('mean.system').factory('game', [
 
     socket.on('searchSuccess', (data) => {
       allUsers(data.user);
+    });
+
+    socket.on('sendConfirmation', () => {
+      console.log('watamaguwam');
+      game.send();
+    });
+
+    socket.on('sendNotification', (data) => {
+      game.myMessage = { message: [...game.myMessage.message, data.msg], url: data.url };
     });
 
     socket.on('err', () => {
@@ -321,10 +352,27 @@ angular.module('mean.system').factory('game', [
       );
     };
 
+    game.pushNotification = function (socketId, player) {
+      const url = $location.absUrl();
+      const { username, id } = player.players[player.playerIndex];
+      console.log(id, socketId);
+      const msg = `${username} has invited his game.
+          click the link below to join`;
+      socket.emit('pushNotification', {
+        socketId, msg, url, sender: id
+      });
+
+      socket.emit('pushSent', { id });
+    };
+
     game.leaveGame = function () {
       game.players = [];
       game.time = 0;
       socket.emit('leaveGame');
+    };
+
+    game.onlineFunc = function () {
+      socket.emit('onlineUsers');
     };
 
     game.pickCards = function (cards) {
