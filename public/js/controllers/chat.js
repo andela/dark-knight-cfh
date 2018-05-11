@@ -78,8 +78,10 @@ angular.module('mean.system')
         //   console.log(`https://chatapp-3aaa8.firebaseio.com/game${game.gameID}`);
         $scope.chatArray = $firebaseArray(refToFirebase);
 
-        if (firstTime) {
+        console.log('VALUESSSSSS', newValue, oldValue, game);
+        if (game.players.length === 1) {
           refToFirebase.remove();
+          // firstTime = false;
         //   console.log('null values');
         }
       }
