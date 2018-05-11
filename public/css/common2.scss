@@ -48,7 +48,7 @@ $black: #000;
     background-color: $navy-blue-lighten-1;
   }
 }
-.btn-large{
+.btn-large {
   padding: 0;
 }
 .glow {
@@ -340,9 +340,14 @@ $black: #000;
   }
 }
 .profile-page {
-  background-color: #e4e4e4;
+  background-color: white;
+  // background-color: #e4e4e4;
   padding-bottom: 40px;
   margin: 0;
+
+  .navbar-profile-hov:hover {
+    background-color: rgba(0, 0, 0, 0.1) !important;
+  }
 
   hr.divider {
     margin-top: 10px;
@@ -351,6 +356,7 @@ $black: #000;
   }
 
   .top-section {
+    // height: 400px;
     color: white;
     background-color: #344454;
     // background-color: #34495E;
@@ -389,6 +395,15 @@ $black: #000;
     }
   }
 
+  .navbar-profile {
+    background-color: #e0e0e0 !important;
+    padding-top: 0;
+    ul {
+      padding-right: 90px;
+      padding-top: 15px;
+    }
+  }
+
   .bottom-section {
     padding-top: 30px;
     .list-group-item {
@@ -421,7 +436,7 @@ $black: #000;
         color: #344454;
       }
 
-      tr>td {
+      tr > td {
         border-top: 1px none #ddd;
       }
       .leaderboard-header {
@@ -429,9 +444,83 @@ $black: #000;
         color: black;
       }
 
-      .btn-load{
+      .btn-load {
         margin-bottom: 30px;
       }
     }
   }
+  .main {
+    margin-top: 90px;
+    height: 100vh;
+    background-color: white;
+    padding-left: 20px;
+    // height: 600px;
+
+    .image-section {
+      height: inherit;
+      margin-right: 10px;
+      img {
+        display: block;
+        margin: auto;
+        margin-top: 15px;
+        height: 180px;
+        width: 180px;
+      }
+      color: white;
+      background-color: #344454;
+      min-height: inherit;
+      .user-details {
+        margin-top: 25px;
+        margin-right: 25px;
+      }
+    }
+    .gamelog-section {
+      nav {
+        width: 100%;
+      }
+      padding-top: 15px;
+      color: #344454;
+      background-color: #e4e4e4;
+      height: inherit;
+      tr:hover {
+        color: white;
+        background-color: #344454;
+      }
+    }
+    .leaderboard-section {
+      margin-left: 10px;
+      padding-top: 15px;
+      color: white;
+      background-color: #344454;
+      height: inherit;
+      tr:hover {
+        color: #344454;
+        background-color: white;
+      }
+    }
+
+    @media only screen and (max-width: 660px) {
+      .leaderboard-section,
+      .gamelog-section,
+      .image-section,
+      .navbar-profile {
+        height: auto;
+        width: auto;
+      }
+    }
+  }
+
+  .ClassA {
+    background-color: white;
+    color: #344454;
+  }
+
+  .ClassB {
+    background-color: #344454;
+    color: white;
+  }
+}
+
+.pagination {
+  background-color: red;
 }
