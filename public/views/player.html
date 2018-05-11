@@ -13,7 +13,7 @@
   </ul>
 </div>
 <div class="tab-content">
-    <div id="home" class="tab-pane fade in active">
+    <div id="home" class="tab-pane fade in active" data-step="2" data-intro="For each round, one player is randomly chosen as the Card Czar.">
       <div id="player-container" ng-repeat="player in game.players" style="background-color:{{colors[player.color]}}">
           <div id ="above-czar-container">
             <div id="avatar_">
@@ -25,7 +25,7 @@
             <div id="player-container-inner">
               <div id="player-name"><h4>{{player.username | upperFirstLetter}}</h4></div>
               <div id="player-score"><h2>{{player.points}}/{{game.pointLimit}}</h2></div>
-              <div ng-show="isPlayer($index)" id="player-star">
+              <div ng-show="isPlayer($index)" id="player-star" data-step="3" data-intro="This identifies you">
                 <img src="../img/11.png"/>
               </div>
             </div>
@@ -60,5 +60,3 @@
         </div>
     </div>
   </div>
-
-

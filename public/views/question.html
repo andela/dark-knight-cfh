@@ -1,15 +1,15 @@
 <link rel="stylesheet" href="../bower/bootstrap/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="../css/common.css">
 <link rel="stylesheet" href="../css/style.css">
-<div id="question-container-inner">
+<div id="question-container-inner" data-step="4" data-intro="When the game starts, each players gets 10 answer cards!">
     <div ng-if="game.errorMessage" >
         <div
         style="background: red; border-radius: 7px; padding: 5px 10px; color: white; font-size: 14px;">
         {{game.errorMessage}}<span style="float: right; cursor: pointer;" ng-click="game.closeErrMsg()">x</span>
       </div></br>
     </div>
-
-
+    </br>
+  </div>
     <div>
         <div id="snackbar">Invite sent successfully!</div>
 
@@ -28,19 +28,27 @@
         <div ng-repeat="user in game.allUsers" class="list"
         style="background: #34495E; color: white;
         border-radius: 7px; padding: 10px 10px;">
-          <ul style="list-style-type: circle;">
-            <li>{{user.name}} <span style="float: right;">
-              <button class="btn btn-success btn-sm" ng-click="game.sendInvite(user, game)">invite</button></span></li>
-          </ul>
-        </div>
-        <div ng-if="game.allUsers"></br></div>
+        <ul style="list-style-type: circle;">
+          <li>{{user.name}}
+            <span style="float: right;">
+              <button class="btn btn-success btn-sm" ng-click="game.sendInvite(user, game)">invite</button>
+            </span>
+          </li>
+        </ul>
+      </div>
+      <div ng-if="game.allUsers">
+        </br>
       </div>
     </div>
+  </div>
 
 
   <div class="card longBlack">
     <div ng-if="game.gameStarted" class="started">
-      <p>Game started!!!<span class="closeMsg" ng-click="game.closeErrMsg()">x</span></p></br>
+      <p>Game started!!!
+        <span class="closeMsg" ng-click="game.closeErrMsg()">x</span>
+      </p>
+      </br>
       {{game.gameStarted}}
     </div>
     <span ng-bind-html-unsafe="game.curQuestion.text" ng-hide="game.state === 'game ended' || game.state ==='game dissolved' || game.state === 'awaiting players'"></span>
@@ -54,15 +62,17 @@
         <div id="the-word-players"> Players</div>
       </div>
       <div id="loading-container">
-        <div id="loading-gif"><img ng-src="../img/loader.gif"/></div>
-      </div>
-      <div id="start-game-container" ng-click="game.startGame(game.players.length, game.id)"
-        ng-show="game.playerIndex === 0 && game.players.length > 0">
-          <div id='start-game-button'>
-            Start Game</br>
+        <div id="loading-gif">
+          <img ng-src="../img/loader.gif" />
         </div>
       </div>
-    </div> </br>
+      <div id="start-game-container" ng-click="game.startGame(game.players.length, game.id)" ng-show="game.playerIndex === 0 && game.players.length > 0">
+        <div id='start-game-button'>
+          Start Game</br>
+        </div>
+      </div>
+    </div>
+    </br>
 
     <!-- Game Over Stuff -->
     <div id="game-end-info">
@@ -71,7 +81,9 @@
         Our sincere apologies.
       </div>
       <div ng-show="game.state === 'game ended' && game.gameWinner === game.playerIndex">
-        <div class="game-end-headline">Congratulations! You won the game, {{game.players[game.playerIndex].username | upperFirstLetter}}!</div>We hope you feel special. If you'd like to share that special feeling with the world, consider donating to charity. Or just horde it all for youself.
+        <div class="game-end-headline">Congratulations! You won the game, {{game.players[game.playerIndex].username | upperFirstLetter}}!</div>We hope you
+        feel special. If you'd like to share that special feeling with the world, consider donating to charity. Or just horde
+        it all for youself.
       </div>
       <div ng-show="game.state === 'game ended' && game.gameWinner !== game.playerIndex">
         <div class="game-end-headline">Aw, shucks! {{game.players[game.gameWinner].username | upperFirstLetter }} won the game!</div>
@@ -81,4 +93,3 @@
 
   </div>
 </div>
-

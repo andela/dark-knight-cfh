@@ -43,12 +43,11 @@ angular.module('mean.system').factory('game', [
     let timing;
 
     const gameStarted = function () {
-      console.log('game started!!!');
       game.gameStarted = 'Only a max of 12 persons allowed per game';
     };
 
     const allUsers = function (data) {
-      console.log('list of all available users in cfh db');
+
       game.allUsers = data.user;
     };
 
@@ -65,7 +64,6 @@ angular.module('mean.system').factory('game', [
     };
 
     const addToNotificationQueue = function (msg) {
-      console.log(game);
       notificationQueue.push(msg);
       if (!timeout) {
         // Start a cycle if there isn't one
@@ -247,10 +245,10 @@ angular.module('mean.system').factory('game', [
         data: { winner, players, level }
       }).then(
         (response) => {
-          console.log('operation was successful', response);
+          // console.log('operation was successful', response);
         },
         (error) => {
-          console.log('An error occured', error);
+          // console.log('An error occured', error);
         }
       );
     };
@@ -325,7 +323,6 @@ angular.module('mean.system').factory('game', [
           socket.emit('search', { user, id: playerInfo.id });
         },
         (error) => {
-          console.log('error occured');
           socket.emit('searchError', { id: playerInfo.id });
         }
       );
@@ -342,11 +339,9 @@ angular.module('mean.system').factory('game', [
         data: { email: data.email, msg }
       }).then(
         (response) => {
-          console.log(response);
           socket.emit('inviteSuccessful', { id: player.id });
         },
         (error) => {
-          console.log('error occured');
           // socket.emit('searchError');
         }
       );

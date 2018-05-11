@@ -243,9 +243,11 @@
   color: #344454; }
 
 .profile-page {
-  background-color: #e4e4e4;
+  background-color: white;
   padding-bottom: 40px;
   margin: 0; }
+  .profile-page .navbar-profile-hov:hover {
+    background-color: rgba(0, 0, 0, 0.1) !important; }
   .profile-page hr.divider {
     margin-top: 10px;
     margin-bottom: 5px;
@@ -273,6 +275,12 @@
   .profile-page .middle-section .rank-name {
     margin-top: 30px;
     margin-bottom: 0; }
+  .profile-page .navbar-profile {
+    background-color: #e0e0e0 !important;
+    padding-top: 0; }
+    .profile-page .navbar-profile ul {
+      padding-right: 90px;
+      padding-top: 15px; }
   .profile-page .bottom-section {
     padding-top: 30px; }
     .profile-page .bottom-section .list-group-item {
@@ -299,3 +307,58 @@
         color: black; }
       .profile-page .bottom-section .leaderboard .btn-load {
         margin-bottom: 30px; }
+  .profile-page .main {
+    margin-top: 90px;
+    height: 100vh;
+    background-color: white;
+    padding-left: 20px; }
+    .profile-page .main .image-section {
+      height: inherit;
+      margin-right: 10px;
+      color: white;
+      background-color: #344454;
+      min-height: inherit; }
+      .profile-page .main .image-section img {
+        display: block;
+        margin: auto;
+        margin-top: 15px;
+        height: 180px;
+        width: 180px; }
+      .profile-page .main .image-section .user-details {
+        margin-top: 25px;
+        margin-right: 25px; }
+    .profile-page .main .gamelog-section {
+      padding-top: 15px;
+      color: #344454;
+      background-color: #e4e4e4;
+      height: inherit; }
+      .profile-page .main .gamelog-section nav {
+        width: 100%; }
+      .profile-page .main .gamelog-section tr:hover {
+        color: white;
+        background-color: #344454; }
+    .profile-page .main .leaderboard-section {
+      margin-left: 10px;
+      padding-top: 15px;
+      color: white;
+      background-color: #344454;
+      height: inherit; }
+      .profile-page .main .leaderboard-section tr:hover {
+        color: #344454;
+        background-color: white; }
+    @media only screen and (max-width: 660px) {
+      .profile-page .main .leaderboard-section,
+      .profile-page .main .gamelog-section,
+      .profile-page .main .image-section,
+      .profile-page .main .navbar-profile {
+        height: auto;
+        width: auto; } }
+  .profile-page .ClassA {
+    background-color: white;
+    color: #344454; }
+  .profile-page .ClassB {
+    background-color: #344454;
+    color: white; }
+
+.pagination {
+  background-color: red; }
