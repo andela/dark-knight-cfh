@@ -47,22 +47,14 @@ module.exports = (app, passport) => {
   app.get('/users/:userId', users.show);
 
   // Setting the facebook oauth routes
-  app.get(
-    '/auth/facebook',
-    passport.authenticate('facebook', {
-      scope: ['public_profile', 'email'],
-      failureRedirect: '/signin'
-    }),
-    users.signin
-  );
+  app.get('/auth/facebook', passport.authenticate('facebook', {
+    scope: ['public_profile', 'email'],
+    failureRedirect: '/signin'
+  }), users.signin);
 
-  app.get(
-    '/auth/facebook/callback',
-    passport.authenticate('facebook', {
-      failureRedirect: '/signin'
-    }),
-    users.authCallback
-  );
+  app.get('/auth/facebook/callback', passport.authenticate('facebook', {
+    failureRedirect: '/signin'
+  }), users.authCallback);
 
   // Setting the twitter oauth routes
   app.get(
