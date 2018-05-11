@@ -51,7 +51,7 @@ module.exports = (app, passport) => {
     scope: ['public_profile', 'email'],
     failureRedirect: '/signin'
   }), users.signin);
-
+  
   app.get('/auth/facebook/callback', passport.authenticate('facebook', {
     failureRedirect: '/signin'
   }), users.authCallback);

@@ -1,0 +1,32 @@
+<link rel="stylesheet" href="../css/style.css">
+
+<div id="chatDiv" class="container-fluid" ng-controller="ChatController">
+    <button ng-click="collapseChat()" ng-class="openChatBox ? 'showFab':'hideFab'">
+        <span ng-if="openChatBox"> - </span>
+        <span ng-if="!openChatBox">CHAT </span>
+        <span id="notification-badge" ng-show="!openChatBox && checkUnreadMsg">{{unreadMessage}}</span>
+    </button>
+    <div ng-if="openChatBox" class="chat">
+        <div id="chatInterface">
+
+            <div ng-repeat="chat in chatArray">
+
+                <div class="chat-bubble" ng-class="chat.user === addNewMessage.user ? 'current-player' : 'team-player'">
+                    <span class="time-display" ng-bind="showTime(chat.timeStamp)">{{chat.timestamp}}</span>
+
+                    <span class="format-user-name">{{chat.user}}</span>
+
+                    <p class="format-msg">{{chat.addNewMessage}}</p>
+                </div>
+            </div>
+
+        </div>
+        <div style="
+        padding: 10px;
+    ">
+            <input ng-controller="ChatController"  id="chatBox" type="text" ng-keypress="sendChatToDb($event)" ng-model="game.newChat" name="chatMessage">
+        </div>
+        
+
+    </div>
+</div>
