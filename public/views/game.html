@@ -1,0 +1,267 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+<link rel="stylesheet" href="../css/common2.css">
+<div class="game-page" ng-controller="GameController">
+    <!-- Navbar -->
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper grey lighten-2">
+                <div class="container nav-box">
+                    <div class="brand-logo animate swell-2">
+                        <a href="#!"><img src="../img/playing-cards.svg" alt=""></a>
+                    </div>
+                    <a data-target="mobile" class="sidenav-trigger"><i class="material-icons grey-text text-darken-4">menu</i></a>
+                    <ul id="nav-mobile" class="right hide-on-med-and-down game-navbar-right">
+                        <li class="game-search">
+                            <div class="game-search-button animate swell-2"><i class="material-icons">search</i></div>
+                            <div class="game-search-bar">
+                                <input type="text" placeholder="search player" ng-change="searchUser(game)" ng-model="search_input">
+                                <div ng-if="game.allUsers" class="dropdown">
+                                    <ul>
+                                        <li ng-repeat="user in game.allUsers" class="text">{{user.name}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#charity" class="gray-slate-text animate swell-1 turn-gray-slate-text">CHARITY</a>
+                        </li>
+                        <li>
+                            <a href="#!/quit" class="gray-slate-text animate swell-1 turn-gray-slate-text" ng-click="abandonGame()">QUIT</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <!-- Navbar List -->
+    <ul class="sidenav" id="mobile">
+        <li><a href="#!/profile" data-ng-show="global.authenticated">CHARITY</a></li>
+        <li><a href="" ng-click="logout()" data-ng-show="global.authenticated">QUIT</a></li>
+    </ul>
+    <!-- Game Content -->
+    <div class="game-content game-height-1">
+        <div class="row game-actual-content">
+            <!--  Left Content -->
+            <div class="col m9 s12 game-height-1">
+                <!-- Dashboard -->
+                <div class="row game-container-height-3">
+                    <!-- Timer -->
+                    <div class="col s4">
+                        <div class=" game-height-3 game-timer">
+                            <div class="b1">
+                                <div class="b2">
+                                    <div class="b3">
+                                        <div class="text animate pulsate" ng-bind="game.time"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="game-timer-context" ng-animate="{enter:'animated fadeInUp', leave:'animate drop'}" ng-show="game.state === 'winner has been chosen'"> Next Round In</div>
+                        <div class="game-timer-context" ng-animate="{enter:'animate fadeInUp', leave:'animate drop'}" ng-show="game.state === 'waiting for czar to decide'"> Czar Choosing</div>
+                    </div>
+                    <!-- Main -->
+                    <div class="col s8">
+                        <div class="game-height-3 game-main">
+                            <!-- ************ Finding Players ************ -->
+                            <div class="start-game-box" ng-show="game.state === 'awaiting players'">
+                                <div class="find-player-box">
+                                    <div class="center">
+                                        <div class="title">Finding Players</div>
+                                        <img src="../img/loading.gif" alt="loading" class="loading">
+                                        <div class="button animate swell-1" ng-show="game.playerIndex === 0 && game.players.length > 0" ng-click="game.startGame(game.players.length, game.id)">START GAME</div>
+                                    </div>
+                                </div>
+                                <div class="player-count-box">
+                                    <div class="player-count animate shrink">{{ game.players.length }}/12</div>
+                                </div>
+                            </div>
+                            <!-- ************ Question ************ -->
+                            <div class="game-question-box" ng-bind-html-unsafe="game.curQuestion.text" ng-hide="game.state === 'game ended' || game.state ==='game dissolved' || game.state === 'awaiting players'"></div>
+                            <!-- ************ Game Over Stuff ************ -->
+                        </div>
+                        <div class="game-main-notification">
+                            <div class="text" ng-if="game.notification" ng-animate="{enter:'animate driftInLeft', leave:'animate drop'}">{{game.notification}}</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Deck -->
+                <div class="game-deck">
+                    <div class="game-deck-row">
+                        <div class="game-card game-height-6" ng-style="{'cursor':'pointer'}" ng-click="pickCard(card)" ng-hide="showTable || isCzar()"
+                            ng-repeat="card in game.players[game.playerIndex].hand" ng-animate="{enter:'animated fadeInUp', leave: 'animated fadeInOut'}">
+                            <img src="../img/pattern.png" alt="pattern1" class="top-right-pattern">
+                            <div class="bottom-left-pattern ">
+                                <div class="text" ng-bind-html-unsafe="card.text"></div>
+                                <img src="../img/pattern1.png" alt="pattern1" class="stick">
+                                <span id='selection-number' class='selection-number' ng-show="showFirst(card)"> 1 </span>
+                                <span id='selection-number' class='selection-number' ng-show="showSecond(card)"> 2 </span>
+                            </div>
+                        </div>
+
+                        <span ng-repeat="answer in game.table">
+                            <div class="game-card game-height-6" ng-click="pickWinning(answer)" ng-show="showTable || isCzar()"
+                                ng-repeat="card in answer.card" ng-animate="{enter:'animated bounceInLeft'}" style="background-color:{{winningColor($parent.$index)}}">
+                                <img src="../img/pattern.png" alt="pattern1" class="top-right-pattern">
+                                <div class="bottom-left-pattern ">
+                                    <div class="text" ng-bind-html-unsafe="card.text"></div>
+                                    <img src="../img/pattern1.png" alt="pattern1" class="stick">
+                                    <span id='selection-number' class='selection-number' ng-show="firstAnswer($index)"> 1 </span>
+                                    <span id='selection-number' class='selection-number' ng-show="secondAnswer($index)"> 2 </span>
+                                </div>
+                            </div>
+                        </span>
+                    </div>
+                    <!-- ************ How to Play ************ -->
+                    <div class="game-how-to" ng-show="game.state === 'awaiting players'">
+                        <div class="title">How to Play</div>
+                        <ol class="body">
+                          <li>Each player begins with, and will always have, 10 white answer cards.</li>
+                          <li>For each round, one player is randomly chosen as the Card Czar.</li>
+                          <li>Everyone else answers the black question card by clicking on the answer card they want to use.</li>
+                          <li>The Card Czar then picks a favorite answer, and whoever played that answer wins the round.</li>
+                          <li>Want to adorn your avatar with a glorious crown? Donate to charity after the game!</li>
+                        </ol>
+                    </div>
+                    <!-- ************ Game End ************ -->
+                    <div ng-show="game.state === 'game ended' || game.state ==='game dissolved'">
+                        <div class="game-end">
+                            <h4>What would you like to do now?</h4>
+                            <div class="game-end-text" ng-show="game.state ==='game dissolved' && game.gameWinner === -1">
+                                You might consider donating to charity to atone for the horrifying answers you've submitted. Donating will also place a lovely crown on your avatar's head.
+                            </div>
+                            <h4>What would you like to do now?</h4>
+                            <div class="game-end-text" ng-show="game.state === 'game ended' || game.gameWinner !== -1">
+                                Help yourself to another game or help a child in need? Donating will also place a lovely crown on your avatar's head.
+                            </div>
+                            <div class="">
+                                <a href='/#!/app'><button ng-click="game.joinGame('joinNewGame')" class="btn-small gray-slate animate swell-2 turn-gray-slate">New Game</button></a>
+                                <a href='/'><button class="btn-small gray-slate animate swell-2 turn-gray-slate">Exit Game</button></a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ************ Note to Czar ************ -->
+                    <div class="game-end" ng-show="isCzar() && game.table.length===0 && game.state !== 'game dissolved' && game.state !== 'awaiting players'">
+                        <h4>You are the Card Czar.</h4>
+                        <div class="game-end-text">
+                            Players are choosing their answers. Prepare to select a winner.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Right Content -->
+            <div class="col m3 s12 game-height-1">
+                <div class="game-player-list">
+                    <!-- Player Label 1 -->
+                    <div class="player-label" ng-repeat="player in game.players">
+                        <!-- Avatar Section -->
+                        <div class="sz4">
+                            <div class="avatar">
+                                <div class="badge">O</div>
+                                <div class="clip-layer">
+                                    <img ng-src="{{ player.avatar }}" alt="placeholder">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Detail Section -->
+                        <div class="sz8">
+                            <div class="row details">
+                                <div class="name">
+                                    <div class="text">{{ player.username | upperFirstLetter }} <span ng-show="isPlayer($index)"></span> </div>
+                                    <div class="czar-tag" ng-show="currentCzar($index)">CZAR</div>
+                                </div>
+                                <div class="points">{{ player.points }}/{{ game.pointLimit }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="game-player-tab-switch animate lighten">FIND PLAYERS</div>
+            </div>
+        </div>
+    </div>
+    <!-- Choose-Region Modal -->
+    <div id="region-modal" class="game-modal" ng-hide="hideModal" data-ng-hide="game.players && game.players.length >= 1">
+        <div class="game-modal-content">
+            <div class="modal-body">
+                <h6>Please select a region</h6>
+                <form action="#" ng-init="game.regId=1">
+                    <p>
+                        <label>
+                        <input class="with-gap" name="group1"  value="1" ng-model="game.regId" type="radio"/>
+                        <span>Africa</span>
+                        </label>
+                    </p>
+                    <p>
+                        <label>
+                        <input class="with-gap" name="group1"  value="2" ng-model="game.regId" type="radio"/>
+                        <span>Global</span>
+                        </label>
+                    </p>
+                </form>
+                <div data-ng-hide="guest">
+                    <h6>Please select a difficulty level</h6>
+                    <form action="#" ng-init="game.level='beginner'">
+                        <p>
+                            <label>
+                            <input class="with-gap" name="group1" type="radio" value="beginner" ng-model="game.level" />
+                            <span>Beginner</span>
+                            </label>
+                        </p>
+                        <p>
+                            <label>
+                            <input class="with-gap" name="group1" type="radio" value="intermediate" ng-model="game.level"/>
+                            <span>Intermediate</span>
+                            </label>
+                        </p>
+                        <p>
+                            <label>
+                            <input class="with-gap" name="group1" type="radio"  value="legend" ng-model="game.level"/>
+                            <span>Legend</span>
+                            </label>
+                        </p>
+                    </form>
+                </div>
+            </div>
+            <div class="game-modal-footer">
+                <button data-ng-hide="guest" type="button" ng-click="hideModal=true; startSession()" class="btn-small gray-slate animate swell-2 turn-gray-slate">Start Game</button>
+                <button data-ng-show="guest" type="button" ng-click="hideModal=true; startSession()" class="btn-small gray-slate animate swell-2 turn-gray-slate">Join Game</button>
+                <button ng-click="abandonGame()" type="button" class="btn-small gray-slate animate swell-2 turn-gray-slate">Go back</button>
+            </div>
+        </div>
+    </div>
+    <!-- Message Toast -->
+    <div id="message-toast" class="game-toast-container">
+        <div id="message-toast" class="game-toast" ng-if="game.errorMessage" ng-animate="{enter:'animated fadeInDown', leave:'animated fadeOut'}">
+            <div>{{game.errorMessage}}</div>
+        </div>
+        <div class="game-toast" ng-show="game.state ==='game dissolved' && game.gameWinner === -1">
+            <div class="title">What the!? The game ended because too many people left!</div>
+            <div>Our sincere apologies.</div>
+        </div>
+        <div class="game-toast" ng-show="game.state === 'game ended' && game.gameWinner !== game.playerIndex">
+            <div class="title">Aw, shucks! {{game.players[game.gameWinner].username | upperFirstLetter }} won the game!</div>
+            <div>That makes you a loser, unfortunately.</div>
+        </div>
+        <div class="game-toast" ng-show="game.state === 'game ended' && game.gameWinner === game.playerIndex">
+            <div class="title">Congratulations! You won the game, {{game.players[game.playerIndex].username | upperFirstLetter}}!</div>
+            <div>We hope you feel special. If you'd like to share that special feeling with the world, consider donating to charity.</div>
+            <div>Or just horde it all for youself.</div>
+        </div>
+    </div>
+</div>
+<!-- FAB -->
+<div class="fixed-action-btn game-chat-fab">
+    <a class="btn-floating btn-large gray-slate animate turn-gray-slate">
+        <i class="large material-icons">chat</i>
+    </a>
+</div>
+<script type="text/javascript">
+    $(window).on('load', function () {
+        const sidenav = document.querySelector('.sidenav');
+        const instance = M.Sidenav.init(sidenav, { });
+
+        $('.game-player-tab-switch').click(function () {
+            console.log('hello');
+        });
+    })
+</script>

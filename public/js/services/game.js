@@ -165,7 +165,7 @@ angular.module('mean.system').factory('game', [
         game.czar = data.czar;
         game.curQuestion = data.curQuestion;
         // Extending the underscore within the question
-        game.curQuestion.text = data.curQuestion.text.replace(/_/g, '<u></u>');
+        game.curQuestion.text = data.curQuestion.text.replace(/_/g, '______');
 
         // Set notifications only when entering state
         if (newState) {
@@ -183,7 +183,7 @@ angular.module('mean.system').factory('game', [
         } else {
           addToNotificationQueue('The czar is contemplating...');
         }
-      } else if (data.state === 'winner has been chosen' && game.curQuestion.text.indexOf('<u></u>') > -1) {
+      } else if (data.state === 'winner has been chosen' && game.curQuestion.text.indexOf('______') > -1) {
         game.curQuestion = data.curQuestion;
       } else if (data.state === 'awaiting players') {
         joinOverrideTimeout = $timeout(() => {
@@ -264,13 +264,14 @@ angular.module('mean.system').factory('game', [
     });
 
     socket.on('err', () => {
-      game.errorMessage = 'A minimum of 3 players are required to play the game';
+      game.errorMessage = 'A minimum of 3 players is required to play the game!';
       setTimeout(() => {
         game.errorMessage = '';
       }, 2000);
     });
 
     game.startGame = function (players, id) {
+      console.log('Hello Mofo')
       if (players < 3) {
         socket.emit('startError', { id });
       } else {
@@ -298,6 +299,13 @@ angular.module('mean.system').factory('game', [
           socket.emit('searchError', { id: playerInfo.id });
         }
       );
+    };
+
+    game.send = function () {
+      console.log('running sendfunct...');
+      const x = document.getElementById('snackbar'); /* eslint-disable-line */
+      x.className = 'show';
+      setTimeout(() => { x.className = x.className.replace('show', ''); }, 3000);
     };
 
     game.sendInvite = function (data, player) {
