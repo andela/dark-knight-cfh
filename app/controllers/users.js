@@ -323,10 +323,15 @@ exports.user = (req, res, next, id) => {
 };
 
 /**
- * Find user by ID
+ * @description returns user data and info
+ *
+ * @param {object} req
+ * @param {object} res
+ *
+ * @returns {object} user object
  */
-exports.profile = (req, res, next) => {
-  const userID = req.verified._id;
+exports.profile = (req, res) => {
+  const userID = req.verified._id || req.verified.id;
   User.findOne({
     _id: userID
   })
@@ -351,25 +356,46 @@ exports.profile = (req, res, next) => {
  * @returns {object} json object containing array of user objects
  */
 exports.leaderboard = (req, res) => {
-  User.find()
-    .sort({ points: -1 })
-    .exec()
-    .then((users) => {
-      if (!users) {
-        return res.status(404).json({
-          message: 'No Users found'
-        });
-      }
-      // nullify user password
-      const secureUsers = users.map((user) => {
-        user.hashed_password = null;
-        return user;
-      });
-      return res.status(200).json({
-        secureUsers
-      });
+  const pageOptions = {
+    page: parseInt(req.query.page, 10) || 0,
+    limit: parseInt(req.query.limit, 10) || 15,
+    canFetchMore: false
+  };
+
+  User.count({})
+    .then((count) => {
+      if (!count) return res.json({ msg: 'database error' });
+
+      const numOfPages = Math.ceil(count / pageOptions.limit);
+      // if (pageOptions.limit * pageOptions.page )
+      User.find()
+        .sort({ points: -1 })
+        .skip(pageOptions.page * pageOptions.limit)
+        .limit(pageOptions.limit)
+        .exec()
+        .then((users) => {
+          if (!users) {
+            return res.status(404).json({
+              message: 'No Users found'
+            });
+          }
+          // nullify user password
+          const secureUsers = users.map((user) => {
+            user.hashed_password = null;
+            return user;
+          });
+          return res.status(200).json({
+            secureUsers,
+            count,
+            numOfPages
+          });
+        })
+        .catch(error => res.status(500).json(error.message || 'Unable to query the database'));
     })
-    .catch(error => res.status(500).json(error.message || 'Unable to query the database'));
+    .catch(error =>
+      res.status(500).json({
+        message: error.message || 'Unable to query the database'
+      }));
 };
 
 /**
@@ -381,9 +407,12 @@ exports.leaderboard = (req, res) => {
 
 exports.getDonation = (req, res) => {
   const userID = req.verified._id;
-  User.findOne({
-    _id: userID
-  }, 'donations')
+  User.findOne(
+    {
+      _id: userID
+    },
+    'donations'
+  )
     .exec()
     .then((user) => {
       if (!user) {
@@ -395,6 +424,5 @@ exports.getDonation = (req, res) => {
         user
       });
     })
-    .catch(error =>
-      res.status(500).json(error.message || 'Unable to query the database'));
+    .catch(error => res.status(500).json(error.message || 'Unable to query the database'));
 };
