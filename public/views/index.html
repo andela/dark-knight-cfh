@@ -1,6 +1,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
 <script type="text/javascript">
-    $(window).on('load',function(){
+    $(document).ready(function(){
         let isMouseOver = false;
         let first = true;
 
@@ -10,8 +10,7 @@
         const fabInstance = M.FloatingActionButton.init(fab, { });
         const instance = M.Sidenav.init(sidenav, { });
     });
-</script>
-
+  </script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
 <link rel="stylesheet" href="../css/common2.css">
 <div ng-cloak ng-controller="IndexController">
@@ -28,7 +27,7 @@
                         <li><a href="#!/signup" class="gray-slate-text animate swell-1 turn-gray-slate-text" data-ng-hide="global.authenticated">SIGN UP</a></li>
                         <li><a href="#!/signin" class="gray-slate-text animate swell-1 turn-gray-slate-text" data-ng-hide="global.authenticated">LOGIN</a></li>
                         <li><a href="" ng-click="logout()" class="gray-slate-text animate swell-1 turn-gray-slate-text" data-ng-show="global.authenticated">SIGN OUT</a></li>
-                        <li><a href="#!/profile" data-ng-show="global.authenticated"><img class="circle" ng-src={{pic}} alt="profile image" width="40px" height="40px" style="margin-top:12px"></a></li>
+                        <li><a href="#!/profile" data-ng-show="global.authenticated"><img class="circle" ng-src="{{pic || '../img/profile-image.png'}}" alt="profile image" width="40px" height="40px" style="margin-top:12px"></a></li>
                     </ul>
                 </div>
             </div>
@@ -36,7 +35,7 @@
     </div>
     <!-- Navbar List -->
     <ul class="sidenav" id="mobile">
-        <li><a href="#!/profile" data-ng-show="global.authenticated"><img class="circle" ng-src={{pic}} alt="profile image" width="40px" height="40px"></a></li>
+        <li><a href="#!/profile" data-ng-show="global.authenticated"><img class="circle" ng-src="{{pic || '../img/profile-image.png'}}" alt="profile image" width="40px" height="40px"></a></li>
         <li><a href="#charity">CHARITY</a></li>
         <li><a href="#">ABOUT US</a></li>
         <li><a href="#!/signup" data-ng-hide="global.authenticated">SIGN UP</a></li>
@@ -54,7 +53,7 @@
         <div class="row intro-buttons center">
             <div class="col s12 m6" data-ng-hide="global.authenticated"><a href="#!/signup"><button class="btn-large gray-slate animate swell-2 turn-gray-slate">SIGN UP</button></a></div>
             <div class="col s12 m6" data-ng-hide="global.authenticated"><a href="/play"><button class="btn-large gray-slate intro-border-button  animate swell-2 turn-gray-slate">PLAY AS GUEST</button></a></div>
-            <div class="col s12 m6" data-ng-show="global.authenticated"><a href="/play?custom"><button class="btn-large gray-slate animate swell-2 turn-gray-slate">PLAY WITH GUEST</button></a></div>
+            <div class="col s12 m6" data-ng-show="global.authenticated"><a href="/play"><button class="btn-large gray-slate animate swell-2 turn-gray-slate">PLAY WITH GUEST</button></a></div>
             <div class="col s12 m6" data-ng-show="global.authenticated"><a href="/play?custom"><button class="btn-large intro-border-button white gray-slate-text animate swell-1 turn-gray-slate-text">PLAY WITH FRIENDS</button></a></div>
         </div>
         <div class="intro-warning grey-text lighten-6"><span class="red-text">Warning!</span> This game contains offensive, profane, explicit content created by Cards Against Humanity and provided here, uncensored and complete, in digital form.</div>

@@ -78,6 +78,7 @@ angular.module('mean.system') /* eslint-disable-line */
 
       $scope.startSession = function () {
         $scope.startUserGame = true;
+        document.getElementById('myModal').style.display = 'none';
       };
 
       $scope.$watch('startUserGame', (newValue, oldValue) => { /* eslint-disable-line */
