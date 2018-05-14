@@ -25,10 +25,10 @@
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         <li><a href="#charity" class="gray-slate-text animate swell-1 turn-gray-slate-text">CHARITY</a></li>
                         <li><a href="#" class="gray-slate-text animate swell-1 turn-gray-slate-text">ABOUT US</a></li>
-                        <li><a href="#!/profile" class="gray-slate-text animate swell-1 turn-gray-slate-text" data-ng-show="global.authenticated">PROFILE</a></li>
                         <li><a href="#!/signup" class="gray-slate-text animate swell-1 turn-gray-slate-text" data-ng-hide="global.authenticated">SIGN UP</a></li>
                         <li><a href="#!/signin" class="gray-slate-text animate swell-1 turn-gray-slate-text" data-ng-hide="global.authenticated">LOGIN</a></li>
                         <li><a href="" ng-click="logout()" class="gray-slate-text animate swell-1 turn-gray-slate-text" data-ng-show="global.authenticated">SIGN OUT</a></li>
+                        <li><a href="#!/profile" data-ng-show="global.authenticated"><img class="circle" ng-src={{pic}} alt="profile image" width="40px" height="40px" style="margin-top:12px"></a></li>
                     </ul>
                 </div>
             </div>
@@ -36,6 +36,7 @@
     </div>
     <!-- Navbar List -->
     <ul class="sidenav" id="mobile">
+        <li><a href="#!/profile" data-ng-show="global.authenticated"><img class="circle" ng-src={{pic}} alt="profile image" width="40px" height="40px"></a></li>
         <li><a href="#charity">CHARITY</a></li>
         <li><a href="#">ABOUT US</a></li>
         <li><a href="#!/signup" data-ng-hide="global.authenticated">SIGN UP</a></li>
