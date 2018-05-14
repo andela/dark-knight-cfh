@@ -130,6 +130,7 @@ assignGuestNames(id, verify, online) {
 };
 
 prepareGame() {
+  console.log('running prepare Game', this);
   this.state = 'game in progress';
 
   this.io.sockets.in(this.gameID).emit(
@@ -149,8 +150,9 @@ prepareGame() {
       this.getAnswers.bind(this)
     ],
     (err, results) => {
+      console.log('the results from getquestion', results);
       if (err) {
-        console.log(err);
+        console.log('An error occured....', err);
       }
       const [a, b] = results;
       self.questions = a; // changed!
@@ -162,7 +164,7 @@ prepareGame() {
 };
 
 startGame() {
-  console.log(this.gameID, this.state);
+  console.log('running start game', this);
   this.shuffleCards(this.questions);
   this.shuffleCards(this.answers);
   this.stateChoosing(this);
