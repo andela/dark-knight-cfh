@@ -23,11 +23,11 @@
     </div>
     <span style="position: relative;">
         <i class="fa fa-bell" style="font-size: 17px; color: white;"></i>
-        <span style="position: absolute; bottom: 35%; left: 60%; background: red; color: white;" 
+        <span style="position: absolute; cursor: pointer; bottom: 35%; left: 60%; background: red; color: white;" 
         class="badge dropdown-toggle" id="menu1" data-toggle="dropdown">{{game.myMessage.message.length || 0}}</span>
 
         <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-            <li ng-repeat="msg in game.myMessage.message" style="border-bottom: 1px solid black; padding: 5px;">
+            <li ng-repeat="msg in game.myMessage.message" style="border-bottom: 1px solid black;cursor: pointer; padding: 5px;">
               <a role="menuitem" ng-click="sendMessage(game.myMessage.url)">
                 {{msg}}
               </a>

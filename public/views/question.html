@@ -23,7 +23,7 @@
         </div>
       </form>
       <div ng-if="game.allUsers && search_input">
-        <div ng-repeat="user in game.allUsers| limitTo : 5 | filter:search_input" class="list"
+        <div ng-repeat="user in game.allUsers| filter:search_input | limitTo : 5 " class="list"
         style="background: #34495E; color: white;
         border-radius: 7px; padding: 10px 10px;">
         <ul style="list-style-type: circle;">

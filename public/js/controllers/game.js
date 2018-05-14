@@ -21,8 +21,7 @@ angular.module('mean.system') /* eslint-disable-line */
         console.log('heyyo ....');
       };
 
-      $scope.sendMessage = function (url, window) {
-        window.close();
+      $scope.sendMessage = function (url) {
         window.open(url, '_blank');
       };
 
