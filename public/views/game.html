@@ -8,12 +8,18 @@
             <div class="nav-wrapper grey lighten-2">
                 <div class="container nav-box">
                     <div class="brand-logo animate swell-2">
-                        <a href="#!"><img src="../img/playing-cards.svg" alt=""></a>
+                        <a href="#!">
+                            <img src="../img/playing-cards.svg" alt="">
+                        </a>
                     </div>
-                    <a data-target="mobile" class="sidenav-trigger"><i class="material-icons grey-text text-darken-4">menu</i></a>
+                    <a data-target="mobile" class="sidenav-trigger">
+                        <i class="material-icons grey-text text-darken-4">menu</i>
+                    </a>
                     <ul id="nav-mobile" class="right hide-on-med-and-down game-navbar-right">
                         <li class="game-search">
-                            <div class="game-search-button animate swell-2"><i class="material-icons">search</i></div>
+                            <div class="game-search-button animate swell-2">
+                                <i class="material-icons">search</i>
+                            </div>
                             <div class="game-search-bar">
                                 <input type="text" placeholder="search player" ng-change="searchUser(game)" ng-model="search_input">
                                 <div ng-if="game.allUsers" class="dropdown">
@@ -36,8 +42,12 @@
     </div>
     <!-- Navbar List -->
     <ul class="sidenav" id="mobile">
-        <li><a href="#!/profile" data-ng-show="global.authenticated">CHARITY</a></li>
-        <li><a href="" ng-click="logout()" data-ng-show="global.authenticated">QUIT</a></li>
+        <li>
+            <a href="#!/profile" data-ng-show="global.authenticated">CHARITY</a>
+        </li>
+        <li>
+            <a href="" ng-click="logout()" data-ng-show="global.authenticated">QUIT</a>
+        </li>
     </ul>
     <!-- Game Content -->
     <div class="game-content game-height-1">
@@ -57,8 +67,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="game-timer-context" ng-animate="{enter:'animated fadeInUp', leave:'animate drop'}" ng-show="game.state === 'winner has been chosen'"> Next Round In</div>
-                        <div class="game-timer-context" ng-animate="{enter:'animate fadeInUp', leave:'animate drop'}" ng-show="game.state === 'waiting for czar to decide'"> Czar Choosing</div>
+                        <div class="game-timer-context" ng-animate="{enter:'animated fadeInUp', leave:'animate drop'}" ng-show="game.state === 'winner has been chosen'">
+                        Next Round In</div>
+                        <div class="game-timer-context" ng-animate="{enter:'animate fadeInUp', leave:'animate drop'}" ng-show="game.state === 'waiting for czar to decide'">
+                        Czar Choosing</div>
                     </div>
                     <!-- Main -->
                     <div class="col s8">
@@ -100,8 +112,8 @@
                         </div>
 
                         <span ng-repeat="answer in game.table">
-                            <div class="game-card game-height-6" ng-click="pickWinning(answer)" ng-show="showTable || isCzar()"
-                                ng-repeat="card in answer.card" ng-animate="{enter:'animated bounceInLeft'}" style="background-color:{{winningColor($parent.$index)}}">
+                            <div class="game-card game-height-6" ng-click="pickWinning(answer)" ng-show="showTable || isCzar()" ng-repeat="card in answer.card"
+                                ng-animate="{enter:'animated bounceInLeft'}" style="background-color:{{winningColor($parent.$index)}}">
                                 <img src="../img/pattern.png" alt="pattern1" class="top-right-pattern">
                                 <div class="bottom-left-pattern ">
                                     <div class="text" ng-bind-html-unsafe="card.text"></div>
@@ -116,11 +128,11 @@
                     <div class="game-how-to" ng-show="game.state === 'awaiting players'">
                         <div class="title">How to Play</div>
                         <ol class="body">
-                          <li>Each player begins with, and will always have, 10 white answer cards.</li>
-                          <li>For each round, one player is randomly chosen as the Card Czar.</li>
-                          <li>Everyone else answers the black question card by clicking on the answer card they want to use.</li>
-                          <li>The Card Czar then picks a favorite answer, and whoever played that answer wins the round.</li>
-                          <li>Want to adorn your avatar with a glorious crown? Donate to charity after the game!</li>
+                            <li>Each player begins with, and will always have, 10 white answer cards.</li>
+                            <li>For each round, one player is randomly chosen as the Card Czar.</li>
+                            <li>Everyone else answers the black question card by clicking on the answer card they want to use.</li>
+                            <li>The Card Czar then picks a favorite answer, and whoever played that answer wins the round.</li>
+                            <li>Want to adorn your avatar with a glorious crown? Donate to charity after the game!</li>
                         </ol>
                     </div>
                     <!-- ************ Game End ************ -->
@@ -128,15 +140,20 @@
                         <div class="game-end">
                             <h4>What would you like to do now?</h4>
                             <div class="game-end-text" ng-show="game.state ==='game dissolved' && game.gameWinner === -1">
-                                You might consider donating to charity to atone for the horrifying answers you've submitted. Donating will also place a lovely crown on your avatar's head.
+                                You might consider donating to charity to atone for the horrifying answers you've submitted. Donating will also place a lovely
+                                crown on your avatar's head.
                             </div>
                             <h4>What would you like to do now?</h4>
                             <div class="game-end-text" ng-show="game.state === 'game ended' || game.gameWinner !== -1">
                                 Help yourself to another game or help a child in need? Donating will also place a lovely crown on your avatar's head.
                             </div>
                             <div class="">
-                                <a href='/#!/app'><button ng-click="game.joinGame('joinNewGame')" class="btn-small gray-slate animate swell-2 turn-gray-slate">New Game</button></a>
-                                <a href='/'><button class="btn-small gray-slate animate swell-2 turn-gray-slate">Exit Game</button></a>
+                                <a href='/#!/app'>
+                                    <button ng-click="game.joinGame('joinNewGame')" class="btn-small gray-slate animate swell-2 turn-gray-slate">New Game</button>
+                                </a>
+                                <a href='/'>
+                                    <button class="btn-small gray-slate animate swell-2 turn-gray-slate">Exit Game</button>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -167,7 +184,9 @@
                         <div class="sz8">
                             <div class="row details">
                                 <div class="name">
-                                    <div class="text">{{ player.username | upperFirstLetter }} <span ng-show="isPlayer($index)"></span> </div>
+                                    <div class="text">{{ player.username | upperFirstLetter }}
+                                        <span ng-show="isPlayer($index)"></span>
+                                    </div>
                                     <div class="czar-tag" ng-show="currentCzar($index)">CZAR</div>
                                 </div>
                                 <div class="points">{{ player.points }}/{{ game.pointLimit }}</div>
@@ -180,21 +199,21 @@
         </div>
     </div>
     <!-- Choose-Region Modal -->
-    <div id="region-modal" class="game-modal" ng-hide="hideModal" data-ng-hide="game.players && game.players.length >= 1">
+    <div id="myModal" class="game-modal" ng-hide="hideModal" data-ng-hide="game.players && game.players.length >= 1">
         <div class="game-modal-content">
             <div class="modal-body">
                 <h6>Please select a region</h6>
                 <form action="#" ng-init="game.regId=1">
                     <p>
                         <label>
-                        <input class="with-gap" name="group1"  value="1" ng-model="game.regId" type="radio"/>
-                        <span>Africa</span>
+                            <input class="with-gap" name="group1" value="1" ng-model="game.regId" type="radio" />
+                            <span>Africa</span>
                         </label>
                     </p>
                     <p>
                         <label>
-                        <input class="with-gap" name="group1"  value="2" ng-model="game.regId" type="radio"/>
-                        <span>Global</span>
+                            <input class="with-gap" name="group1" value="2" ng-model="game.regId" type="radio" />
+                            <span>Global</span>
                         </label>
                     </p>
                 </form>
@@ -203,20 +222,20 @@
                     <form action="#" ng-init="game.level='beginner'">
                         <p>
                             <label>
-                            <input class="with-gap" name="group1" type="radio" value="beginner" ng-model="game.level" />
-                            <span>Beginner</span>
+                                <input class="with-gap" name="group1" type="radio" value="beginner" ng-model="game.level" />
+                                <span>Beginner</span>
                             </label>
                         </p>
                         <p>
                             <label>
-                            <input class="with-gap" name="group1" type="radio" value="intermediate" ng-model="game.level"/>
-                            <span>Intermediate</span>
+                                <input class="with-gap" name="group1" type="radio" value="intermediate" ng-model="game.level" />
+                                <span>Intermediate</span>
                             </label>
                         </p>
                         <p>
                             <label>
-                            <input class="with-gap" name="group1" type="radio"  value="legend" ng-model="game.level"/>
-                            <span>Legend</span>
+                                <input class="with-gap" name="group1" type="radio" value="legend" ng-model="game.level" />
+                                <span>Legend</span>
                             </label>
                         </p>
                     </form>
@@ -255,10 +274,11 @@
         <i class="large material-icons">chat</i>
     </a>
 </div>
+<!-- Chat FAB -->
 <script type="text/javascript">
     $(window).on('load', function () {
         const sidenav = document.querySelector('.sidenav');
-        const instance = M.Sidenav.init(sidenav, { });
+        const instance = M.Sidenav.init(sidenav, {});
 
         $('.game-player-tab-switch').click(function () {
             console.log('hello');
