@@ -28,7 +28,7 @@
 
         <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
             <li ng-repeat="msg in game.myMessage.message" style="border-bottom: 1px solid black; padding: 5px;">
-              <a role="menuitem" ng-href="{{game.myMessage.url}}">
+              <a role="menuitem" ng-click="sendMessage(game.myMessage.url)">
                 {{msg}}
               </a>
             </li>

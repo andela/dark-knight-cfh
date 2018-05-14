@@ -52,7 +52,7 @@
           <ol>
             <li style="cursor: pointer;" 
             ng-repeat="users in game.online | filter:searchFilter" title="Invite Player!">
-              <a ng-click="game.pushNotification(users.id, game)">
+              <a ng-click="users.id === game.id ? test() : game.pushNotification(users.id, game)">
                 {{users.name}}
               </a>
             </li>

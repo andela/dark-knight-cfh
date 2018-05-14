@@ -47,8 +47,8 @@ angular.module('mean.system').factory('game', [
     };
 
     const allUsers = function (data) {
-
       game.allUsers = data.user;
+      console.log('******>> i am the search user', game.allUsers);
     };
 
     const setNotification = function () {
@@ -311,12 +311,11 @@ angular.module('mean.system').factory('game', [
       game.errorMessage = '';
     };
 
-    game.searchUser = function (name, playerInfo) {
-      const { username } = playerInfo.players[playerInfo.playerIndex];
+    game.searchUser = function (playerInfo) {
+      console.log('currently running...');
       $http({
-        method: 'POST',
-        url: '/api/search/users',
-        data: { username: name, value: username }
+        method: 'GET',
+        url: '/api/search/users'
       }).then(
         (response) => {
           const user = response.data;

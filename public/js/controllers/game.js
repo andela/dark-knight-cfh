@@ -17,8 +17,13 @@ angular.module('mean.system') /* eslint-disable-line */
       // let makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
       // $scope.makeAWishFact = makeAWishFacts.pop();
 
-      $scope.searchUser = function (playerInfo) {
-        game.searchUser($scope.search_input, playerInfo);
+      $scope.test = function () {
+        console.log('heyyo ....');
+      };
+
+      $scope.sendMessage = function (url, window) {
+        window.close();
+        window.open(url, '_blank');
       };
 
       $scope.pickCard = function (card) {

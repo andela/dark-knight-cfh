@@ -17,7 +17,7 @@ module.exports = (app, passport) => {
   app.post('/users', users.create);
   app.post('/api/auth/signup', users.register);
   app.post('/users/avatars', users.avatars);
-  app.post('/api/search/users', users.search);
+  app.get('/api/search/users', users.search);
   app.post('/api/invite/users', users.invite);
 
   // Donation Routes
@@ -51,7 +51,7 @@ module.exports = (app, passport) => {
     scope: ['public_profile', 'email'],
     failureRedirect: '/signin'
   }), users.signin);
-  
+
   app.get('/auth/facebook/callback', passport.authenticate('facebook', {
     failureRedirect: '/signin'
   }), users.authCallback);
