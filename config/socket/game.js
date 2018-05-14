@@ -265,12 +265,14 @@ stateDissolveGame() {
 };
 
 getQuestions(cb) {
+  console.log('the results from getQuestion Api....');
   questions.allQuestionsForGame(this.regionId, (data) => {
     cb(null, data);
   });
 };
 
 getAnswers(cb) {
+  console.log('the results from getAnswers Api....');
   answers.allAnswersForGame((data) => {
     cb(null, data);
   });
