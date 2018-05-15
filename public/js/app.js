@@ -24,6 +24,9 @@ angular.module('mean', ['ngCookies', 'firebase', 'ngResource', 'ui.bootstrap', '
           when('/choose-avatar', {
             templateUrl: '/views/choose-avatar.html'
           }).
+          when('/profile', {
+            templateUrl: '/views/profile.html'
+          }).
           otherwise({
             redirectTo: '/'
           });
