@@ -9,15 +9,18 @@
     </div>
     <div ng-if="openChatBox" class="chat">
         <div id="chatInterface">
+            <div class="chat-header">
+                <button class="close-chat" ng-click="collapseChat()"> X </button>
+            </div>
 
             <div ng-repeat="chat in chatArray">
 
-                <div class="chat-bubble" ng-class="chat.user === addNewMessage.user ? 'current-player' : 'team-player'">
+                <div class="chat-bubble" ng-class="chat.user === currentUser ? 'current-player' : 'team-player'">
                     <span class="time-display" ng-bind="showTime(chat.timeStamp)">{{chat.timestamp}}</span>
 
                     <span class="format-user-name">{{chat.user}}</span>
 
-                    <p class="format-msg">{{chat.addNewMessage}}</p>
+                    <p class="format-msg">{{chat.message}}</p>
                 </div>
             </div>
 
