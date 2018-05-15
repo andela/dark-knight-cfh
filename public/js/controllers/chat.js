@@ -17,18 +17,21 @@ angular.module('mean.system')
   .controller('ChatController', ['$scope', '$firebaseArray', 'game', function ($scope, $firebaseArray, game) {
     let refToFirebase;
     const firstTime = true;
+    $scope.game = game;
     const openChatBox = false;
     let oldMessageLength = 0,
       newMessageLength = 0;
     $scope.checkUnreadMsg = false;
     $scope.chatArray = [];
+    $scope.currentUser = '';
 
     // send a chat method
     $scope.addNewChat = function () {
       if (game.newChat) {
         $scope.addNewMessage = {
           user: game.players[game.playerIndex].username,
-          addNewMessage: game.newChat,
+          userId: game.players[game.playerIndex].id,
+          message: game.newChat,
           timeStamp: new Date().toISOString()
         };
         $scope.chatArray.$add($scope.addNewMessage);
@@ -72,13 +75,18 @@ angular.module('mean.system')
       });
     });
 
+    $scope.$watch('game.playerIndex', (newValue, oldValue) => {
+      if (newValue) {
+        $scope.currentUser = game.players[game.playerIndex].username;
+      }
+    });
+
     $scope.$watch('game.gameID', (newValue, oldValue) => {/* eslint-disable-line */
       if (newValue) {
         refToFirebase = new Firebase(`https://chatapp-3aaa8.firebaseio.com/game${game.gameID}`);
         //   console.log(`https://chatapp-3aaa8.firebaseio.com/game${game.gameID}`);
         $scope.chatArray = $firebaseArray(refToFirebase);
 
-        console.log('VALUESSSSSS', newValue, oldValue, game);
         if (game.players.length === 1) {
           refToFirebase.remove();
           // firstTime = false;
