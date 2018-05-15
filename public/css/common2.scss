@@ -638,6 +638,11 @@ $long-shadow: 0px 4px 4px rgba(0, 0, 0, .4);
       box-shadow: $long-shadow;
       background-color: #546474;
 
+      &.not-ingame {
+        border-top-right-radius: 50px;
+        border-bottom-right-radius: 50px;
+      }
+
       .text {
         height: 100%;
         display: flex;
@@ -667,6 +672,7 @@ $long-shadow: 0px 4px 4px rgba(0, 0, 0, .4);
         margin-left: 5px;
       }
     }
+
     .points {
       display: flex;
       align-items: center;
@@ -703,6 +709,78 @@ $long-shadow: 0px 4px 4px rgba(0, 0, 0, .4);
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   box-shadow: $regular-shadow;
+
+  .game-search {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+    .game-search-bar {
+      margin: 15px 0;
+      background-color: #546474;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      width: 90% !important;
+      height: 30px;
+      border-radius: 5px;
+      box-shadow: $regular-inset-shadow;
+      border: 1px solid #455464;
+      z-index: 7;
+
+      input {
+        border-bottom: none!important;
+        height: 35px;
+        color: #d4d4d4 !important;
+        font-size: 12px;
+        margin-top: 5px;
+        margin-left: 10px;
+
+        &:focus {
+          width: 100% !important;
+          outline: none !important;
+          border-bottom: none!important;
+          box-shadow: none!important;
+        }
+      }
+    }
+
+    .dropdown {
+      position: relative;
+      top: 10px;
+      width: 100%;
+      height: auto;
+      padding: 5px 0;
+      background-color: #748494;
+      box-shadow: $regular-shadow;
+      border-radius: 3px;
+      z-index: 8;
+
+      li {
+        line-height: 2em;
+        padding: 0 5px;
+
+        &:hover {
+          background-color: #f4f4f4;
+          color: #445464;
+          cursor: pointer;
+        }
+      }
+
+      li:nth-child(odd) {
+        background-color: #647484;
+
+        &:hover {
+          background-color: #f4f4f4;
+        }
+      }
+
+      .text {
+        color: #d4d4d4;
+        width: 100%;
+      }
+    }
+  }
 }
 
 .game-player-tab-switch {
@@ -1391,3 +1469,196 @@ padding: 5px 0;
   color: #fff;
 }
 
+// Profile
+.navbar {
+  a {
+    color: #344454;
+  }
+}
+
+.profile-page {
+  background-color: white;
+  // background-color: #e4e4e4;
+  padding-bottom: 40px;
+  margin: 0;
+
+  .navbar-profile-hov:hover {
+    background-color: rgba(0, 0, 0, 0.1) !important;
+  }
+
+  hr.divider {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    border-top: 1px solid #8a92cd;
+  }
+
+  .top-section {
+    // height: 400px;
+    color: white;
+    background-color: #344454;
+    // background-color: #34495E;
+    padding-bottom: 20px;
+
+    .profile-buttons {
+      margin-top: 50px;
+      .btn-custom {
+        background-color: #8a92cd;
+        color: white;
+        margin-top: 10px;
+      }
+    }
+    .user-details {
+      margin-top: 50px;
+      .details-img {
+        margin-bottom: 10px;
+      }
+      .details-item {
+        margin-bottom: 0px;
+      }
+    }
+  }
+
+  .middle-section {
+    div > h3 {
+      font-weight: 600;
+    }
+    .rank {
+      margin-top: 20px;
+      // width: 50px;
+    }
+    .rank-name {
+      margin-top: 30px;
+      margin-bottom: 0;
+    }
+  }
+
+  .navbar-profile {
+    background-color: #e0e0e0 !important;
+    padding-top: 0;
+    ul {
+      padding-right: 90px;
+      padding-top: 15px;
+    }
+  }
+
+  .bottom-section {
+    padding-top: 30px;
+    .list-group-item {
+      background-color: inherit;
+    }
+
+    div.game-log {
+      tr {
+        color: #2a2727;
+      }
+
+      tr.you {
+        background-color: #fff;
+        color: #4077ff;
+      }
+
+      tr:hover {
+        background-color: #34495e;
+        color: #fafaff;
+        font-weight: bold;
+      }
+    }
+
+    .leaderboard {
+      background-color: #344454;
+      color: #fff;
+
+      tr:hover {
+        background-color: white;
+        color: #344454;
+      }
+
+      tr > td {
+        border-top: 1px none #ddd;
+      }
+      .leaderboard-header {
+        background-color: white;
+        color: black;
+      }
+
+      .btn-load {
+        margin-bottom: 30px;
+      }
+    }
+  }
+
+  .main {
+    margin-top: 90px;
+    height: 100vh;
+    background-color: white;
+    padding-left: 20px;
+    // height: 600px;
+
+    .image-section {
+      height: inherit;
+      margin-right: 10px;
+      img {
+        display: block;
+        margin: auto;
+        margin-top: 15px;
+        height: 180px;
+        width: 180px;
+      }
+      color: white;
+      background-color: #344454;
+      min-height: inherit;
+      .user-details {
+        margin-top: 25px;
+        margin-right: 25px;
+      }
+    }
+    .gamelog-section {
+      nav {
+        width: 100%;
+      }
+      padding-top: 15px;
+      color: #344454;
+      background-color: #e4e4e4;
+      height: inherit;
+      tr:hover {
+        color: white;
+        background-color: #344454;
+      }
+    }
+    .leaderboard-section {
+      margin-left: 10px;
+      padding-top: 15px;
+      color: white;
+      background-color: #344454;
+      height: inherit;
+      tr:hover {
+        color: #344454;
+        background-color: white;
+      }
+    }
+
+    @media only screen and (max-width: 660px) {
+      .leaderboard-section,
+      .gamelog-section,
+      .image-section,
+      .navbar-profile {
+        height: auto;
+        width: auto;
+      }
+    }
+  }
+
+  .ClassA {
+    background-color: white;
+    color: #344454;
+  }
+
+  .ClassB {
+    background-color: #344454;
+    color: white;
+  }
+}
+
+.pagination {
+  background-color: red;
+}
