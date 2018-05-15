@@ -62,7 +62,7 @@ angular.module('mean.system').factory('game', [
     };
 
     const addToNotificationQueue = function (msg) {
-      console.log(game);
+      // console.log(game);
       notificationQueue.push(msg);
       if (!timeout) {
         // Start a cycle if there isn't one
@@ -130,6 +130,7 @@ angular.module('mean.system').factory('game', [
       game.winnerAutopicked = data.winnerAutopicked;
       game.gameWinner = data.gameWinner;
       game.pointLimit = data.pointLimit;
+      game.czar = data.czar;
 
       // Handle updating game.table
       if (data.table.length === 0) {
@@ -202,6 +203,10 @@ angular.module('mean.system').factory('game', [
     socket.on('started', () => {
       gameStarted();
     });
+
+    game.continue = () => {
+      socket.emit('pickBlackCard');
+    };
 
     game.joinGame = function (mode, room, createPrivate) {
       const level = localStorage.getItem('level');

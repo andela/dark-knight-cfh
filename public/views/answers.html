@@ -74,11 +74,11 @@
     <!-- <script type="text/javascript" src="https://apisandbox.crowdrise.com/widgets/donate/project/36715/?callback=userDonationCb"></script> -->
   </div>
 </div>
-<div id="czar-blank-container" ng-show="iAmCzar()">
+<div id="czar-blank-container" ng-show="isCzar() && game.state === 'getting black card'">
   <div id="czar-blank-inner">
     You are the Card Czar.
     <br>
-    <span id="smaller-text">{{waitingMessage}}</span>
+    <span id="smaller-text">Players are choosing their answers. Prepare to select a winner.</span>
   </div>
   <div id='charity-fact-container'>
     <div id='charity-fact-tagline'>Did you know?</div>
@@ -92,31 +92,4 @@
     </div>
 
   </div>
-  <!-- MODAL TO DISPLAY LIST OF QUESTIONS, PROMPTING THE CZAR TO CHOOLSE A QUESTION -->
-  <div id="questionModal" class="modal" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title " style="text-align: center">
-            <b id="questionaire">SELECT A QUESTION</b>
-          </h4>
-        </div>
-        <div class="modal-body">
-          <h4 style="color: rgb(80, 73, 73);">SELECT A QUESTION</h4>
-        </div>
-        <div class="modal-footer">
-          <button data-ng-hide="guest" type="button" ng-click="startSession()" class="btn btn-success" data-dismiss="modal">Start Game</button>
-          <button data-ng-show="guest" type="button" ng-click="startSession()" class="btn btn-success" data-dismiss="modal">join Game</button>
-          <button ng-click="abandonGame()" type="button" class="btn btn-danger" data-dismiss="modal">Go back</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- END OF QUESTIONS MODAL -->
 </div>
-<script>
-  $('#czar-blank-container').click(() => {
-    $('#questionModal').modal('show');
-  })
-</script>

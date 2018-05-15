@@ -231,7 +231,6 @@ angular.module('mean.system') /* eslint-disable-line */.controller('GameControll
         }
       }
     });
-    console.log('***********>> ', $location.search().custom);
 
     if ($location.search().custom === true) {
       $scope.owner = true;
@@ -241,18 +240,34 @@ angular.module('mean.system') /* eslint-disable-line */.controller('GameControll
       $scope.guest = true;
       $scope.owner = true;
     }
-    // GET WHEN CZAR
-    let count = 0;
-    $scope.iAmCzar = () => {
-      if ($scope.isCzar() && $scope.game.table.length === 0 && $scope.game.state !== 'game dissolved' && $scope.game.state !== 'awaiting players') {
-        count++;
-        if (count === 1) {
-          $scope.waitingMessage = 'Players are choosing their answers. Prepare to select a winner.';
-          const element = angular.element('#questionModal');
-          element.modal('show');
-        }
-        return true;
-      }
+    $scope.continueGame = function () {
+      angular.element('.span12').click(() => {
+        angular.element('.span12').hide(0, () => {
+          setTimeout(() => {
+            angular.element('#questionModal').modal('hide');
+            game.continue();
+          }, 1000);
+          angular.element('.card-back').hide();
+          angular.element('.equipment-card').toggleClass('flipped');
+        });
+        setTimeout(() => {
+          // Reset components
+          angular.element('.span12').show();
+          angular.element('.card-back').show();
+          angular.element('.equipment-card').removeClass('flipped');
+        }, 2000);
+      });
     };
+
+    $scope.$watch('game.state', () => {
+      if (game.state === 'getting black card' && $scope.isCzar()) {
+        const element = angular.element('#questionModal');
+        element.modal('show');
+      } else if (game.state === 'getting black card' && !$scope.isCzar()) {
+        $scope.awaiting = 'Awaiting the czar to pick a question...';
+      } else {
+        $scope.awaiting = '';
+      }
+    });
   }
 ]);
