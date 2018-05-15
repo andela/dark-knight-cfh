@@ -238,6 +238,8 @@ module.exports = function (io) {
       delete allPlayers[socket.id];
       if (game.state === 'awaiting players' ||
         game.players.length - 1 >= game.playerMinLimit) {
+        console.log('>>>>>>>>>>>> Awaiting Players ...for some reason :/')
+        console.log('>>>>>>>>>>>> Current game state: ', game.state);
         game.removePlayer(socket.id);
       } else {
         game.stateDissolveGame();
