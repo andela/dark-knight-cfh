@@ -112,7 +112,7 @@
                         </div>
 
                         <span ng-repeat="answer in game.table">
-                            <div class="game-card game-height-6" ng-click="pickWinning(answer)" ng-show="showTable || isCzar()" ng-repeat="card in answer.card"
+                            <div class="game-card game-height-6" id='table' ng-style="pointerCursorStyle()" ng-click="pickWinning(answer)" ng-show="(game.state !== 'game ended' && game.state !== 'game dissolved') && (showTable || isCzar())" ng-repeat="card in answer.card"
                                 ng-animate="{enter:'animated bounceInLeft'}" style="background-color:{{winningColor($parent.$index)}}">
                                 <img src="../img/pattern.png" alt="pattern1" class="top-right-pattern">
                                 <div class="bottom-left-pattern ">
@@ -137,29 +137,31 @@
                     </div>
                     <!-- ************ Game End ************ -->
                     <div ng-show="game.state === 'game ended' || game.state ==='game dissolved'">
-                        <div class="game-end">
+                        <div class="game-end" ng-show="game.state ==='game dissolved' && game.gameWinner === -1">
                             <h4>What would you like to do now?</h4>
-                            <div class="game-end-text" ng-show="game.state ==='game dissolved' && game.gameWinner === -1">
+                            <div class="game-end-text">
                                 You might consider donating to charity to atone for the horrifying answers you've submitted. Donating will also place a lovely
                                 crown on your avatar's head.
                             </div>
+                        </div>
+                        <div class="game-end" ng-show="game.state === 'game ended' || game.gameWinner !== -1">
                             <h4>What would you like to do now?</h4>
-                            <div class="game-end-text" ng-show="game.state === 'game ended' || game.gameWinner !== -1">
+                            <div class="game-end-text">
                                 Help yourself to another game or help a child in need? Donating will also place a lovely crown on your avatar's head.
                             </div>
-                            <div class="">
-                                <a href='/#!/app'>
-                                    <button ng-click="game.joinGame('joinNewGame')" class="btn-small gray-slate animate swell-2 turn-gray-slate">New Game</button>
-                                </a>
-                                <a href='/'>
-                                    <button class="btn-small gray-slate animate swell-2 turn-gray-slate">Exit Game</button>
-                                </a>
-                            </div>
+                        </div>
+                        <div class="game-end-buttons">
+                            <a href='/play'>
+                                <button ng-click="game.joinGame('joinNewGame')" class="btn-small gray-slate animate swell-2 turn-gray-slate">New Game</button>
+                            </a>
+                            <a href='/'>
+                                <button class="btn-small gray-slate animate swell-2 turn-gray-slate">Exit Game</button>
+                            </a>
                         </div>
                     </div>
                     <!-- ************ Note to Czar ************ -->
                     <div class="game-end" ng-show="isCzar() && game.table.length===0 && game.state !== 'game dissolved' && game.state !== 'awaiting players'">
-                        <h4>You are the Card Czar.</h4>
+                        <h4>You are the Card Czar!</h4>
                         <div class="game-end-text">
                             Players are choosing their answers. Prepare to select a winner.
                         </div>
@@ -185,7 +187,7 @@
                             <div class="row details">
                                 <div class="name">
                                     <div class="text">{{ player.username | upperFirstLetter }}
-                                        <span ng-show="isPlayer($index)"></span>
+                                        <span class="game-player-circle" ng-show="isPlayer($index)"></span>
                                     </div>
                                     <div class="czar-tag" ng-show="currentCzar($index)">CZAR</div>
                                 </div>
@@ -203,7 +205,7 @@
         <div class="game-modal-content">
             <div class="modal-body">
                 <h6>Please select a region</h6>
-                <form action="#" ng-init="game.regId=1">
+                <form action="#" ng-init="game.regId='2'">
                     <p>
                         <label>
                             <input class="with-gap" name="group1" value="1" ng-model="game.regId" type="radio" />
@@ -269,12 +271,13 @@
     </div>
 </div>
 <!-- FAB -->
-<div class="fixed-action-btn game-chat-fab">
+<!-- <div class="fixed-action-btn game-chat-fab">
     <a class="btn-floating btn-large gray-slate animate turn-gray-slate">
         <i class="large material-icons">chat</i>
     </a>
-</div>
+</div> -->
 <!-- Chat FAB -->
+<chat></chat>
 <script type="text/javascript">
     $(window).on('load', function () {
         const sidenav = document.querySelector('.sidenav');
