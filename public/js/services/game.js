@@ -270,7 +270,6 @@ angular.module('mean.system').factory('game', [
     });
 
     game.startGame = function (players, id) {
-      console.log('Hello Mofo')
       if (players < 3) {
         socket.emit('startError', { id });
       } else {

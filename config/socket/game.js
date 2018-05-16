@@ -37,9 +37,9 @@ constructor(gameID, io) {
   this.gameWinner = -1; // Index in this.players
   this.winnerAutopicked = false;
   this.czar = -1; // Index in this.players
-  this.playerMinLimit = 2;
+  this.playerMinLimit = 3;
   this.playerMaxLimit = 12;
-  this.pointLimit = 1;
+  this.pointLimit = 3;
   this.state = 'awaiting players';
   this.round = 0;
   this.questions = null;
@@ -131,7 +131,7 @@ prepareGame() {
       timeLimits: this.timeLimits
     }
   );
-  
+
   const self = this;
   async.parallel(
     [
