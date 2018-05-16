@@ -42,6 +42,7 @@ constructor(gameID, io) {
   this.pointLimit = 1;
   this.state = 'awaiting players';
   this.round = 0;
+  this.oline = null,
   this.questions = null;
   this.answers = null;
   this.curQuestion = null;
@@ -97,6 +98,10 @@ sendNotification(msg) {
   this.io.sockets.in(this.gameID).emit('notification', { notification: msg });
 };
 
+updateOnlineUsers(data) {
+  this.io.sockets.emit('updateOnlineUsers', data);
+};
+
 // Currently called on each joinGame event from socket.js
 // Also called on removePlayer IF game is in 'awaiting players' state
 assignPlayerColors() {
@@ -105,13 +110,18 @@ assignPlayerColors() {
   });
 };
 
-assignGuestNames() {
+assignGuestNames(id, verify, online) {
   const self = this;
   this.players.forEach((player) => {
     if (player.username === 'Guest') {
       const randIndex = Math.floor(Math.random() * self.guestNames.length);
       const [a] = self.guestNames.splice(randIndex, 1); // changed!
       player.username = a;
+      console.log('verify', verify);
+      if(verify.indexOf(a) === -1){
+        online.push({id, name: a})
+        verify.push(a);
+      }
       if (!self.guestNames.length) {
         self.guestNames = guestNames.slice();
       }
@@ -120,6 +130,7 @@ assignGuestNames() {
 };
 
 prepareGame() {
+  console.log('running prepare Game', this);
   this.state = 'game in progress';
 
   this.io.sockets.in(this.gameID).emit(
@@ -139,8 +150,9 @@ prepareGame() {
       this.getAnswers.bind(this)
     ],
     (err, results) => {
+      console.log('the results from getquestion', results);
       if (err) {
-        console.log(err);
+        console.log('An error occured....', err);
       }
       const [a, b] = results;
       self.questions = a; // changed!
@@ -152,7 +164,7 @@ prepareGame() {
 };
 
 startGame() {
-  console.log(this.gameID, this.state);
+  console.log('running start game', this);
   this.shuffleCards(this.questions);
   this.shuffleCards(this.answers);
   this.stateChoosing(this);
@@ -183,6 +195,7 @@ stateChoosing(self) {
   } else {
     self.czar++;
   }
+  console.log('********>>>111111', self.questions);
   self.sendUpdate();
 
   self.choosingTimeout = setTimeout(() => {
@@ -252,12 +265,14 @@ stateDissolveGame() {
 };
 
 getQuestions(cb) {
+  console.log('the results from getQuestion Api....', cb);
   questions.allQuestionsForGame(this.regionId, (data) => {
     cb(null, data);
   });
 };
 
 getAnswers(cb) {
+  console.log('the results from getAnswers Api....', cb);
   answers.allAnswersForGame((data) => {
     cb(null, data);
   });

@@ -181,32 +181,22 @@ exports.create = (req, res) => {
 };
 
 exports.search = function (req, res) {
-  const { username, value } = req.body;
-  User.findOne({
-    name: value
-  }).exec((err, existingUser) => {
-    if (!existingUser) {
+  User.find({}).exec((error, user) => {
+    if (error) {
       return res.status(500).send({
-        error: 'An error occured!'
+        error
       });
     }
-    User.find({ name: username.toString() }).exec((error, user) => {
-      if (error) {
-        return res.status(500).send({
-          error
-        });
-      }
-      if (user.length === 0) {
-        return res.status(404).send({
-          status: 'Unsucessful',
-          message: 'User not found on db'
-        });
-      }
-      return res.status(200).send({
-        status: 'sucessful',
-        message: 'User found',
-        user
+    if (user.length === 0) {
+      return res.status(404).send({
+        status: 'Unsucessful',
+        message: 'User not found on db'
       });
+    }
+    return res.status(200).send({
+      status: 'sucessful',
+      message: 'Users found',
+      user
     });
   });
 };

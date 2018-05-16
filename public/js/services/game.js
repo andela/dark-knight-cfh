@@ -21,16 +21,19 @@ angular.module('mean.system').factory('game', [
       state: null,
       round: 0,
       time: 0,
+      online: null,
       curQuestion: null,
       level: '',
       notification: null,
       timeLimits: {},
+      myMessage: { message: [], url: '' },
       joinOverride: false,
       errorMessage: '',
       gameStarted: '',
       allUsers: [],
       regId: null,
-      inviteSent: false
+      inviteSent: false,
+      pushSent: false
     };
 
     const notificationQueue = [];
@@ -44,8 +47,8 @@ angular.module('mean.system').factory('game', [
     };
 
     const allUsers = function (data) {
-
       game.allUsers = data.user;
+      console.log('******>> i am the search user', game.allUsers);
     };
 
     const setNotification = function () {
@@ -201,9 +204,17 @@ angular.module('mean.system').factory('game', [
       gameStarted();
     });
 
+    game.send = function () {
+      console.log('running sendfunct...');
+      const x = document.getElementById('snackbar'); /* eslint-disable-line */
+      x.className = 'show';
+      setTimeout(() => { x.className = x.className.replace('show', ''); }, 3000);
+    };
+
     game.joinGame = function (mode, room, createPrivate) {
       const level = localStorage.getItem('level');
       const { regId } = game;
+
       if (level === 'beginner') {
         timing = 30;
       } else if (level === 'intermidiate') {
@@ -246,12 +257,22 @@ angular.module('mean.system').factory('game', [
       game.owner = data.id;
     });
 
+    socket.on('online', (data) => {
+      game.online = data;
+      console.log(game.online);
+    });
+
+    socket.on('updateOnlineUsers', (data) => {
+      game.online = data;
+    });
+
     socket.on('inviteSuccess', () => {
       game.inviteSent = true;
       game.allUsers = [];
       setTimeout(() => {
         game.inviteSent = false;
       }, 2000);
+      game.send();
     });
 
     socket.on('searchErr', () => {
@@ -260,6 +281,15 @@ angular.module('mean.system').factory('game', [
 
     socket.on('searchSuccess', (data) => {
       allUsers(data.user);
+    });
+
+    socket.on('sendConfirmation', () => {
+      console.log('watamaguwam');
+      game.send();
+    });
+
+    socket.on('sendNotification', (data) => {
+      game.myMessage = { message: [...game.myMessage.message, data.msg], url: data.url };
     });
 
     socket.on('err', () => {
@@ -281,12 +311,11 @@ angular.module('mean.system').factory('game', [
       game.errorMessage = '';
     };
 
-    game.searchUser = function (name, playerInfo) {
-      const { username } = playerInfo.players[playerInfo.playerIndex];
+    game.searchUser = function (playerInfo) {
+      console.log('currently running...');
       $http({
-        method: 'POST',
-        url: '/api/search/users',
-        data: { username: name, value: username }
+        method: 'GET',
+        url: '/api/search/users'
       }).then(
         (response) => {
           const user = response.data;
@@ -317,10 +346,27 @@ angular.module('mean.system').factory('game', [
       );
     };
 
+    game.pushNotification = function (socketId, player) {
+      const url = $location.absUrl();
+      const { username, id } = player.players[player.playerIndex];
+      console.log(id, socketId);
+      const msg = `${username} has invited his game.
+          click the link below to join`;
+      socket.emit('pushNotification', {
+        socketId, msg, url, sender: id
+      });
+
+      socket.emit('pushSent', { id });
+    };
+
     game.leaveGame = function () {
       game.players = [];
       game.time = 0;
       socket.emit('leaveGame');
+    };
+
+    game.onlineFunc = function () {
+      socket.emit('onlineUsers');
     };
 
     game.pickCards = function (cards) {
