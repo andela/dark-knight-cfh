@@ -52,6 +52,7 @@ angular.module('mean.system').factory('game', [
     };
 
     const setNotification = function () {
+      console.log(game);
       if (notificationQueue.length === 0) {
         // If notificationQueue is empty, stop
         clearInterval(timeout);
@@ -131,6 +132,7 @@ angular.module('mean.system').factory('game', [
       game.winnerAutopicked = data.winnerAutopicked;
       game.gameWinner = data.gameWinner;
       game.pointLimit = data.pointLimit;
+      game.czar = data.czar;
 
       // Handle updating game.table
       if (data.table.length === 0) {
@@ -204,6 +206,9 @@ angular.module('mean.system').factory('game', [
       gameStarted();
     });
 
+    game.continue = () => {
+      socket.emit('pickBlackCard');
+    };
     game.send = function () {
       console.log('running sendfunct...');
       const x = document.getElementById('snackbar'); /* eslint-disable-line */
