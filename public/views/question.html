@@ -13,7 +13,7 @@
 
       <form style="margin-bottom: 5px;">
         <div class="input-group">
-          <input ng-change="searchUser(game)" ng-model="search_input" 
+          <input ng-click="game.searchUser(game)" ng-model="search_input"
             type="text" class="form-control" id="fname" name="fname" placeholder="Enter a user's name...">
           <div class="input-group-btn">
             <button class="btn btn-default" type="submit">
@@ -22,8 +22,8 @@
           </div>
         </div>
       </form>
-      <div ng-if="game.allUsers">
-        <div ng-repeat="user in game.allUsers" class="list"
+      <div ng-if="game.allUsers && search_input">
+        <div ng-repeat="user in game.allUsers| filter:search_input | limitTo : 5 " class="list"
         style="background: #34495E; color: white;
         border-radius: 7px; padding: 10px 10px;">
         <ul style="list-style-type: circle;">
