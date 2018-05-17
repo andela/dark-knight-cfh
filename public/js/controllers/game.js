@@ -14,6 +14,7 @@ angular.module('mean.system') /* eslint-disable-line */
       $scope.pickedCards = [];
       $scope.searchFilter = '';
       $scope.name = 'ello bae';
+      $scope.awaiting = false;
       // let makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
       // $scope.makeAWishFact = makeAWishFacts.pop();
 
@@ -268,7 +269,7 @@ angular.module('mean.system') /* eslint-disable-line */
         angular.element('.span12').click(() => {
           angular.element('.span12').hide(0, () => {
             setTimeout(() => {
-              angular.element('#questionModal').modal('hide');
+              angular.element('#questionModal').addClass('hide');
               game.continue();
             }, 1000);
             angular.element('.card-back').hide();
@@ -284,13 +285,10 @@ angular.module('mean.system') /* eslint-disable-line */
       };
 
       $scope.$watch('game.state', () => {
-        if (game.state === 'getting black card' && $scope.isCzar()) {
-          const element = angular.element('#questionModal');
-          element.modal('show');
-        } else if (game.state === 'getting black card' && !$scope.isCzar()) {
-          $scope.awaiting = 'Awaiting the czar to pick a question...';
+        if (game.state === 'getting black card') {
+          $scope.awaiting = true;
         } else {
-          $scope.awaiting = '';
+          $scope.awaiting = false;
         }
       });
     }

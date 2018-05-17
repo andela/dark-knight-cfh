@@ -35,7 +35,11 @@
                         <li>
                             <a href="#!/quit" class="gray-slate-text animate swell-1 turn-gray-slate-text" ng-click="abandonGame()">QUIT</a>
                         </li>
-                        <li ng-controller="IndexController" ng-show="global.authenticated"><a href="#!/profile"><img class="circle" ng-src="{{pic || '../img/profile-image.png'}}" alt="profile image" width="40px" height="40px" style="margin-top:12px"></a></li>
+                        <li ng-controller="IndexController" ng-show="global.authenticated">
+                            <a href="#!/profile">
+                                <img class="circle" ng-src="{{pic || '../img/profile-image.png'}}" alt="profile image" width="40px" height="40px" style="margin-top:12px">
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -77,6 +81,18 @@
     <region></region>
     <!-- Message Toast -->
     <toast></toast>
+    <!-- Draw Card Modal -->
+    <div id="cardModal" class="game-modal" ng-show="awaiting && isCzar()" ng-click="continueGame()">
+        <div class='span12'>
+        </div>
+        <div class='equipment-card'>
+            <div class='card-front card-face'>
+            </div>
+            <div class='card-back card-face'>
+            </div>
+        </div>
+    </div>
+    <!-- </div> -->
 </div>
 <!-- Chat FAB -->
 <chat></chat>
@@ -90,7 +106,7 @@
         });
     })
 
-            window.onbeforeunload = () => {
-            alert('Fuck off guys!');
-        };
+    window.onbeforeunload = () => {
+        alert('Fuck off guys!');
+    };
 </script>
