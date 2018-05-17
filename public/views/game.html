@@ -1,0 +1,96 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+<link rel="stylesheet" href="../css/common2.css">
+<div class="game-page" ng-app ng-controller="GameController">
+    <!-- Navbar -->
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper grey lighten-2 game">
+                <div class="container nav-box">
+                    <div class="brand-logo animate swell-2">
+                        <a href="#!">
+                            <img src="../img/playing-cards.svg" alt="">
+                        </a>
+                    </div>
+                    <a data-target="mobile" class="sidenav-trigger">
+                        <i class="material-icons grey-text text-darken-4">menu</i>
+                    </a>
+                    <ul id="nav-mobile" class="right hide-on-med-and-down game-navbar-right">
+                        <li class="game-search">
+                            <div class="game-search-button animate swell-2">
+                                <i class="material-icons">search</i>
+                            </div>
+                            <div class="game-search-bar">
+                                <input type="text" placeholder="search player" ng-change="searchUser(game)" ng-model="search_input">
+                                <div ng-if="game.allUsers" class="dropdown">
+                                    <ul>
+                                        <li ng-repeat="user in game.allUsers" class="text">{{user.name}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#charity" class="gray-slate-text animate swell-1 turn-gray-slate-text">CHARITY</a>
+                        </li>
+                        <li>
+                            <a href="#!/quit" class="gray-slate-text animate swell-1 turn-gray-slate-text" ng-click="abandonGame()">QUIT</a>
+                        </li>
+                        <li ng-controller="IndexController" ng-show="global.authenticated"><a href="#!/profile"><img class="circle" ng-src="{{pic || '../img/profile-image.png'}}" alt="profile image" width="40px" height="40px" style="margin-top:12px"></a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <!-- Navbar List -->
+    <ul class="sidenav" id="mobile">
+        <li>
+            <a href="#!/profile" data-ng-show="global.authenticated">CHARITY</a>
+        </li>
+        <li>
+            <a href="" ng-click="logout()" data-ng-show="global.authenticated">QUIT</a>
+        </li>
+    </ul>
+    <!-- Game Content -->
+    <div class="game-content-container">
+        <div class="game-content game-height-1">
+            <div class="row game-actual-content">
+                <!--  Left Content -->
+                <div class="col m9 s12 game-height-1">
+                    <!-- Dashboard -->
+                    <div class="row game-container-height-3">
+                        <!-- Timer -->
+                        <timer></timer>
+                        <!-- Question Board -->
+                        <question-board></question-board>
+                    </div>
+                    <!-- Deck -->
+                    <deck></deck>
+                </div>
+                <!-- Right Content / Players List -->
+                <list-co-player></list-co-player>
+                <!-- List of All Players Online -->
+                <list-player-online></list-player-online>
+            </div>
+        </div>
+    </div>
+    <!-- Choose-Region Modal -->
+    <region></region>
+    <!-- Message Toast -->
+    <toast></toast>
+</div>
+<!-- Chat FAB -->
+<chat></chat>
+<script type="text/javascript">
+    $(window).on('load', function () {
+        const sidenav = document.querySelector('.sidenav');
+        const instance = M.Sidenav.init(sidenav, {});
+
+        $('.game-player-tab-switch').click(function () {
+            console.log('hello');
+        });
+    })
+
+            window.onbeforeunload = () => {
+            alert('Fuck off guys!');
+        };
+</script>

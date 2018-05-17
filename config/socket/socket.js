@@ -154,7 +154,7 @@ module.exports = function (io) {
     createPrivate = createPrivate || false;
     console.log(socket.id, 'is requesting room', requestedGameId);
     if (requestedGameId.length && allGames[requestedGameId]) {
-      // console.log('Room', requestedGameId, 'is valid');
+      console.log('Room', requestedGameId, 'is valid');
       const game = allGames[requestedGameId];
       // Ensure that the same socket doesn't try to join the same game
       // This can happen because we rewrite the browser's URL to reflect
@@ -163,6 +163,7 @@ module.exports = function (io) {
       // no one is in this custom room.
       if (game.state === 'awaiting players' && (!game.players.length ||
         game.players[0].socket.id !== socket.id)) {
+        console.log('about to enter....')
         // Put player into the requested game
         allPlayers[socket.id] = true;
         game.players.push(player);
@@ -198,6 +199,7 @@ module.exports = function (io) {
       gameID += 1;
       const gameIDStr = gameID.toString();
       game = new Game(gameIDStr, io);
+      game.regionId = regId;
       allPlayers[socket.id] = true;
       game.players.push(player);
       allGames[gameID] = game;
@@ -275,6 +277,8 @@ module.exports = function (io) {
       delete allPlayers[socket.id];
       if (game.state === 'awaiting players' ||
         game.players.length - 1 >= game.playerMinLimit) {
+        console.log('>>>>>>>>>>>> Awaiting Players ...for some reason :/')
+        console.log('>>>>>>>>>>>> Current game state: ', game.state);
         game.removePlayer(socket.id);
       } else {
         game.stateDissolveGame();

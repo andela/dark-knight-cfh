@@ -1,0 +1,71 @@
+
+<div class="game-deck">
+    <!-- ************ Card Deck ************ -->
+    <div class="game-deck-row">
+        <div class="game-card game-height-6" ng-style="{'cursor':'pointer'}" ng-click="pickCard(card)" ng-hide="showTable || isCzar()"
+            ng-repeat="card in game.players[game.playerIndex].hand" ng-animate="{enter:'animated fadeInUp', leave: 'animated fadeInOut'}">
+            <img src="../img/pattern.png" alt="pattern1" class="top-right-pattern">
+            <div class="bottom-left-pattern ">
+                <div class="text" ng-bind-html-unsafe="card.text"></div>
+                <img src="../img/pattern1.png" alt="pattern1" class="stick">
+                <span id='selection-number' class='selection-number' ng-show="showFirst(card)"> 1 </span>
+                <span id='selection-number' class='selection-number' ng-show="showSecond(card)"> 2 </span>
+            </div>
+        </div>
+
+        <span ng-repeat="answer in game.table">
+            <div class="game-card game-height-6" id='table' ng-style="pointerCursorStyle()" ng-click="pickWinning(answer)" ng-show="(game.state !== 'game ended' && game.state !== 'game dissolved') && (showTable || isCzar())"
+                ng-repeat="card in answer.card" ng-animate="{enter:'animated bounceInLeft'}" style="background-color:{{winningColor($parent.$index)}}">
+                <img src="../img/pattern.png" alt="pattern1" class="top-right-pattern">
+                <div class="bottom-left-pattern ">
+                    <div class="text" ng-bind-html-unsafe="card.text"></div>
+                    <img src="../img/pattern1.png" alt="pattern1" class="stick">
+                    <span id='selection-number' class='selection-number' ng-show="firstAnswer($index)"> 1 </span>
+                    <span id='selection-number' class='selection-number' ng-show="secondAnswer($index)"> 2 </span>
+                </div>
+            </div>
+        </span>
+    </div>
+    <!-- ************ How to Play ************ -->
+    <div class="game-how-to" ng-show="game.state === 'awaiting players'">
+        <div class="title">How to Play</div>
+        <ol class="body">
+            <li>Each player begins with, and will always have, 10 white answer cards.</li>
+            <li>For each round, one player is randomly chosen as the Card Czar.</li>
+            <li>Everyone else answers the black question card by clicking on the answer card they want to use.</li>
+            <li>The Card Czar then picks a favorite answer, and whoever played that answer wins the round.</li>
+            <li>Want to adorn your avatar with a glorious crown? Donate to charity after the game!</li>
+        </ol>
+    </div>
+    <!-- ************ Game End ************ -->
+    <div ng-show="game.state === 'game ended' || game.state ==='game dissolved'">
+        <div class="game-end" ng-show="game.state ==='game dissolved' && game.gameWinner === -1">
+            <h4>What would you like to do now?</h4>
+            <div class="game-end-text">
+                You might consider donating to charity to atone for the horrifying answers you've submitted. Donating will also place a lovely
+                crown on your avatar's head.
+            </div>
+        </div>
+        <div class="game-end" ng-show="game.state === 'game ended' || game.gameWinner !== -1">
+            <h4>What would you like to do now?</h4>
+            <div class="game-end-text">
+                Help yourself to another game or help a child in need? Donating will also place a lovely crown on your avatar's head.
+            </div>
+        </div>
+        <div class="game-end-buttons">
+            <a href='/play'>
+                <button ng-click="game.joinGame('joinNewGame')" class="btn-small gray-slate animate swell-2 turn-gray-slate">New Game</button>
+            </a>
+            <a href='/'>
+                <button class="btn-small gray-slate animate swell-2 turn-gray-slate">Exit Game</button>
+            </a>
+        </div>
+    </div>
+    <!-- ************ Note to Czar ************ -->
+    <div class="game-end" ng-show="isCzar() && game.table.length===0 && game.state !== 'game dissolved' && game.state !== 'awaiting players'">
+        <h4>You are the Card Czar!</h4>
+        <div class="game-end-text">
+            Players are choosing their answers. Prepare to select a winner.
+        </div>
+    </div>
+</div>

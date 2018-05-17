@@ -1,0 +1,21 @@
+<div id="message-toast" class="game-toast-container">
+    <div id="message-toast" class="game-toast" ng-if="game.errorMessage" ng-animate="{enter:'animated fadeInDown', leave:'animated fadeOut'}">
+        <div>{{game.errorMessage}}</div>
+    </div>
+    <div class="game-toast" ng-show="game.state ==='game dissolved' && game.gameWinner === -1" ng-animate="{enter:'animated fadeInDown', leave:'animated fadeOut'}">
+        <div class="title">What the!? The game ended because too many people left!</div>
+        <div>Our sincere apologies.</div>
+    </div>
+    <div class="game-toast" ng-show="game.state === 'game ended' && game.gameWinner !== game.playerIndex" ng-animate="{enter:'animated fadeInDown', leave:'animated fadeOut'}">
+        <div class="title">Aw, shucks! {{game.players[game.gameWinner].username | upperFirstLetter }} won the game!</div>
+        <div>That makes you a loser, unfortunately.</div>
+    </div>
+    <div class="game-toast" ng-show="game.state === 'game ended' && game.gameWinner === game.playerIndex" ng-animate="{enter:'animated fadeInDown', leave:'animated fadeOut'}">
+        <div class="title">Congratulations! You won the game, {{game.players[game.playerIndex].username | upperFirstLetter}}!</div>
+        <div>We hope you feel special. If you'd like to share that special feeling with the world, consider donating to charity.</div>
+        <div>Or just horde it all for youself.</div>
+    </div>
+    <div ng-if="game.inviteSent" ng-animate="{enter:'animated fadeInDown', leave:'animated fadeOut'}">
+        <div>Invite successfully sent!</div>
+    </div>
+</div>

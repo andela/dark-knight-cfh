@@ -130,11 +130,16 @@ angular.module('mean.system').controller('IndexController', [
     $scope.profile = () => {
       const token = localStorage.getItem('token');
 
-      $scope.profileData = $http.get('/api/profile', {
-        headers: {
-          'x-access-token': token
-        }
-      });
+      if (!token) {
+        $location.path('/');
+      } else {
+        $scope.profileData = $http.get('/api/profile', {
+          headers: {
+            'x-access-token': token
+          }
+        });
+      }
+
 
       /**
        * @description fetches leaderboard data

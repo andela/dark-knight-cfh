@@ -96,7 +96,7 @@ gulp.task('sass:dist', () =>
 gulp.task('bower', () => bower());
 
 // Default task(s).
-gulp.task('default', ['eslint', 'concurrent', 'sass']);
+gulp.task('default', ['eslint', 'concurrent', 'sass:dist']);
 
 // Test task.
 gulp.task('test', ['mochaTest']);
