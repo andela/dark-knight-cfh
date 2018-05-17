@@ -9,223 +9,246 @@ const guestNames = ['Disco Potato', 'Silver Blister', 'Insulated Mustard', 'Fune
 // let globalRegionId;
 class Game {
   /**
-   * @description creates a new game object
-   *
-   * @param {number} gameID a review object
-   * @param {object} io a review object
-   * @return {object} return an array of objects
-   */
-  constructor(gameID, io) {
-    this.io = io;
-    this.gameID = gameID;
-    this.players = []; // Contains array of player models
-    this.table = []; // Contains array of {card: card, player: player.id}
-    this.winningCard = -1; // Index in this.table
-    this.gameWinner = -1; // Index in this.players
-    this.winnerAutopicked = false;
-    this.czar = -1; // Index in this.players
-    this.playerMinLimit = 2;
-    this.playerMaxLimit = 12;
-    this.pointLimit = 1;
-    this.state = 'awaiting players';
-    this.round = 0;
-    this.questions = null;
-    this.answers = null;
-    this.curQuestion = null;
-    this.regionId = null;
-    this.timeLimits = {
-      stateChoosing: 30,
-      stateJudging: 16,
-      stateResults: 6
-    };
-    // setTimeout ID that triggers the czar judging state
-    // Used to automatically run czar judging if players don't pick before time limit
-    // Gets cleared if players finish picking before time limit.
-    this.choosingTimeout = 0;
-    // setTimeout ID that triggers the result state
-    // Used to automatically run result if czar doesn't decide before time limit
-    // Gets cleared if czar finishes judging before time limit.
-    this.judgingTimeout = 0;
-    this.resultsTimeout = 0;
-    this.guestNames = guestNames.slice();
-  }
+  * @description creates a new game object
+  *
+  * @param {number} gameID a review object
+  * @param {object} io a review object
+  * @return {object} return an array of objects
+  */
+constructor(gameID, io) {
+  this.io = io;
+  this.gameID = gameID;
+  this.players = []; // Contains array of player models
+  this.table = []; // Contains array of {card: card, player: player.id}
+  this.winningCard = -1; // Index in this.table
+  this.gameWinner = -1; // Index in this.players
+  this.winnerAutopicked = false;
+  this.czar = -1; // Index in this.players
+  this.playerMinLimit = 3;
+  this.playerMaxLimit = 12;
+  this.pointLimit = 3;
+  this.state = 'awaiting players';
+  this.round = 0;
+  this.oline = null,
+  this.questions = null;
+  this.answers = null;
+  this.curQuestion = null;
+  this.regionId = null;
+  this.timeLimits = {
+    stateChoosing: 30,
+    stateJudging: 16,
+    stateResults: 6
+  };
+  // setTimeout ID that triggers the czar judging state
+  // Used to automatically run czar judging if players don't pick before time limit
+  // Gets cleared if players finish picking before time limit.
+  this.choosingTimeout = 0;
+  // setTimeout ID that triggers the result state
+  // Used to automatically run result if czar doesn't decide before time limit
+  // Gets cleared if czar finishes judging before time limit.
+  this.judgingTimeout = 0;
+  this.resultsTimeout = 0;
+  this.guestNames = guestNames.slice();
+}
 
-  payload() {
-    const players = [];
-    this.players.forEach((player, index) => {
-      players.push({
-        hand: player.hand,
-        points: player.points,
-        username: player.username,
-        id: player.id,
-        avatar: player.avatar,
-        premium: player.premium,
-        socketID: player.socket.id,
-        color: player.color
-      });
+payload() {
+  const players = [];
+  this.players.forEach((player, index) => {
+    players.push({
+      hand: player.hand,
+      points: player.points,
+      username: player.username,
+      id: player.id,
+      avatar: player.avatar,
+      premium: player.premium,
+      socketID: player.socket.id,
+      color: player.color
     });
-    return {
-      gameID: this.gameID,
-      players,
-      czar: this.czar,
-      state: this.state,
-      round: this.round,
-      gameWinner: this.gameWinner,
-      winningCard: this.winningCard,
-      winningCardPlayer: this.winningCardPlayer,
-      winnerAutopicked: this.winnerAutopicked,
-      table: this.table,
-      pointLimit: this.pointLimit,
-      curQuestion: this.curQuestion
-    };
-  }
+  });
+  return {
+    gameID: this.gameID,
+    players,
+    czar: this.czar,
+    state: this.state,
+    round: this.round,
+    gameWinner: this.gameWinner,
+    winningCard: this.winningCard,
+    winningCardPlayer: this.winningCardPlayer,
+    winnerAutopicked: this.winnerAutopicked,
+    table: this.table,
+    pointLimit: this.pointLimit,
+    curQuestion: this.curQuestion
+  };
+};
 
-  sendNotification(msg) {
-    this.io.sockets.in(this.gameID).emit('notification', { notification: msg });
-  }
+sendNotification(msg) {
+  this.io.sockets.in(this.gameID).emit('notification', { notification: msg });
+};
 
-  // Currently called on each joinGame event from socket.js
-  // Also called on removePlayer IF game is in 'awaiting players' state
-  assignPlayerColors() {
-    this.players.forEach((player, index) => {
-      player.color = index;
-    });
-  }
+updateOnlineUsers(data) {
+  this.io.sockets.emit('updateOnlineUsers', data);
+};
 
-  assignGuestNames() {
-    const self = this;
-    this.players.forEach(player => {
-      if (player.username === 'Guest') {
-        const randIndex = Math.floor(Math.random() * self.guestNames.length);
-        const [a] = self.guestNames.splice(randIndex, 1); // changed!
-        player.username = a;
-        if (!self.guestNames.length) {
-          self.guestNames = guestNames.slice();
-        }
+// Currently called on each joinGame event from socket.js
+// Also called on removePlayer IF game is in 'awaiting players' state
+assignPlayerColors() {
+  this.players.forEach((player, index) => {
+    player.color = index;
+  });
+};
+
+assignGuestNames(id, verify, online) {
+  const self = this;
+  this.players.forEach((player) => {
+    if (player.username === 'Guest') {
+      const randIndex = Math.floor(Math.random() * self.guestNames.length);
+      const [a] = self.guestNames.splice(randIndex, 1); // changed!
+      player.username = a;
+      console.log('verify', verify);
+      if(verify.indexOf(a) === -1){
+        online.push({id, name: a})
+        verify.push(a);
       }
-    });
-  }
+      if (!self.guestNames.length) {
+        self.guestNames = guestNames.slice();
+      }
+    }
+  })
+}
 
-  prepareGame() {
-    this.state = 'game in progress';
+prepareGame() {
+  this.state = 'game in progress';
 
-    this.io.sockets.in(this.gameID).emit('prepareGame', {
-      playerMinLimit: this.playerMinLimit,
-      playerMaxLimit: this.playerMaxLimit,
-      pointLimit: this.pointLimit,
-      timeLimits: this.timeLimits
-    });
+  this.io.sockets.in(this.gameID).emit('prepareGame', {
+    playerMinLimit: this.playerMinLimit,
+    playerMaxLimit: this.playerMaxLimit,
+    pointLimit: this.pointLimit,
+    timeLimits: this.timeLimits
+  });
 
-    const self = this;
-    async.parallel([this.getQuestions.bind(this), this.getAnswers.bind(this)], (err, results) => {
+  const self = this;
+  async.parallel(
+    [
+      this.getQuestions.bind(this),
+      this.getAnswers.bind(this)
+    ],
+    (err, results) => {
+      console.log('the results from getquestion', results);
       if (err) {
-        console.log(err);
+        console.log('An error occured....', err);
       }
       const [a, b] = results;
       self.questions = a; // changed!
       self.answers = b;
 
       self.startGame();
+    }
+  );
+};
+
+startGame() {
+  console.log('running start game', this);
+  this.shuffleCards(this.questions);
+  this.shuffleCards(this.answers);
+  // this.stateChoosing(this);
+  this.getBlackcards(this);
+};
+
+sendUpdate() {
+  this.io.sockets.in(this.gameID).emit('gameUpdate', this.payload());
+};
+
+getBlackcards(self) {
+  self.state = 'getting black card';
+  // Rotate card czar
+  if (self.czar >= self.players.length - 1) {
+    self.czar = 0;
+  } else {
+    self.czar++;
+  }
+  self.sendUpdate();
+}
+continue(self) {
+  if (self.state === 'getting black card') {
+    self.stateChoosing(self);
+  }
+}
+sendUpdate() {
+  this.io.sockets.in(this.gameID).emit('gameUpdate', this.payload());
+}
+
+stateChoosing(self) {
+  self.state = 'waiting for players to pick';
+  self.table = [];
+  self.winningCard = -1;
+  self.winningCardPlayer = -1;
+  self.winnerAutopicked = false;
+  self.curQuestion = self.questions.pop();
+  if (!self.questions.length) {
+    self.getQuestions((err, data) => {
+      self.questions = data;
     });
   }
+  self.round++;
+  self.dealAnswers();
+  self.sendUpdate();
+  // Rotate card czar previously here
+  self.choosingTimeout = setTimeout(() => {
+    self.stateJudging(self);
+  }, self.timeLimits.stateChoosing * 1000);
+}
 
-  startGame() {
-    console.log(this.gameID, this.state);
-    this.shuffleCards(this.questions);
-    this.shuffleCards(this.answers);
-    // this.stateChoosing(this);
+selectFirst() {
+  if (this.table.length) {
+    this.winningCard = 0;
+    const winnerIndex = this._findPlayerIndexBySocket(this.table[0].player);
+    this.winningCardPlayer = winnerIndex;
+    this.players[winnerIndex].points++;
+    this.winnerAutopicked = true;
+    this.stateResults(this);
+  } else {
     this.getBlackcards(this);
   }
+}
 
-  getBlackcards(self) {
-    self.state = 'getting black card';
-    // Rotate card czar
-    if (self.czar >= self.players.length - 1) {
-      self.czar = 0;
-    } else {
-      self.czar++;
-    }
+stateJudging(self) {
+  self.state = 'waiting for czar to decide';
+
+  if (self.table.length <= 1) {
+    // Automatically select a card if only one card was submitted
+    self.selectFirst();
+  } else if (self.table.length === 0) {
+    self.getBlackcards(self);
+  } else {
     self.sendUpdate();
-  }
-  continue(self) {
-    if (self.state === 'getting black card') {
-      self.stateChoosing(self);
-    }
-  }
-  sendUpdate() {
-    this.io.sockets.in(this.gameID).emit('gameUpdate', this.payload());
-  }
-
-  stateChoosing(self) {
-    self.state = 'waiting for players to pick';
-    self.table = [];
-    self.winningCard = -1;
-    self.winningCardPlayer = -1;
-    self.winnerAutopicked = false;
-    self.curQuestion = self.questions.pop();
-    if (!self.questions.length) {
-      self.getQuestions((err, data) => {
-        self.questions = data;
-      });
-    }
-    self.round++;
-    self.dealAnswers();
-    self.sendUpdate();
-    // Rotate card czar previously here
-    self.choosingTimeout = setTimeout(() => {
-      self.stateJudging(self);
-    }, self.timeLimits.stateChoosing * 1000);
-  }
-
-  selectFirst() {
-    if (this.table.length) {
-      this.winningCard = 0;
-      const winnerIndex = this._findPlayerIndexBySocket(this.table[0].player);
-      this.winningCardPlayer = winnerIndex;
-      this.players[winnerIndex].points++;
-      this.winnerAutopicked = true;
-      this.stateResults(this);
-    } else {
-      this.getBlackcards(this);
-    }
-  }
-
-  stateJudging(self) {
-    self.state = 'waiting for czar to decide';
-
-    if (self.table.length <= 1) {
-      // Automatically select a card if only one card was submitted
+    self.judgingTimeout = setTimeout(() => {
+      // Automatically select the first submitted card when time runs out.
       self.selectFirst();
-    } else if (self.table.length === 0) {
-      self.getBlackcards(self);
-    } else {
-      self.sendUpdate();
-      self.judgingTimeout = setTimeout(() => {
-        // Automatically select the first submitted card when time runs out.
-        self.selectFirst();
-      }, self.timeLimits.stateJudging * 1000);
-    }
+    }, self.timeLimits.stateJudging * 1000);
   }
+};
 
-  stateResults(self) {
-    self.state = 'winner has been chosen';
-    console.log(self.state);
-    // TODO: do stuff
-    let winner = -1;
-    for (let i = 0; i < self.players.length; i++) {
-      if (self.players[i].points >= self.pointLimit) {
-        winner = i;
-      }
+
+
+stateResults(self) {
+  self.state = 'winner has been chosen';
+  console.log(self.state);
+  // TODO: do stuff
+  let winner = -1;
+  for (let i = 0; i < self.players.length; i++) {
+    if (self.players[i].points >= self.pointLimit) {
+      winner = i;
     }
-    self.sendUpdate();
-    self.resultsTimeout = setTimeout(() => {
-      if (winner !== -1) {
-        self.stateEndGame(winner);
-      } else {
-        self.getBlackcards(self);
-      }
-    }, self.timeLimits.stateResults * 1000);
   }
+  self.sendUpdate();
+  self.resultsTimeout = setTimeout(() => {
+    if (winner !== -1) {
+      self.stateEndGame(winner);
+    } else {
+      self.getBlackcards(self);
+    }
+  }, self.timeLimits.stateResults * 1000);
+}
 
   stateEndGame(winner) {
     this.state = 'game ended';

@@ -10,3 +10,4 @@ build
 .nyc_output
 bower_components
 .vscode
+public/css/common2.css

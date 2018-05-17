@@ -1,9 +1,11 @@
+<!-- <script type='text/javascript' src='/bower/bootstrap/dist/js/bootstrap.js'></script> -->
 <script type="text/javascript">
   $(window).on('load', function () {
     $('#myModal').modal('show');
   });
 </script>
-<div id="app-container" ng-controller="GameController">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div id="app-container" ng-controller="GameController" data-ng-init="init()">
   <div id="menu-container">
     <div id="logo">
       <span id="first-word">Cards</span>
@@ -17,17 +19,37 @@
       <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://cfh.io" data-text="Cards for Humanity: A Game for Horrible People Desperately Trying to do Good"
         data-related="CFH_App">Tweet</a>
       <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'twitter-wjs');</script>
+    <span style="position: relative;">
+        <i class="fa fa-bell" style="font-size: 17px; color: white;"></i>
+        <span style="position: absolute; cursor: pointer; bottom: 35%; left: 60%; background: red; color: white;" 
+        class="badge dropdown-toggle" id="menu1" data-toggle="dropdown">{{game.myMessage.message.length || 0}}</span>
+
+        <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+            <li ng-repeat="msg in game.myMessage.message" style="border-bottom: 1px solid black;cursor: pointer; padding: 5px;">
+              <a role="menuitem" ng-click="sendMessage(game.myMessage.url)">
+                {{msg}}
+              </a>
+            </li>
+        </ul>
+
+    </span>
+        <span id="tweet-container">
+      <a href="https://twitter.com/share" class="twitter-share-button" 
+        data-url="http://cfh.io" 
+        data-text="Cards for Humanity: A Game for Horrible People Desperately Trying to do Good"
+        data-related="CFH_App">Tweet</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
     </span>
   </div>
   <div id="gameplay-container">
+    <a class="btn btn-large btn-success" href="javascript:void(0);" onclick="javascript:introJs().start();">Take a quick tour</a>
     <div id="upper-gameplay-container">
-      <div ng-if="owner" id="myModal" class="modal" role="dialog">
+      <div ng-if="owner" id="myModal" class="modal" role="dialog"  data-keyboard="false" data-backdrop="static" style="display: block;">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
               <h4 class="modal-title " style="text-align: center">
-                <b>Cards for humanity.</b>
+                <b>Cards for Humanity.</b>
               </h4>
             </div>
             <div class="modal-body">
@@ -57,8 +79,8 @@
             </div>
             <div class="modal-footer">
               <button data-ng-hide="guest" type="button" ng-click="startSession()" class="btn btn-success" data-dismiss="modal">Start Game</button>
-              <button data-ng-show="guest" type="button" ng-click="startSession()" class="btn btn-success" data-dismiss="modal">join Game</button>
-              <button ng-click="abandonGame()" type="button" class="btn btn-danger" data-dismiss="modal">Go back</button>
+              <button data-ng-show="guest" type="button" ng-click="startSession()" class="btn btn-success" data-dismiss="modal">Join Game</button>
+              <button ng-click="abandonGame()" type="button" class="btn btn-danger" data-dismiss="modal">Go Back</button>
             </div>
           </div>
 
@@ -87,5 +109,6 @@
       </br>
     </div>
     <answers></answers>
+    <chat></chat>
   </div>
 </div>

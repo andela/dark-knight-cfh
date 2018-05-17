@@ -5,7 +5,7 @@
   <div id="social-bar-container">
     <player></player>
   </div>
-  <div id="cards" class='hand'>
+  <div id="cards" class='hand' data-step="1" data-intro="Everyone else answers the black question card by clicking on the answer card they want to use!" data-position='right'>
 
     <span ng-show="winnerPicked()"></span>
 
@@ -24,7 +24,6 @@
         <span id='selection-number' ng-show="secondAnswer($index)"> 2 </span>
       </div>
     </span>
-
   </div>
 </div>
 
@@ -40,6 +39,9 @@
     </ol>
   </div>
 </div>
+
+
+
 <div id="game-end-container" ng-show="game.state === 'game ended' || game.state ==='game dissolved'">
   <div id="inner-info-exit">
     <div class="game-end-answer-text" ng-show="game.state ==='game dissolved' && game.gameWinner === -1">

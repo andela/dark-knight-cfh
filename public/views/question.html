@@ -1,27 +1,30 @@
 <link rel="stylesheet" href="../bower/bootstrap/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="../css/common.css">
 <link rel="stylesheet" href="../css/style.css">
-<div id="question-container-inner">
-  <div ng-if="game.errorMessage">
-    <div style="background: red; border-radius: 7px; padding: 5px 10px; color: white; font-size: 14px;">
-      {{game.errorMessage}}
-      <span style="float: right; cursor: pointer;" ng-click="game.closeErrMsg()">x</span>
+<div id="question-container-inner" data-step="4" data-intro="When the game starts, each players gets 10 answer cards!">
+    <div ng-if="game.errorMessage" >
+        <div
+        style="background: red; border-radius: 7px; padding: 5px 10px; color: white; font-size: 14px;">
+        {{game.errorMessage}}<span style="float: right; cursor: pointer;" ng-click="game.closeErrMsg()">x</span>
+      </div></br>
     </div>
-    </br>
-  </div>
+    <div>
+        <div id="snackbar">Invite sent successfully!</div>
 
-
-  <div>
-    <div ng-if="game.inviteSent" style="background: green; border-radius: 7px; padding: 5px 10px; color: white; font-size: 14px;">
-      Invite successfully sent!
-      <span style="float: right; cursor: pointer;" ng-click="game.closeErrMsg()">x</span>
-    </div>
-    <form>
-      <input ng-change="searchUser(game)" ng-model="search_input" class="search_input" placeholder="Enter a user's name..." type="text"
-        id="fname" name="fname">
-    </form>
-    <div ng-if="game.allUsers">
-      <div ng-repeat="user in game.allUsers" class="list" style="background: #34495E; color: white;
+      <form style="margin-bottom: 5px;">
+        <div class="input-group">
+          <input ng-change="searchUser(game)" ng-model="search_input" 
+            type="text" class="form-control" id="fname" name="fname" placeholder="Enter a user's name...">
+          <div class="input-group-btn">
+            <button class="btn btn-default" type="submit">
+              <i class="glyphicon glyphicon-search"></i>
+            </button>
+          </div>
+        </div>
+      </form>
+      <div ng-if="game.allUsers">
+        <div ng-repeat="user in game.allUsers" class="list"
+        style="background: #34495E; color: white;
         border-radius: 7px; padding: 10px 10px;">
         <ul style="list-style-type: circle;">
           <li>{{user.name}}
@@ -47,7 +50,7 @@
       {{game.gameStarted}}
     </div>
     <span ng-bind-html-unsafe="game.curQuestion.text" ng-hide="game.state === 'game ended' || game.state ==='game dissolved' || game.state === 'awaiting players'"></span>
-    <h3>{{awaiting}}</h3>
+
     <div id="notifications" ng-if="game.notification" ng-animate="{enter:'animated fadeInLeft', leave:'animated fadeOut'}">{{game.notification}}</div>
 
     <div id="startGame" ng-show="game.state === 'awaiting players'">
@@ -68,6 +71,7 @@
       </div>
     </div>
     </br>
+
     <!-- Game Over Stuff -->
     <div id="game-end-info">
       <div id="people-left-game-top" ng-show="game.state ==='game dissolved' && game.gameWinner === -1">
@@ -84,22 +88,6 @@
         That makes you a loser, unfortunately.
       </div>
     </div>
-    <!-- MODAL TO DISPLAY LIST OF QUESTIONS, PROMPTING THE CZAR TO CHOOLSE A QUESTION -->
-    <div id="questionModal" class="modal" data-backdrop="static" data-keyboard="false" ng-click="continueGame()" role="dialog">
-      <div class="modal-dialog">
-        <!-- <div class="modal-content"> -->
-            <!-- <b>You're the Czar, pick a card to reveal the question...</b> -->
-            <div class='span12'>
-            </div>
-            <div class='equipment-card'>
-              <div class='card-front card-face'>
-              </div>
-              <div class='card-back card-face'>
-              </div>
-            </div>
-        <!-- </div> -->
-    </div>
+
   </div>
-  <!-- END OF QUESTIONS MODAL -->
-</div>
 </div>
