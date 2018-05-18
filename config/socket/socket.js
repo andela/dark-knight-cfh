@@ -19,6 +19,7 @@ module.exports = function(io) {
   let gameID = 0;
   let onlineUsers = [];
   let verifyUsers = [];
+  let isDissolved = false;
 
   io.sockets.on('connection', socket => {
     console.log(`${socket.id} Connected`);
@@ -202,39 +203,43 @@ module.exports = function(io) {
 
   const fireGame = function (player, socket, regId) {
     let game;
-    if (gamesNeedingPlayers.length <= 0) {
-      gameID += 1;
-      const gameIDStr = gameID.toString();
-      game = new Game(gameIDStr, io);
-      game.regionId = regId;
-      allPlayers[socket.id] = true;
-      game.players.push(player);
-      allGames[gameID] = game;
-      game.regionId = regId;
-      gamesNeedingPlayers.push(game);
-      socket.join(game.gameID);
-      socket.gameID = game.gameID;
-      console.log(socket.id, 'has joined newly created game', game.gameID);
-      game.assignPlayerColors();
-      game.assignGuestNames(socket.id, verifyUsers, onlineUsers);
-      console.log('heyyyo1', verifyUsers, onlineUsers)
-      game.updateOnlineUsers(onlineUsers);
-      game.sendUpdate();
-    } else {
-      game = gamesNeedingPlayers[0];
-      allPlayers[socket.id] = true;
-      game.players.push(player);
-      console.log(socket.id, 'has joined game', game.gameID);
-      socket.join(game.gameID);
-      socket.gameID = game.gameID;
-      game.assignPlayerColors();
-      game.assignGuestNames(socket.id, verifyUsers, onlineUsers);
-      game.sendUpdate();
-      game.updateOnlineUsers(onlineUsers);
-      game.sendNotification(`${player.username} has joined the game!`);
-      if (game.players.length >= game.playerMaxLimit) {
-        gamesNeedingPlayers.shift();
-        game.prepareGame();
+    if(isDissolved){
+      socket.to(socket.id).emit('started');
+    }else{
+      if (gamesNeedingPlayers.length <= 0) {
+        gameID += 1;
+        const gameIDStr = gameID.toString();
+        game = new Game(gameIDStr, io);
+        game.regionId = regId;
+        allPlayers[socket.id] = true;
+        game.players.push(player);
+        allGames[gameID] = game;
+        game.regionId = regId;
+        gamesNeedingPlayers.push(game);
+        socket.join(game.gameID);
+        socket.gameID = game.gameID;
+        console.log(socket.id, 'has joined newly created game', game.gameID);
+        game.assignPlayerColors();
+        game.assignGuestNames(socket.id, verifyUsers, onlineUsers);
+        console.log('heyyyo1', verifyUsers, onlineUsers)
+        game.updateOnlineUsers(onlineUsers);
+        game.sendUpdate();
+      } else {
+        game = gamesNeedingPlayers[0];
+        allPlayers[socket.id] = true;
+        game.players.push(player);
+        console.log(socket.id, 'has joined game', game.gameID);
+        socket.join(game.gameID);
+        socket.gameID = game.gameID;
+        game.assignPlayerColors();
+        game.assignGuestNames(socket.id, verifyUsers, onlineUsers);
+        game.sendUpdate();
+        game.updateOnlineUsers(onlineUsers);
+        game.sendNotification(`${player.username} has joined the game!`);
+        if (game.players.length >= game.playerMaxLimit) {
+          gamesNeedingPlayers.shift();
+          game.prepareGame();
+        }
       }
     }
   };
@@ -286,6 +291,7 @@ module.exports = function(io) {
       if (game.state === 'awaiting players' || game.players.length - 1 >= game.playerMinLimit) {
         game.removePlayer(socket.id);
       } else {
+        isDissolved = true;
         game.stateDissolveGame();
         for (let j = 0; j < game.players.length; j++) {
           game.players[j].socket.leave(socket.gameID);
