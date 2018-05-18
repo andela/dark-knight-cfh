@@ -707,10 +707,10 @@ $long-shadow: 0px 4px 4px rgba(0, 0, 0, .4);
 .game-actual-content {
   height: auto;
   padding: 10px 0;
+  // margin: 0 %;
 }
 
 .game-content {
-  margin: 0 7%;
   border-radius: 5px;
   box-shadow: $regular-shadow;
   background-color: #f4f4f4;
@@ -1677,19 +1677,17 @@ font-size: 12px; */
   padding-bottom: 10px;
 }
 
-#notification-badge {
-  border-radius: 50%;
-  background: #b91515;
-  /* width: 40px; */
-  color: white;
-  /* height: 40px; */
-  /* margin-left: -23px; */
+#notification-badge {    border-radius: 50px;
+  background: #e4e4e4;
+  width: 40px;
+  color: #445464;
+  height: 40px;
   top: -18px;
   right: 30%;
   z-index: 999;
   position: relative;
-  font-size: 1em;
-  padding: 10px;
+  font-size: 10px;
+  padding: 5px 8px;
 }
 
 // Profile
@@ -1937,6 +1935,21 @@ font-size: 12px; */
 }
 
 /* END OF CZAR'S CARD DECK STYLE */
+
+.tour-container {
+  display: flex;
+  .btn-tour {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #647484;
+    color: #e4e4e4;
+    padding: 10px 10px !important;
+    border-radius: 50px;
+    height: 30px;
+    font-size: 14px;
+  }
+}
 
 .czar-card-container {
   display: flex;

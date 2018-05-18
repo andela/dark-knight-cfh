@@ -5,7 +5,7 @@ const _ = require('underscore');
 
 const questions = require(`${__dirname}/../../app/controllers/questions.js`);
 const answers = require(`${__dirname}/../../app/controllers/answers.js`);
-const guestNames = ['Disco Potato', 'Silver Blister', 'Insulated Mustard', 'Funeral Flapjack', 'Toenail', 'Urgent Drip', 'Raging Bagel', 'Aggressive Pie', 'Loving Spoon', 'Swollen Node', 'The Spleen', 'Dingle Dangle'];
+const guestNames = ['Disco', 'Silver', 'Insulated', 'Funeral', 'Toenail', 'Urgent', 'Raging', 'Aggressive', 'Loving', 'Swollen', 'Spleen', 'Dingle'];
 // let globalRegionId;
 class Game {
   /**
