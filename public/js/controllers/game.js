@@ -52,9 +52,9 @@ angular.module('mean.system') /* eslint-disable-line */
       };
 
       $scope.$watch('game.level', (newValue, oldValue) => {
-      /* eslint-disable-line */
+        /* eslint-disable-line */
         if (newValue !== '') {
-        localStorage.setItem('level', newValue); /* eslint-disable-line */
+          localStorage.setItem('level', newValue); /* eslint-disable-line */
         }
       });
 
@@ -67,7 +67,7 @@ angular.module('mean.system') /* eslint-disable-line */
         return {};
       };
       $scope.$watch('game.state', (newValue, oldValue) => {
-      /* eslint-disable-line */
+        /* eslint-disable-line */
         if (newValue === 'game ended' && game.playerIndex === 0) {
           const winner = game.players[game.gameWinner].id;
           const { players } = game;
@@ -89,7 +89,7 @@ angular.module('mean.system') /* eslint-disable-line */
         document.getElementById('myModal').style.display = 'none';
       };
 
-    $scope.$watch('startUserGame', (newValue, oldValue) => { /* eslint-disable-line */
+      $scope.$watch('startUserGame', (newValue, oldValue) => { /* eslint-disable-line */
         if (newValue) {
           if ($location.search().game && !(/^\d+$/).test($location.search().game)) {
             game.joinGame('joinGame', $location.search().game);
@@ -228,18 +228,18 @@ angular.module('mean.system') /* eslint-disable-line */
       $scope.$watch('game.gameID', () => {
         if (game.gameID && game.state === 'awaiting players') {
           if (!$scope.isCustomGame() && $location.search().game) {
-          // If the player didn't successfully enter the request room,
-          // reset the URL so they don't think they're in the requested room.
+            // If the player didn't successfully enter the request room,
+            // reset the URL so they don't think they're in the requested room.
             $location.search({});
           } else if ($scope.isCustomGame() && !$location.search().game) {
-          // Once the game ID is set, update the URL if this is a game with friends,
-          // where the link is meant to be shared.
+            // Once the game ID is set, update the URL if this is a game with friends,
+            // where the link is meant to be shared.
             $location.search({
               game: game.gameID
             });
             if (!$scope.modalShown) {
               setTimeout(() => {
-              const link = document.URL; /* eslint-disable-line */
+                const link = document.URL; /* eslint-disable-line */
                 const txt = 'Give the following link to your friends so they can join your game: ';
                 $('#lobby-how-to-play').text(txt);
                 $('#oh-el')
@@ -265,31 +265,53 @@ angular.module('mean.system') /* eslint-disable-line */
         $scope.guest = true;
         $scope.owner = true;
       }
-      $scope.continueGame = function () {
-        angular.element('.span12').click(() => {
-          angular.element('.span12').hide(0, () => {
-            setTimeout(() => {
-              angular.element('#questionModal').addClass('hide');
-              game.continue();
-            }, 1000);
-            angular.element('.card-back').hide();
-            angular.element('.equipment-card').toggleClass('flipped');
-          });
+
+      $scope.continueGame = function (id) {
+        const leaveAnimation = () => {
+          angular.element('#b1').addClass('animated fadeOutLeftBig');
+          angular.element('#b2').addClass('animated fadeOutUpBig');
+          angular.element('#b3').addClass('animated fadeOutRightBig');
+
           setTimeout(() => {
-          // Reset components
-            angular.element('.span12').show();
-            angular.element('.card-back').show();
-            angular.element('.equipment-card').removeClass('flipped');
+            angular.element('#b1').removeClass('animated fadeOutLeftBig');
+            angular.element('#b2').removeClass('animated fadeOutUpBig');
+            angular.element('#b3').removeClass('animated fadeOutRightBig');
+            angular.element(`#${id}`).toggleClass('flipped');
           }, 2000);
-        });
+        };
+
+        game.continue();
+
+        angular.element(`#${id}`).toggleClass('flipped');
+        setTimeout(leaveAnimation, 2000);
       };
 
       $scope.$watch('game.state', () => {
         if (game.state === 'getting black card') {
           $scope.awaiting = true;
         } else {
-          $scope.awaiting = false;
+          setTimeout(() => {
+            $scope.awaiting = false;
+          }, 3000);
         }
       });
+
+
+      $scope.getBadge = (player) => {
+        let x = player.points;
+        if (x < 10) { // Pawn
+          return '../img/pawn.svg';
+        } else if (x < 50) { // Knight
+          return '../img/knight.svg';
+        } else if (x < 200) { // Bishop
+          return '../img/bishop.svg';
+        } else if (x < 500) { // Rook
+          return '../img/rook.svg';
+        } else if (x < 1000) { // Queen
+          return '../img/queen.svg';
+        }
+        // King
+        return '../img/king.svg';
+      };
     }
   ]);

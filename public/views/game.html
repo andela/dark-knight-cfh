@@ -82,13 +82,33 @@
     <!-- Message Toast -->
     <toast></toast>
     <!-- Draw Card Modal -->
-    <div id="cardModal" class="game-modal" ng-show="awaiting && isCzar()" ng-click="continueGame()">
+    <!-- <div id="cardModal" class="game-modal" ng-show="awaiting && isCzar()" ng-click="continueGame()">
         <div class='span12'>
         </div>
         <div class='equipment-card'>
-            <div class='card-front card-face'>
+            <div class='card-front card-face'></div>
+            <div class='card-back card-face'></div>
+        </div>
+    </div> -->
+    <div id="cardModal" class="game-modal" ng-show="awaiting && isCzar()">
+        <div class="czar-card-container">
+            <div class="czar-card-box b1 animated fadeInLeftBig" ng-click="continueGame('b1')">
+                <div id="b1" class="czar-card" >
+                    <div class="front"><div ng-bind-html-unsafe="game.curQuestion.text"></div></div>
+                    <div class="back"><span>DARK</span><span class="circle"></span><span>KNIGHT</span></div>
+                </div>
             </div>
-            <div class='card-back card-face'>
+            <div class="czar-card-box b2 animated fadeInDownBig" ng-click="continueGame('b2')">
+                <div id="b2" class="czar-card" >
+                    <div class="front"><div ng-bind-html-unsafe="game.curQuestion.text"></div></div>
+                    <div class="back"><span>DARK</span><span class="circle"></span><span>KNIGHT</span></div>
+                </div>
+            </div>
+            <div class="czar-card-box b3 animated fadeInRightBig" ng-click="continueGame('b3')">
+                <div id="b3" class="czar-card b3">
+                    <div class="front"><div ng-bind-html-unsafe="game.curQuestion.text"></div></div>
+                    <div class="back"><span>DARK</span><span class="circle"></span><span>KNIGHT</span></div>
+                </div>
             </div>
         </div>
     </div>
@@ -104,9 +124,7 @@
         $('.game-player-tab-switch').click(function () {
             console.log('hello');
         });
-    })
+    });
 
-    window.onbeforeunload = () => {
-        alert('Fuck off guys!');
-    };
+
 </script>

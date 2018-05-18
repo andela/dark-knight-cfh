@@ -1,12 +1,12 @@
 
-<div class="col m3 s12 game-height-1" ng-hide="showCoPlayers">
+<div class="col m3 s12 game-height-1" ng-hide="showCoPlayers" ng-controller="IndexController">
     <div class="game-player-list">
         <!-- Player Label 1 -->
         <div class="player-label" ng-repeat="player in game.players">
             <!-- Avatar Section -->
             <div class="sz4">
                 <div class="avatar">
-                    <div class="badge">O</div>
+                    <div class="badge"><img ng-src="{{ getBadge(player) }}" alt="placeholder"></div>
                     <div class="clip-layer">
                         <img ng-src="{{ player.avatar }}" alt="placeholder">
                     </div>
