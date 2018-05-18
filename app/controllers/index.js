@@ -34,11 +34,11 @@ exports.start = function (req, res) {
   let points;
   const { players, winner, level } = req.body;
   if (level === 'beginner') {
-    points = 1;
+    points = 5 * 1;
   } else if (level === 'intermidiate') {
-    points = 3;
+    points = 5 * 3;
   } else if (level === 'legend') {
-    points = 5;
+    points = 5 * 5;
   }
   User.findOneAndUpdate({ _id: winner }, { $inc: { points } }, { new: true }, (err, doc) => {
     if (!doc) {
