@@ -37,6 +37,7 @@
                             <a href="#!/quit" class="gray-slate-text animate swell-1 turn-gray-slate-text" ng-click="abandonGame()"
                             data-step="3" data-intro="Leave the game at any time!">QUIT</a>
                         </li>
+                        <li class="tour-container"><a class="btn-tour animate swell-1" href="javascript:void(0);" onclick="javascript:introJs().start();">TOUR</a></li>
                         <li ng-controller="IndexController" ng-show="global.authenticated">
                             <a href="#!/profile">
                                 <img class="circle" ng-src="{{pic || '../img/profile-image.png'}}" alt="profile image" width="40px" height="40px" style="margin-top:12px">
@@ -58,7 +59,7 @@
     </ul>
     <!-- Game Content -->
     <div class="game-content-container">
-            <a class="btn btn-large btn-success" href="javascript:void(0);" onclick="javascript:introJs().start();">Take a quick tour</a>
+            <!-- <a class="btn btn-large btn-success" href="javascript:void(0);" onclick="javascript:introJs().start();">Take a quick tour</a> -->
 
         <div class="game-content game-height-1">
             <div class="row game-actual-content">
