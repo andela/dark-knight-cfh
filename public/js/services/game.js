@@ -29,7 +29,8 @@ angular.module('mean.system').factory('game', [
       myMessage: { message: [], url: '' },
       joinOverride: false,
       errorMessage: '',
-      gameStarted: '',
+      gameStarted: false,
+      search_input: '',
       allUsers: [],
       regId: null,
       inviteSent: false,
@@ -43,7 +44,7 @@ angular.module('mean.system').factory('game', [
     let timing;
 
     const gameStarted = function () {
-      game.gameStarted = 'Only a max of 12 persons allowed per game';
+      game.gameStarted = true;
     };
 
     const allUsers = function (data) {
@@ -210,10 +211,10 @@ angular.module('mean.system').factory('game', [
       socket.emit('pickBlackCard');
     };
     game.send = function () {
-      console.log('running sendfunct...');
-      const x = document.getElementById('snackbar'); /* eslint-disable-line */
-      x.className = 'show';
-      setTimeout(() => { x.className = x.className.replace('show', ''); }, 3000);
+      game.inviteSent = true;
+      setTimeout(() => {
+        game.inviteSent = false;
+      }, 2000);
     };
 
     game.joinGame = function (mode, room, createPrivate) {
@@ -274,6 +275,7 @@ angular.module('mean.system').factory('game', [
     socket.on('inviteSuccess', () => {
       game.inviteSent = true;
       game.allUsers = [];
+      game.search_input = '';
       setTimeout(() => {
         game.inviteSent = false;
       }, 2000);
@@ -289,7 +291,6 @@ angular.module('mean.system').factory('game', [
     });
 
     socket.on('sendConfirmation', () => {
-      console.log('watamaguwam');
       game.send();
     });
 
@@ -317,7 +318,6 @@ angular.module('mean.system').factory('game', [
     };
 
     game.searchUser = function (playerInfo) {
-      console.log('currently running...');
       $http({
         method: 'GET',
         url: '/api/search/users'
@@ -332,14 +332,9 @@ angular.module('mean.system').factory('game', [
       );
     };
 
-    game.send = function () {
-      console.log('running sendfunct...');
-      const x = document.getElementById('snackbar'); /* eslint-disable-line */
-      x.className = 'show';
-      setTimeout(() => { x.className = x.className.replace('show', ''); }, 3000);
-    };
-
     game.sendInvite = function (data, player) {
+      game.allUsers = [];
+      game.search_input = '';
       const url = $location.absUrl();
       const { username } = player.players[player.playerIndex];
       const msg = `hi ${data.name}, ${username} has invited to his game.
@@ -353,6 +348,7 @@ angular.module('mean.system').factory('game', [
           socket.emit('inviteSuccessful', { id: player.id });
         },
         (error) => {
+          console.log('An error has occured!!');
           // socket.emit('searchError');
         }
       );

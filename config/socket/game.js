@@ -37,7 +37,7 @@ constructor(gameID, io) {
   this.timeLimits = {
     stateChoosing: 30,
     stateJudging: 16,
-    stateResults: 6
+    stateResults: 6 
   };
   // setTimeout ID that triggers the czar judging state
   // Used to automatically run czar judging if players don't pick before time limit

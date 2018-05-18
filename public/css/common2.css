@@ -1,5 +1,53 @@
 .nav-wrapper {
   font-family: 'Quicksand'; }
+  .nav-wrapper .notification {
+    height: 25px;
+    width: 25px;
+    margin-left: 15px;
+    margin-top: 28px; }
+  .nav-wrapper .badge1 {
+    position: relative; }
+  .nav-wrapper .badge1[data-badge]:after {
+    content: attr(data-badge);
+    position: absolute;
+    top: 25px;
+    right: -10px;
+    font-size: .7em;
+    background-color: white;
+    border: 1px solid #344454;
+    color: #344454;
+    width: 18px;
+    height: 18px;
+    text-align: center;
+    line-height: 18px;
+    border-radius: 50%;
+    box-shadow: 0 0 1px #333; }
+  .nav-wrapper .dropdown {
+    position: absolute;
+    top: 70px;
+    width: 285px;
+    height: auto;
+    padding: 5px 0;
+    background-color: #748494;
+    font-size: 14px;
+    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.4);
+    border-radius: 3px; }
+    .nav-wrapper .dropdown ul {
+      height: 0px; }
+    .nav-wrapper .dropdown li {
+      line-height: 2em;
+      padding: 0 5px; }
+      .nav-wrapper .dropdown li:hover {
+        color: #445464;
+        cursor: pointer;
+        background-color: #d4d4d4; }
+    .nav-wrapper .dropdown li:nth-child(odd) {
+      background-color: #647484; }
+      .nav-wrapper .dropdown li:nth-child(odd):hover {
+        background-color: #d4d4d4; }
+    .nav-wrapper .dropdown .text {
+      color: #d4d4d4;
+      width: 100%; }
 
 .landing-page-row {
   width: 100%;
@@ -536,12 +584,6 @@
         font-size: 12px;
         background-color: #445464;
         color: #c4c4c4; }
-      .player-label .details .name .game-player-circle {
-        width: 5px;
-        height: 5px;
-        background-color: #55f555;
-        border-radius: 50%;
-        margin-left: 5px; }
     .player-label .details .points {
       display: flex;
       align-items: center;
@@ -558,6 +600,46 @@
     animation-duration: 1s;
     -webkit-animation-name: bounce;
     animation-name: bounce; }
+
+.game-player-circle {
+  width: 5px;
+  height: 5px;
+  background-color: #55f555;
+  border-radius: 50%;
+  margin-left: 5px; }
+  .game-player-circle.online {
+    margin-right: 10px; }
+
+.player-online-label {
+  border-radius: 50px;
+  height: 30px;
+  margin: 5px 7%;
+  background-color: #445464;
+  color: #d4d4d4;
+  padding: 5px;
+  display: flex; }
+  .player-online-label .player-online-name {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    align-self: flex-start;
+    flex-grow: 1; }
+
+.player-online-button {
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  background-color: #647484;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #f4f4f4;
+  align-self: flex-end; }
+  .player-online-button:hover {
+    background-color: #243444; }
+  .player-online-button img {
+    width: 10px;
+    height: 10px; }
 
 .game-player-list-box {
   height: auto;
