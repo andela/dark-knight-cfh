@@ -300,15 +300,15 @@ angular.module('mean.system').controller('IndexController', [
 
           if (x < 10) {
             $scope.userRank = 'Pawn';
-          } else if (x < 20) {
-            $scope.userRank = 'Knight';
           } else if (x < 50) {
+            $scope.userRank = 'Knight';
+          } else if (x < 200) {
             $scope.userRank = 'Bishop';
-          } else if (x < 100) {
+          } else if (x < 500) {
             $scope.userRank = 'Rook';
-          } else if (x < 150) {
+          } else if (x < 1000) {
             $scope.userRank = 'Queen';
-          } else if (x < 250) {
+          } else {
             $scope.userRank = 'King';
           }
         }

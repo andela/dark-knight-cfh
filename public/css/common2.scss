@@ -70,7 +70,7 @@ $long-shadow: 0px 4px 4px rgba(0, 0, 0, .4);
       width: 100%;
     }
   }
-  
+
 }
 
 
@@ -197,6 +197,68 @@ $long-shadow: 0px 4px 4px rgba(0, 0, 0, .4);
   }
 }
 
+
+@keyframes fadeInLeftBig {
+	0% {
+		opacity: 0;
+		transform: translateX(-2000px) rotate(0deg);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateX(0) rotate(-15deg);
+	}
+}
+
+@keyframes fadeInRightBig {
+	0% {
+		opacity: 0;
+		transform: translateX(2000px) rotate(0deg);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateX(0) rotate(15deg);
+	}
+}
+
+@keyframes revealRight {
+	0% {
+		opacity: 0;
+		transform: translate(0px);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateX(200px) translateY(-50px);
+	}
+}
+
+@keyframes revealUp {
+	0% {
+		opacity: 0;
+		transform: translateX(0px);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateY(-100px);
+	}
+}
+
+@keyframes revealLeft {
+	0% {
+		opacity: 0;
+		transform: translate(0px);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateX(-200px) translateY(-50px);
+	}
+}
+
+
 .animate {
   &.swell-1 {
     -webkit-transition: transform 1s;
@@ -256,9 +318,47 @@ $long-shadow: 0px 4px 4px rgba(0, 0, 0, .4);
     animation-name: driftInLeft;
     animation-duration: .8s;
   }
+
+  &.fadeInLeftBig {
+    animation-name: fadeInLeftBig;
+    animation-duration: 2s;
+  }
+
+  &.fadeInRightBig {
+    animation-name: fadeInRightBig;
+    animation-duration: 2s;
+  }
+
+  &.revealRight {
+    animation-name: revealRight;
+    animation-duration: 1s;
+  }
+
+  &.revealUp {
+    animation-name: revealUp;
+    animation-duration: 1s;
+  }
+
+  &.revealLeft {
+    animation-name: revealLeft;
+    animation-duration: 1s;
+  }
+
   &.drop {
     animation-name: drop;
     animation-duration: 1s;
+  }
+
+  &.fadeOutLeftBig {
+    animation-duration: 2s !important;
+  }
+
+  &.fadeOutRightBig {
+    animation-duration: 2s !important;
+  }
+
+  &.fadeOutUpBig {
+    animation-duration: 2s !important;
   }
 }
 
@@ -682,9 +782,16 @@ $long-shadow: 0px 4px 4px rgba(0, 0, 0, .4);
       float: right;
       border-bottom-left-radius: 50%;
       border-bottom-right-radius: 50%;
-      background-color: #343434;
+      background-color: #546474;
+      border: 1px solid #fff;
+      box-shadow: 0px 0px 1px 1px #546474;
       color: #c4c4c4;
       z-index: 4;
+
+      img {
+        width: 10px;
+        height: 10px;
+      }
     }
     .clip-layer {
       width: 100%;
@@ -780,7 +887,7 @@ $long-shadow: 0px 4px 4px rgba(0, 0, 0, .4);
   &.online {
     margin-right: 10px;
   }
-} 
+}
 
 .player-online-label {
   border-radius: 50px;
@@ -1848,5 +1955,93 @@ font-size: 12px; */
 .hide {
   display: none;
 }
-
 /* END OF CZAR'S CARD DECK STYLE */
+
+.czar-card-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .czar-card-box {
+    width: 300px;
+    height: 450px;
+    position: relative;
+    perspective: 800px;
+    border-radius: 4px;
+
+    &.b1 {
+      top: 200px;
+      left: 150px;
+      transform: rotate(-15deg);
+    }
+
+    &.b2 {
+      top: 150px;
+      left: 0px;
+    }
+
+    &.b3 {
+      top: 200px;
+      left: -150px;
+      transform: rotate(15deg);
+    }
+  }
+
+  .czar-card {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    transform-style: preserve-3d;
+    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border-radius: 6px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    cursor: pointer;
+  }
+  .czar-card div {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    text-align: center;
+    border-radius: 6px;
+    background: #fff;
+    display: -ms-flexbox;
+    display: box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    -webkit-font-smoothing: antialiased;
+    color: #47525d;
+  }
+  .czar-card .front {
+    transform: rotateY(180deg);
+  }
+  .czar-card .back {
+    background-color: #000;
+    color: #ffffff;
+    border: 3px solid #fff;
+    box-shadow: 0px 0px 2px 3px #000;
+    font-size: 20px;
+
+    .circle {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #ffffff;
+      border: 2px solid #000;
+      box-shadow: 0px 0px 1px 3px #fff;
+      height: 90px;
+      width: 90px;
+      margin: 0px 10px;
+
+      img {
+        height: 70px;
+        width: 70px;
+      }
+    }
+  }
+  .czar-card.flipped {
+    transform: rotateY(180deg);
+  }
+}
+
