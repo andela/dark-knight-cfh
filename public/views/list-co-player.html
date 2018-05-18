@@ -1,6 +1,6 @@
 
 <div class="col m3 s12 game-height-1" ng-hide="showCoPlayers">
-    <div class="game-player-list">
+    <div class="game-player-list" data-step="5" data-intro="List of gamers">
         <!-- Player Label 1 -->
         <div class="player-label" ng-repeat="player in game.players">
             <!-- Avatar Section -->
@@ -17,14 +17,14 @@
                 <div class="row details">
                     <div class="name">
                         <div class="text">{{ player.username | upperFirstLetter }}
-                            <span class="game-player-circle" ng-show="isPlayer($index)"></span>
+                            <span class="game-player-circle" ng-show="isPlayer($index)" data-step="7" data-intro="This helps identify you"></span>
                         </div>
-                        <div class="czar-tag" ng-show="currentCzar($index)">CZAR</div>
+                        <div class="czar-tag" ng-show="currentCzar($index)" data-step="8" data-intro="This identifies the CZAR">CZAR</div>
                     </div>
-                    <div class="points">{{ player.points }}/{{ game.pointLimit }}</div>
+                    <div class="points" data-step="6" data-intro="See the number of rounds you've won!">{{ player.points }}/{{ game.pointLimit }}</div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="game-player-tab-switch animate lighten" ng-click="showCoPlayers=true">SEE PLAYERS ONLINE</div>
+    <div class="game-player-tab-switch animate lighten" ng-click="showCoPlayers=true" data-step="9" data-intro="Click here to see a list of online players!">SEE PLAYERS ONLINE</div>
 </div>

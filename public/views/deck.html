@@ -1,7 +1,7 @@
 
 <div class="game-deck">
     <!-- ************ Card Deck ************ -->
-    <div class="game-deck-row">
+    <div class="game-deck-row" data-step="15" data-intro="Pick an answer card!">
         <div class="game-card game-height-6" ng-style="{'cursor':'pointer'}" ng-click="pickCard(card)" ng-hide="showTable || isCzar()"
             ng-repeat="card in game.players[game.playerIndex].hand" ng-animate="{enter:'animated fadeInUp', leave: 'animated fadeInOut'}">
             <img src="../img/pattern.png" alt="pattern1" class="top-right-pattern">
@@ -28,8 +28,9 @@
     </div>
     <!-- ************ How to Play ************ -->
     <div class="game-how-to" ng-show="game.state === 'awaiting players'">
+
         <div class="title">How to Play</div>
-        <ol class="body">
+        <ol class="body" data-step="2" data-intro="You can revisit the instructions anytime here!">
             <li>Each player begins with, and will always have, 10 white answer cards.</li>
             <li>For each round, one player is randomly chosen as the Card Czar.</li>
             <li>Everyone else answers the black question card by clicking on the answer card they want to use.</li>
