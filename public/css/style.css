@@ -1155,9 +1155,271 @@ li {
 /*MORE MEDIA QUERIESS WHOOOOOAAAA*/
 
 @media (min-width: 1430px) {
-  .row {
-    margin: 0 0 -9px 0;
-  }
+   .row {
+      margin: 0 0 -9px 0;
+   }
+
+   .wpb-logo-container {
+      margin-right: 0;
+   }
+}
+
+@media(max-width: 680px) {
+   .wpb-menu-container {
+      display: none;
+   }
+
+   .mod-contain {
+      text-align: center;
+   }
+}
+
+@media (min-width : 480px) and (max-width : 865px)  {
+   .wpb-menu-container .wpb-main-menu {
+      text-align: right;
+      height: 100px;
+      margin-top: -77px;
+      font-size: .85em;
+   }
+
+   .wpb-menu-container .wpb-main-menu li a {
+      display: block;
+      height: 100%;
+      line-height: 100px;
+      font-weight: bold;
+      color: white;
+      padding: 0px 3px;
+      -webkit-transition: color 0.5s ease;
+      -moz-transition: color 0.5s ease;
+      -ms-transition: color 0.5s ease;
+      -o-transition: color 0.5s ease;
+      transition: color 0.5s ease;
+      text-transform: uppercase;
+      position: relative;
+      z-index: 1000;
+   }
+   .wpb-logo-container {
+      color: #fff;
+      font-weight: bold;
+      margin-right: 0;
+      font-size: 11px;
+      max-width: 99%;
+   }
+
+   .wpb-teaser .container {
+      position: relative;
+      z-index: 1000;
+      padding-top: 70px;
+   }
+
+   .landing-card {
+      font-size: 0.8em;
+   }
+}
+
+@media (min-width : 865px) and (max-width : 1024px)  {
+   .wpb-menu-container .wpb-main-menu {
+      text-align: right;
+      height: 100px;
+      margin-top: -77px;
+      font-size: .9em;
+      margin-right: 35px;
+   }
+
+   .wpb-menu-container .wpb-main-menu li a {
+      display: block;
+      height: 100%;
+      line-height: 100px;
+      font-weight: bold;
+      color: white;
+      padding: 0px 6px;
+      -webkit-transition: color 0.5s ease;
+      -moz-transition: color 0.5s ease;
+      -ms-transition: color 0.5s ease;
+      -o-transition: color 0.5s ease;
+      transition: color 0.5s ease;
+      text-transform: uppercase;
+      position: relative;
+      z-index: 1000;
+   }
+   .wpb-logo-container {
+      color: #fff;
+      font-weight: bold;
+      margin-right: 10px;
+      font-size: 11px;
+   }
+
+   .wpb-teaser .container {
+      position: relative;
+      z-index: 1000;
+      padding-top: 70px;
+   }
+
+   #ang-logo {
+      width: 37% !important;
+   }
+}
+ @media (max-width: 480px) {
+
+   #sign-up-btn{
+      font-size: 1.5rem;
+   }
+   .wpb-teaser .container {
+      position: relative;
+      z-index: 1000;
+      padding: 0;
+   }
+
+    .wpb-teaser {
+      min-height: 360px;
+      position: relative;
+      z-index: 990;
+      width: 98%;
+      margin: 0px auto;
+      border-radius: 8px;
+      padding: 30px;
+   }
+
+    .wpb-teaser .wpb-slogan h2 {
+      color: #fff;
+      font-weight: bold;
+      font-size: 1.6em;
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 24px;
+   }
+
+   .wpb-top-bar {
+      height: 60px;
+      background: transparent;
+      position: relative;
+      top: 0;
+      width: 100%;
+      z-index: 10000;
+      max-width: 1400px;
+   }
+
+   .mod-contain {
+      width: 100%;
+      text-align: center;
+   }
+
+   #homer {
+      padding-top: 0;
+   }
+
+   #main-text {
+      margin: 0;
+   }
+
+   .wpb-menu-container {
+      display: none;
+   }
+
+   .wpb-teaser .parallax-background {
+      padding: 10% 0 0 0;
+   }
+
+   #avatars {
+      display: none;
+   }
+
+   #slogan {
+      text-align: center;
+      color: white;
+      font-size: 1.3em;
+   }
+
+   #how-to-play {
+      margin-top: 0;
+   }
+
+   #how-to-play {
+      margin-top: 80px;
+   }
+
+   .landing-card {
+      position: relative;
+      display: block;
+      box-sizing: border-box;
+      padding: 4%;
+      margin: 5% 0;
+      background-color: #fff;
+      border-radius: 8px;
+      color: #252525;
+      font-family: Arial;
+      font-size: 20px;
+      font-weight: bold;
+      vertical-align: top;
+      width: 100%;
+   }
+
+   .wpb-portfolio-list .wpb-portfolio-item {
+      margin-left: -20px;
+      border-radius: 8px;
+      list-style-type: none;
+      width: 100%;
+   }
+
+   .wpb-contact-us {
+      min-height: 0;
+      position: relative;
+      z-index: 890;
+      margin-top: 50px;
+   }
+
+   .wpb-team-details h3 {
+      font-size: 0.94em;
+      margin-top: -5px;
+   }
+
+   #how-to-container {
+      padding-top: 0;
+   }
+
+   .avatar-list {
+      overflow: hidden;
+      padding-left: 0px;
+      margin-left: 0;
+   }
+
+   .avatars {
+      position: relative;
+      float: left;
+      margin: 2px 17px;
+   }
+
+   .foot {
+      bottom: 0;
+      max-width: 1400px;
+      height: 60px;
+      border-radius: 8px;
+      background: #252525;
+      padding: 5px 5px 5px 13px;
+      width: 100%;
+      margin: 30px auto;
+   }
+
+   .row {
+      margin: 0 0 0 4px;
+   }
+ }
+
+.modal-backdrop.in {
+  opacity: 0.8 !important;
+}
+.modal{
+  top: 30% !important;
+}
+
+/** ///////////////////////////////////////////// */
+@media (max-width: 520px) {
+	.card {
+		font-size: 14px;
+		height: 115px;
+		word-wrap: break-word;
+	}
+}
 
   .wpb-logo-container {
     margin-right: 0;
@@ -1412,24 +1674,6 @@ li {
 }
 
 /** ///////////////////////////////////////////// */
-
-.card {
-  position: relative;
-  display: inline-block;
-  box-sizing: border-box;
-  width: 17.5%;
-  height: 215px;
-  padding: 1%;
-  margin: 1%;
-  background-color: #fff;
-  border-radius: 8px;
-  color: #252525;
-  font-family: Arial;
-  font-size: 20px;
-  font-weight: bold;
-  vertical-align: top;
-}
-
 @media (max-width: 520px) {
   .card {
     font-size: 14px;
@@ -3632,7 +3876,7 @@ body {
 .image-circle {
   margin-top: 1em;
 }
-input[type="file"] {
+input[type="file"], #profilePic {
   display: none;
 }
 #auth-center {
@@ -3672,7 +3916,7 @@ input[type="file"] {
 .btn-social:hover {
   border-radius: 10px !important;
   color: #fff;
-  padding: 0 10px 0 0;
+  padding: 0 10px 0 0 !important;
 }
 .btn-social:hover {
   color: #000;
@@ -3698,6 +3942,7 @@ input[type="file"] {
 }
 .reg-redirect a:hover {
   text-decoration: underline;
+  color: #fff;
 }
 .text-in-line::after {
   content: " ------------ ";
