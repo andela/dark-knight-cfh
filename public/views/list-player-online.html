@@ -4,36 +4,18 @@
         <!-- Search Bar -->
         <div class="game-search">
             <div class="game-search-bar">
-                <input type="text" placeholder="search for players">
-                <div class="dropdown">
+                <input ng-model="searchFilter" type="text" placeholder="search for players">
+                <!-- <div class="dropdown">
                     <ul>
                         <li ng-repeat="user in game.allUsers" class="text">{{user.name}}</li>
                     </ul>
-                </div>
+                </div> -->
             </div>
         </div>
-        <!-- Player Label 1 -->
-        <div class="player-label">
-            <!-- Avatar Section -->
-            <div class="sz4">
-                <div class="avatar">
-                    <div class="badge">O</div>
-                    <div class="clip-layer">
-                        <img ng-src="img/placeholder.jpg" alt="placeholder">
-                    </div>
-                </div>
-            </div>
-            <!-- Detail Section -->
-            <div class="sz8">
-                <div class="row details">
-                    <div class="name not-ingame">
-                        <div class="text">Dancing Rat
-                            <span class="game-player-circle" ng-show="isPlayer($index)"></span>
-                        </div>
-                        <div class="czar-tag" ng-show="currentCzar($index)">CZAR</div>
-                    </div>
-                </div>
-            </div>
+        <!-- Player Online Label -->
+        <div style="cursor: pointer;" class="player-online-label" ng-repeat="users in game.online | filter:searchFilter">
+            <div class="player-online-name"><span class="game-player-circle online"></span>{{users.name}}</div>
+            <span ng-click="users.id === game.id ? test() : game.pushNotification(users.id, game)" class="player-online-button"><img src="../img/right-arrow.svg" alt="" srcset=""></span>
         </div>
     </div>
     <div class="game-player-tab-switch animate lighten" ng-click="showCoPlayers=false">SEE CO-PLAYERS</div>

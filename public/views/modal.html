@@ -1,4 +1,4 @@
-<div id="myModal" class="game-modal" ng-hide="hideModal" data-ng-hide="game.players && game.players.length >= 1">
+<div ng-if="!game.gameStarted" id="myModal" class="game-modal" ng-hide="hideModal" data-ng-hide="game.players && game.players.length >= 1">
     <div class="game-modal-content">
         <div class="modal-body">
             <h6>Please select a region</h6>

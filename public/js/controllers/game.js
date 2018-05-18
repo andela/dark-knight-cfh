@@ -5,7 +5,6 @@ angular.module('mean.system') /* eslint-disable-line */
       $scope.winningCardPicked = false;
       $scope.showTable = false;
       $scope.modalShown = false;
-      $scope.search_input = '';
       $scope.game = game;
       $scope.startUserGame = false;
       $scope.level = '';
@@ -14,6 +13,7 @@ angular.module('mean.system') /* eslint-disable-line */
       $scope.pickedCards = [];
       $scope.searchFilter = '';
       $scope.name = 'ello bae';
+      $scope.openDropDown = false;
       $scope.awaiting = false;
       // let makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
       // $scope.makeAWishFact = makeAWishFacts.pop();
@@ -22,8 +22,16 @@ angular.module('mean.system') /* eslint-disable-line */
         console.log('heyyo ....');
       };
 
-      $scope.sendMessage = function (url) {
+      $scope.enterGame = function (url) {
         window.open(url, '_blank');
+      };
+
+      // $scope.redirect = function (url) {
+      //   window.location.assign('/#!/app');
+      // };
+
+      $scope.dropDown = function () {
+        $scope.openDropDown = !$scope.openDropDown;
       };
 
       $scope.searchUser = function (playerInfo) {
