@@ -1,7 +1,6 @@
-<link rel="stylesheet" href="../bower/bootstrap/dist/css/bootstrap.min.css">
-<link rel="stylesheet" href="../css/common2.css">
-<link rel="stylesheet" href="../css/style.css">
-
+<style type="text/css" scoped>
+  @import url('/bower/bootstrap/dist/css/bootstrap.min.css');
+</style>
 <div class="containerr" ng-controller="IndexController">
 
   <div class="profile-page" ng-init="profile()">
@@ -37,7 +36,7 @@
 
     <div class="row main profile-container">
 
-      <div class="col-md-2 image-section">
+      <div class="col-md-3 image-section">
         <img class="img img-circle details-img img-responsive" ng-src="{{imageUrl ||'../img/profile-image.png'}}" alt="profile image" width="200px" height="200px">
         <div class="user-details text-center">
           <p class="details-itemr">
@@ -88,7 +87,6 @@
           <tbody>
             <tr ng-repeat="user in leaderboardInfo" ng-class="highlightPlayerClass(user._id)">
               <td>{{ (leaderboardInfo.indexOf(user) + 1) + (page*16) - page }}</td>
-              <td>{{ page }}</td>
               <td class="">{{ user.name }}</td>
               <td>{{ user.points || 0 }}</td>
             </tr>
