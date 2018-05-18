@@ -22,10 +22,10 @@
                                 <i class="material-icons">search</i>
                             </div>
                             <div class="game-search-bar">
-                                <input type="text" placeholder="search player" ng-change="searchUser(game)" ng-model="search_input" data-step="4" data-intro="Search for your friends and invite them!">
-                                <div ng-if="game.allUsers" class="dropdown">
+                                <input type="text" placeholder="search player" ng-click="game.searchUser(game)" ng-model="game.search_input">
+                                <div ng-if="game.allUsers && game.search_input" class="dropdown">
                                     <ul>
-                                        <li ng-repeat="user in game.allUsers" class="text">{{user.name}}</li>
+                                        <li ng-repeat="user in game.allUsers | filter:game.search_input | limitTo : 5 " ng-click="game.sendInvite(user, game)" class="text">{{user.name}}</li>
                                     </ul>
                                 </div>
                             </div>
@@ -43,6 +43,14 @@
                                 <img class="circle" ng-src="{{pic || '../img/profile-image.png'}}" alt="profile image" width="40px" height="40px" style="margin-top:12px">
                             </a>
                         </li>
+                        <li style="cursor: pointer;" class="badge1" data-badge="{{game.myMessage.message.length || 0}}" ng-click="dropDown()">
+                            <img class="notification animate swell-2 "src="../img/notif.svg" alt="notif">
+                        </li>
+                        <div ng-if="openDropDown && game.myMessage.message.length > 0" class="dropdown">
+                            <ul ng-repeat="msg in game.myMessage.message">
+                                <li ng-click="dropDown(); enterGame(game.myMessage.url)" class="text">{{msg}}</li>
+                            </ul>
+                        </div>
                     </ul>
                 </div>
             </div>
@@ -84,19 +92,53 @@
     </div>
     <!-- Choose-Region Modal -->
     <region></region>
+    <!-- Reload Modal -->
     <!-- Message Toast -->
     <toast></toast>
     <!-- Draw Card Modal -->
-    <div id="cardModal" class="game-modal" ng-show="awaiting && isCzar()" ng-click="continueGame()" data-step="13" data-intro="The CZAR picks a question from the deck of cards">
+    <!-- <div id="cardModal" class="game-modal" ng-show="awaiting && isCzar()" ng-click="continueGame()">
         <div class='span12'>
         </div>
         <div class='equipment-card'>
-            <div class='card-front card-face'>
+            <div class='card-front card-face'></div>
+            <div class='card-back card-face'></div>
+        </div>
+    </div> -->
+    <div id="cardModal" class="game-modal" ng-show="awaiting && isCzar()">
+        <div class="czar-card-container">
+            <div class="czar-card-box b1 animated fadeInLeftBig" ng-click="continueGame('b1')">
+                <div id="b1" class="czar-card" >
+                    <div class="front"><div ng-bind-html-unsafe="game.curQuestion.text"></div></div>
+                    <div class="back"><span>DARK</span><span class="circle"><img src="../img/spade.svg" alt="spade"></span><span>KNIGHT</span></div>
+                </div>
             </div>
-            <div class='card-back card-face'>
+            <div class="czar-card-box b2 animated fadeInDownBig" ng-click="continueGame('b2')">
+                <div id="b2" class="czar-card" >
+                    <div class="front"><div ng-bind-html-unsafe="game.curQuestion.text"></div></div>
+                    <div class="back"><span>DARK</span><span class="circle"><img src="../img/spade.svg" alt="spade"></span><span>KNIGHT</span></div>
+                </div>
+            </div>
+            <div class="czar-card-box b3 animated fadeInRightBig" ng-click="continueGame('b3')">
+                <div id="b3" class="czar-card b3">
+                    <div class="front"><div ng-bind-html-unsafe="game.curQuestion.text"></div></div>
+                    <div class="back"><span>DARK</span><span class="circle"><img src="../img/spade.svg" alt="spade"></span><span>KNIGHT</span></div>
+                </div>
             </div>
         </div>
     </div>
+
+    <div id="myModal" class="game-modal" ng-show="game.gameStarted">
+        <div class="game-modal-content" style="text-align: center">
+            <div class="modal-body">
+                <h5>Game started</h5>
+                <p>Would you like to start another game?</p>
+            </div>
+            <div class="game-modal-footer">
+                <button ng-click="abandonGame()" type="button" class="btn-small gray-slate animate swell-2 turn-gray-slate">Go back</button>
+            </div>
+        </div>
+    </div>
+
     <!-- </div> -->
 </div>
 <!-- Chat FAB -->
@@ -109,9 +151,7 @@
         $('.game-player-tab-switch').click(function () {
             console.log('hello');
         });
-    })
+    });
 
-    window.onbeforeunload = () => {
-        alert('Fuck off guys!');
-    };
+
 </script>
