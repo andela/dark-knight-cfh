@@ -1,9 +1,38 @@
 {
   "name": "dark-knight-cfh",
-  "scripts": {
-  },
+  "scripts": {},
   "env": {
     "MONGOHQ_URL": {
+      "required": true
+    },
+    "SECRET_KEY": {
+      "required": true
+    },
+    "TWITTER_CONSUMER_KEY": {
+      "required": true
+    },
+    "TWITTER_CONSUMER_SECRET": {
+      "required": true
+    },
+    "FB_CLIENT_ID": {
+      "required": true
+    },
+    "FB_CLIENT_SECRET": {
+      "required": true
+    },
+    "GOOGLE_CLIENT_ID": {
+      "required": true
+    },
+    "GOOGLE_CLIENT_SECRET": {
+      "required": true
+    },
+    "FACEBOOK_CALLBACK": {
+      "required": true
+    },
+    "TWITTER_CALLBACK": {
+      "required": true
+    },
+    "GOOGLE_CALLBACK": {
       "required": true
     }
   },
@@ -15,9 +44,7 @@
   "addons": [
 
   ],
-  "buildpacks": [
-    {
-      "url": "heroku/nodejs"
-    }
-  ]
+  "buildpacks": [{
+    "url": "heroku/nodejs"
+  }]
 }

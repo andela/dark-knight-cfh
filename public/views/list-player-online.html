@@ -1,0 +1,22 @@
+
+<div class="col m3 s12 game-height-1" ng-show="showCoPlayers">
+    <div class="game-player-list" data-step="10" data-intro="List of online players" data-position="right">
+        <!-- Search Bar -->
+        <div class="game-search">
+            <div class="game-search-bar">
+                <input ng-model="searchFilter" type="text" placeholder="search for players">
+                <!-- <div class="dropdown">
+                    <ul>
+                        <li ng-repeat="user in game.allUsers" class="text">{{user.name}}</li>
+                    </ul>
+                </div> -->
+            </div>
+        </div>
+        <!-- Player Online Label -->
+        <div style="cursor: pointer;" class="player-online-label" ng-repeat="users in game.online | filter:searchFilter">
+            <div class="player-online-name"><span class="game-player-circle online"></span>{{users.name}}</div>
+            <span ng-click="users.id === game.id ? test() : game.pushNotification(users.id, game)" class="player-online-button"><img src="../img/right-arrow.svg" alt="" srcset=""></span>
+        </div>
+    </div>
+    <div class="game-player-tab-switch animate lighten" ng-click="showCoPlayers=false">SEE CO-PLAYERS</div>
+</div>

@@ -4,38 +4,39 @@ angular.module('mean', ['ngCookies', 'firebase', 'ngResource', 'ui.bootstrap', '
     function ($routeProvider) {
       $routeProvider
         .when('/', {
-          templateUrl: 'views/index.html',
+          templateUrl: 'views/index.html'
         })
         .when('/app', {
-          templateUrl: '/views/app.html',
+          templateUrl: '/views/game.html',
         })
         .when('/privacy', {
           templateUrl: '/views/privacy.html',
         })
         .when('/bottom', {
-          templateUrl: '/views/bottom.html',
+          templateUrl: '/views/bottom.html'
         })
         .when('/signin', {
-          templateUrl: '/views/signin.html',
+          templateUrl: '/views/signin.html'
         })
         .when('/signup', {
-          templateUrl: '/views/signup.html',
+          templateUrl: '/views/signup.html'
         })
         .when('/choose-avatar', {
-          templateUrl: '/views/choose-avatar.html',
+          templateUrl: '/views/choose-avatar.html'
         })
         .when('/profile', {
-          templateUrl: '/views/profile.html',
+          templateUrl: '/views/profile.html'
         })
         .otherwise({
-          redirectTo: '/',
+          redirectTo: '/'
         });
-    },
+    }
   ]).config(['$locationProvider',
     function ($locationProvider) {
       $locationProvider.hashPrefix('!');
-    },
-  ]).run(['$rootScope', function ($rootScope) {
+    }
+  ])
+  .run(['$rootScope', '$location', '$window', function ($rootScope, $window, $location) {
     $rootScope.safeApply = function (fn) {
       const phase = this.$root.$$phase;
       if (phase === '$apply' || phase === '$digest') {
@@ -46,6 +47,10 @@ angular.module('mean', ['ngCookies', 'firebase', 'ngResource', 'ui.bootstrap', '
         this.$apply(fn);
       }
     };
+    $rootScope.$on('$routeChangeStart', (event, next, current) => {
+      // window.location.reload(true);
+      console.log('alaye', window);
+    });
   }])
   .run(['DonationService', function (DonationService) {
     window.userDonationCb = function (donationObject) {

@@ -1,0 +1,49 @@
+<div ng-if="!game.gameStarted" id="myModal" class="game-modal" ng-hide="hideModal" data-ng-hide="game.players && game.players.length >= 1">
+    <div class="game-modal-content">
+        <div class="modal-body">
+            <h6>Please select a region</h6>
+            <form action="#" ng-init="game.regId='2'">
+                <p>
+                    <label>
+                        <input class="with-gap" name="group1" value="1" ng-model="game.regId" type="radio" />
+                        <span>Africa</span>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input class="with-gap" name="group1" value="2" ng-model="game.regId" type="radio" />
+                        <span>Global</span>
+                    </label>
+                </p>
+            </form>
+            <div data-ng-hide="guest">
+                <h6>Please select a difficulty level</h6>
+                <form action="#" ng-init="game.level='beginner'">
+                    <p>
+                        <label>
+                            <input class="with-gap" name="group1" type="radio" value="beginner" ng-model="game.level" />
+                            <span>Beginner</span>
+                        </label>
+                    </p>
+                    <p>
+                        <label>
+                            <input class="with-gap" name="group1" type="radio" value="intermediate" ng-model="game.level" />
+                            <span>Intermediate</span>
+                        </label>
+                    </p>
+                    <p>
+                        <label>
+                            <input class="with-gap" name="group1" type="radio" value="legend" ng-model="game.level" />
+                            <span>Legend</span>
+                        </label>
+                    </p>
+                </form>
+            </div>
+        </div>
+        <div class="game-modal-footer">
+            <button data-ng-hide="guest" type="button" ng-click="hideModal=true; startSession()" class="btn-small gray-slate animate swell-2 turn-gray-slate">Start Game</button>
+            <button data-ng-show="guest" type="button" ng-click="hideModal=true; startSession()" class="btn-small gray-slate animate swell-2 turn-gray-slate">Join Game</button>
+            <button ng-click="abandonGame()" type="button" class="btn-small gray-slate animate swell-2 turn-gray-slate">Go back</button>
+        </div>
+    </div>
+</div>

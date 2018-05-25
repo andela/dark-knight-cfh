@@ -1,32 +1,37 @@
-<link rel="stylesheet" href="../css/style.css">
-
-<div id="chatDiv" class="container-fluid" ng-controller="ChatController">
-    <button ng-click="collapseChat()" ng-class="openChatBox ? 'showFab':'hideFab'">
-        <span ng-if="openChatBox"> - </span>
-        <span ng-if="!openChatBox">CHAT </span>
+<style type="text/css" scoped>
+    @import url('/bower/emojione/extras/css/emojione.css');
+    @import url('/bower/emojionearea/dist/emojionearea.css');
+</style>
+<div id="chatDiv" class="container-fluid" ng-controller="ChatController" ng-hide="game.state === 'game ended' || game.state ==='game dissolved' || game.state === 'awaiting players'">
+    <div class="fixed-action-btn game-chat-fab" ng-click="collapseChat()" ng-class="openChatBox ? 'hideFab' : 'showFab'">
+        <a class="btn-floating btn-large gray-slate animate turn-gray-slate">
+            <i class="large material-icons">chat</i>
+        </a>
         <span id="notification-badge" ng-show="!openChatBox && checkUnreadMsg">{{unreadMessage}}</span>
-    </button>
-    <div ng-if="openChatBox" class="chat">
-        <div id="chatInterface">
+    </div>
+    <div ng-show="openChatBox">
+        <div class="chat-header">
+            <button class="close-chat" ng-click="collapseChat()"> x </button>
+        </div>
+        <div class="chat">
+            <div id="chatInterface">
 
-            <div ng-repeat="chat in chatArray">
+                <div ng-repeat="chat in chatArray">
 
-                <div class="chat-bubble" ng-class="chat.user === addNewMessage.user ? 'current-player' : 'team-player'">
-                    <span class="time-display" ng-bind="showTime(chat.timeStamp)">{{chat.timestamp}}</span>
+                    <div class="chat-bubble" ng-class="chat.userId === currentUserIndex ? 'current-player' : 'team-player'">
+                        <span class="time-display" ng-bind="showTime(chat.timeStamp)">{{chat.timestamp}}</span>
+                        <span class="format-user-name">{{chat.user}}</span>
 
-                    <span class="format-user-name">{{chat.user}}</span>
-
-                    <p class="format-msg">{{chat.addNewMessage}}</p>
+                        <p class="format-msg">{{chat.message}}</p>
+                    </div>
                 </div>
-            </div>
 
+            </div>
+            <div style="padding: 10px">
+                <input ng-controller="ChatController" id="chatBox" type="text" ng-keyup="sendChatToDb($event)" ng-model="game.newChat"
+                    name="chatMessage">
+            </div>
         </div>
-        <div style="
-        padding: 10px;
-    ">
-            <input ng-controller="ChatController"  id="chatBox" type="text" ng-keypress="sendChatToDb($event)" ng-model="game.newChat" name="chatMessage">
-        </div>
-        
 
     </div>
 </div>
